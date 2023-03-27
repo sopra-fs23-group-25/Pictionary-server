@@ -1,8 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Session;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -20,15 +20,38 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-  DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
+    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "username", target = "username")
-  User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
+    // POST /users
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "language", target = "language")
+    User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "username", target = "username")
-  @Mapping(source = "status", target = "status")
-  UserGetDTO convertEntityToUserGetDTO(User user);
+    // GET /users/{userId}
+    @Mapping(source = "userId", target = "id") //where is target? why can i not change it to "userId"?
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "lobbyId", target = "lobbyId")
+    @Mapping(source = "language", target = "language")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "token", target = "token")
+    UserGetDTO convertEntityToUserGetDTO(User user);
+
+    // PUT /users/{userId}
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "language", target = "language")
+    @Mapping(source = "password", target = "password")
+    User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
+
+    // POST /sessions
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
+    Session convertSessionPostDTOtoEntity(SessionPostDTO sessionPostDTO);
+
+    @Mapping(source = "token", target = "token")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "userId", target = "userId")
+    SessionGetDTO convertEntityToSessionGetDTO(Session session);
+
+
 }
