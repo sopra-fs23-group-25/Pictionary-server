@@ -29,7 +29,8 @@ public class UserServiceTest {
 
     private User testUser = new User();
 
-    private String token = "test-token";
+    private String token = "testToken";
+
 
     @BeforeEach
     public void setup() {
@@ -106,13 +107,13 @@ public class UserServiceTest {
     public void changeStatus_idNotFound () throws Exception {
         when(userRepository.findById(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
         assertThrows(ResponseStatusException.class, () -> userService.changeStatus(1L, UserStatus.ONLINE));
-
     }
 
     @Test
     public void changeStatus_ () throws Exception {
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(testUser));
-        assertEquals(testUser.getStatus(),UserStatus.OFFLINE);
+        userService.changeStatus(1L, UserStatus.ONLINE);
+        assertEquals(testUser.getStatus(),UserStatus.ONLINE);
 
     }
 
