@@ -3,7 +3,9 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs23.service.AuthService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +23,13 @@ import java.util.List;
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
+    private final AuthService authService;
 
-  UserController(UserService userService) {
-    this.userService = userService;
-  }
+    UserController(UserService userService, AuthService authService) {
+        this.userService = userService;
+        this.authService = authService;
+    }
 
   @GetMapping("/users")
   @ResponseStatus(HttpStatus.OK)
@@ -42,6 +46,7 @@ public class UserController {
     return userGetDTOs;
   }
 
+  //input: UserPostDTO; output: UserGetDTO
   @PostMapping("/users")
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
@@ -54,4 +59,24 @@ public class UserController {
     // convert internal representation of user back to API
     return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
   }
+
+    @GetMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO getUser(@PathVariable("id") long userId, @RequestHeader("Auth-Token") String token) {
+        authService.authUser(token);
+
+        User user = userService.userById(userId);
+
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+    }
+
+    @PutMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void updateUser(@PathVariable("id") long userId, @RequestBody UserPutDTO userPutDTO, @RequestHeader("Auth-Token") String token) {
+        authService.authUserForUserId(token, userId);
+        User userWithUpdateInfo = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
+        userService.updateUser(userWithUpdateInfo, userService.userById(userId));
+    }
 }
