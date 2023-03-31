@@ -1,10 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
+import java.sql.Time;
+
 public class LobbyPostDTO {
 
     private String lobbyName;
 
-    private int timePerRound;
+    private Time timePerRound;
 
     private int nrOfRounds;
 
@@ -19,11 +21,11 @@ public class LobbyPostDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getTimePerRound() {
+    public Time getTimePerRound() {
         return timePerRound;
     }
 
-    public void setTimePerRound(int timePerRound) {
+    public void setTimePerRound(Time timePerRound) {
         this.timePerRound = timePerRound;
     }
 

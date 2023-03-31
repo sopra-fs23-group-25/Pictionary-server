@@ -45,21 +45,22 @@ public class LobbyService {
     }
 
     public Lobby createLobby(Lobby newLobby) {
+        if (newLobby.getLobbyName() != null) {
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
+        }
+        try {
+            checkIfLobbyExists(newLobby);
+            newLobby = lobbyRepository.save(newLobby);
+            lobbyRepository.flush();
 
-        newLobby = lobbyRepository.save(newLobby);
-        lobbyRepository.flush();
+            return newLobby;
+        }
+        catch (Exception e) {
+            String baseErrorMessage = "The %s provided is not unique. Therefore, the Lobby could not be created!";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, e.getMessage()));
 
-        return newLobby;
-    }
-
-
-    private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
-        Lobby lobbyByLobbyId = lobbyRepository.findByLobbyId(lobbyToBeCreated.getLobbyId());
-
-
-        String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-        if (lobbyByLobbyId != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, "LobbyId", "is"));
         }
     }
 
@@ -67,4 +68,14 @@ public class LobbyService {
         Lobby lobby = lobbyRepository.findByLobbyId(id);
         return lobby;
     }
+
+
+    private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
+        Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
+
+        if (lobbyWithSameName != null) {
+            throw new RuntimeException("name");
+        }
+    }
+
 }
