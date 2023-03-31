@@ -8,6 +8,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,18 @@ public class LobbyController {
     }
 
     @PostMapping("/lobbies")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public LobbyGetDTO createLobby(@RequestBody LobbyPostDTO lobbyPostDTO){
+    public LobbyGetDTO createLobby(@RequestBody LobbyPostDTO lobbyPostDTO) {
         Lobby newLobby = DTOMapper.INSTANCE.convertLobbiesPostDTOToEntity(lobbyPostDTO);
+
         Lobby createdLobby = lobbyService.createLobby(newLobby);
+
+        if(createdLobby == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be created");
+        }
         return DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(createdLobby);
+
     }
 
     @GetMapping("/lobbies")

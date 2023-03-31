@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.List;
 
 
@@ -21,7 +22,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private int numberOfPlayers;
     @Column(nullable = false)
-    private int timePerRound;
+    private Time timePerRound;
     @Column(nullable = false)
     private int nrOfRounds;
 
@@ -47,11 +48,11 @@ public class Lobby implements Serializable {
         this.lobbyName = lobbyName;
     }
 
-    public int getTimePerRound() {
+    public Time getTimePerRound() {
         return timePerRound;
     }
 
-    public void setTimePerRound(int timePerRound) {
+    public void setTimePerRound(Time timePerRound) {
         this.timePerRound = timePerRound;
     }
 
