@@ -16,7 +16,6 @@ public class TranslatorTest {
         String testString = "Er";
         String testLanguage = "de";
         try {
-            //System.out.printf("\n\n\n\n\n\nTranslated text: %s\n\n\n\n\n\n", translator.translateSingle(testString, testLanguage));
             assertEquals(translator.translateSingle(testString, testLanguage), "He");
         }
         catch (Exception e) {
@@ -30,7 +29,6 @@ public class TranslatorTest {
         List<String> translatedTestList = Arrays.asList("She", "you", "he");
         String testLanguage = "de";
         try {
-            //System.out.printf("\n\n\n\n\n\nTranslated text: %s\n\n\n\n\n\n", translator.translateSingle(testString, testLanguage));
             assertEquals(translator.translateList(testList, testLanguage), translatedTestList);
         }
         catch (Exception e) {
