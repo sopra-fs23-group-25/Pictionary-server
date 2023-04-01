@@ -45,9 +45,7 @@ public class LobbyService {
     }
 
     public Lobby createLobby(Lobby newLobby) {
-        if (newLobby.getLobbyName() != null) {
-        }
-        else {
+        if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
         try {
