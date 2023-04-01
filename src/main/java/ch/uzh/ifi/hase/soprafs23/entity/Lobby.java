@@ -26,7 +26,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private int nrOfRounds;
 
-    @OneToMany (mappedBy = "lobbyId")
+    @OneToMany (mappedBy = "userId")
     private List<User> usersInLobby;
 
     @Column(nullable = false)
