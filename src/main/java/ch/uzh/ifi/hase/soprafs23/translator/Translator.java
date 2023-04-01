@@ -20,9 +20,9 @@ public class Translator {
     }
 
     public String translateSingle(String word, String language) throws IOException {
+        String translationText = "";
         // Initialize client that will be used to send requests. This client only needs to be created
         // once, and can be reused for multiple requests. using it in a try statement should ensure automatic close call, need to see if this is a problem
-        String translationText = "";
         try (TranslationServiceClient client = TranslationServiceClient.create()) {
             TranslateTextResponse response = translateText(language, word, client);
             for (Translation translation : response.getTranslationsList()) {
@@ -36,9 +36,10 @@ public class Translator {
     }
 
     public List<String> translateList(List<String> wordList, String language) throws IOException {
+
+        List<String> translatedStrings = new ArrayList<String>();
         // Initialize client that will be used to send requests. This client only needs to be created
         // once, and can be reused for multiple requests. using it in a try statement should ensure automatic close call, need to see if this is a problem
-        List<String> translatedStrings = new ArrayList<String>();
         try (TranslationServiceClient client = TranslationServiceClient.create()) {
             for (String word : wordList) {
                 TranslateTextResponse response = translateText(language, word, client);
