@@ -22,9 +22,6 @@ import static org.mockito.Mockito.when;
 import java.sql.Time;
 
 
-
-
-
 public class LobbyServiceTest {
 
     Lobby testLobby = new Lobby();
