@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "sopra-fs23-group-25-server",
+  "private_key_id": "feaab082250224590ff616c8a4deeee68138ddb5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKlf2stl2NnoLh\nXz3+0cBe1J5FsIHBTCGH3pNakz8GjqRA/BilK4VM66zP+nwc+CCvxiIqSrlxqlVl\nZlK3KpevUH3WOcQ7D5FMYCL6UgdZ62/oUOSh5K1GM4zOhD77qew5A7ifMR3swyV5\nFT/5v5V0BNsVyzbp1mj/HM83kYYsCXTKhypeOGzyy2mlFD5wZ/oc9uVY1j4vJlAw\n+Mp7tfXLXu8Q7mKC06hPM3ShzkyCo/zBFvUIi1HRMdzjdZS7Th9FWpj2DKAWvEoD\n1g2NbzwEUa0AG0BTMNBpnSquryc4XtbNRCaT0qoT8yURrXMZI6k84vAg0mqf4arB\n1ItAKua1AgMBAAECggEAQWi8Rw96lUcgqvO9aJEAs52inI2o12hlSyEqIox4RP25\nOuIqcuniWDufyGbvu8rBgv9N+Km3xmNgvySSgGFYKFqsxoZQPWGBYE+J+5iQlw/V\nSgUUTNEwwQHT7Ln2O/tZMe9ppLyPFOrNJpMd3N1mu9b1hcvfJxD7RaNfpGlwELdJ\nlyOcxGtKDbeuafwR0PiRcZPXYbkdUVkrIYr+FA1kG7jydtbjmV4ybXLHJiiKzbEj\nz7OYcSyyHtM7DUg2fFQLkZt1pnlcs1Rjxj3m0TL9DXsVlFZ4jlvmSWJgACMOCtM5\nZ9UrHo25ME/J7DQdsq0hYBzGEGfIroxUSJvopa3a4QKBgQDxaiz538CaUUD1Jq+2\nEYbTgHUVp2GlfEQ8clcD1N4MHfVJv5u02tLps+6/Sy7ShZ0uKyERwvAJNbsEKoIL\nN6IFv1P0X5K0+Ep/2NCgAMTDQ8ukYMQMaziQDEgdYBoEPv3GhzvyLebf1xGkvISp\n4KJbN+SlxGrC+9Cq7c8otrygKwKBgQDW00WG07x2emsL2PRod4f7OZ/NsKzXSi21\nu3Xvs2I39s/4jnnAI6yXXSpTq2lcfWoXdKxUES7XzvyVKMwAs0KzWHOJXg/NWUcF\nXpaL2sAsSP2f6BMzEsrNakspu1VgXMNxs1I15tSQeui7thD0HJitlL5WM/lm6TVC\njRMEP2hEnwKBgGFBZvEbRRpmFYctmKf+k5RtMb4RenMShuLbJVbz0KiNAR4+xNmt\nNj7UMCB8h1ZkYZgR4/al09HCBZ9+CHnAZdNu6sGOJyokxM6QaCutY5dOnqGQIirm\nnxjY+cxrxM9lGRN7s5izCUmv+PmmwMM3LfEVqVVmtaPrknrp5wT96SuVAoGAGVXH\nQFReSJa9YyNOB7f5GH6+QvLQH3/HDkSybvd34OPBuS2MXEWYyC0bncx8W4UK6wM+\ng5eXL6pgjXLHRFnfxujqj0vBj1U1FAQIuyusOEzPZHlpMj/IHRupC53lPr0R66nb\nSzIS5YspQWICc9efhfEh1WbBxgpA1r1ufbTApj8CgYEA4RogPLIeKmSmNTeJ40P+\npL8EIWPUjnK2fFaOLcNd1RRBf1W368Y1wm3JJKwNNNV5f592JYYnBw2MKT3dsUc/\nIeBVON26k1/bJPrBp0zmDL/aYH46QppYXXH4FAMkc1TXbTvsItIRAETmjV+NkCpq\nN93+CoSsk++R0weTHB9gn+U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sopra-fs23-group-25-server@appspot.gserviceaccount.com",
+  "client_id": "111381857423470619858",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sopra-fs23-group-25-server%40appspot.gserviceaccount.com"
+}
