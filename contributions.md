@@ -4,7 +4,8 @@
  
 |  Name|  Issue(s)| Description |
 |--|--|--|
-|Leo|#58, #59 | created Lobby-endpoints |
+|Leo|#35, #58, #59 | created Lobby-endpoints |
+||#64|implement Lobby entity|
 ||#108|setup Google Translate API|
 ||#107|implementation Translator class|
 |Joana|#24, #52, #25|created User-endpoints|
