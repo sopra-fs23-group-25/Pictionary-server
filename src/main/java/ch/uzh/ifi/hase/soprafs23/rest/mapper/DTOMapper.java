@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Session;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
@@ -66,6 +67,12 @@ public interface DTOMapper {
     @Mapping(source = "nrOfRounds", target = "nrOfRounds")
     @Mapping(source = "timePerRound", target = "timePerRound")
     Lobby convertLobbiesPostDTOToEntity(LobbyPostDTO newLobby);
+    
+    @Mapping(source="userId", target="userId")
+    @Mapping(source="guess", target="guess")
+    @Mapping(source="time", target="time")
+    @Mapping(source="score", target="score")
+    Guess convertGuessPostDTOToEntity(GuessPostDTO newGuess);
 
 
 }
