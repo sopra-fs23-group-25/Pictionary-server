@@ -11,6 +11,14 @@ public class Guess {
     private Duration time;
     private Long score;
 
+    public Guess(Long userId, String guess, Duration time, long score){
+        this.userId = userId;
+        this.guess = guess;
+        this.time = time;
+        this.score = score;
+    }
+
+    public Guess(){}
 
     public long getUserId() {
         return userId;
