@@ -67,7 +67,7 @@ public interface DTOMapper {
     @Mapping(source = "nrOfRounds", target = "nrOfRounds")
     @Mapping(source = "timePerRound", target = "timePerRound")
     Lobby convertLobbiesPostDTOToEntity(LobbyPostDTO newLobby);
-    
+
     @Mapping(source="userId", target="userId")
     @Mapping(source="guess", target="guess")
     @Mapping(source="time", target="time")
