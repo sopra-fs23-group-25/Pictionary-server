@@ -47,6 +47,8 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private UserService userService;
+
+    // don't delete!!
     @MockBean
     private AuthService authService;
     User testUser = new User();
