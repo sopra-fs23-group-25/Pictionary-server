@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +31,14 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
+    //private final GameRepository gameRepository;
 
     @Autowired
-    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository) {
+    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
+                        //,@Qualifier("gameRepository")GameRepository gameRepository)
+                        {
         this.lobbyRepository = lobbyRepository;
+        //this.gameRepository = gameRepository;
     }
 
     public List<Lobby> getLobbies() {
@@ -66,7 +71,6 @@ public class LobbyService {
         Lobby lobby = lobbyRepository.findByLobbyId(id);
         return lobby;
     }
-
 
     private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
