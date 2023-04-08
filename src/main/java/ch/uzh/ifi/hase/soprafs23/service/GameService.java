@@ -36,29 +36,22 @@ public class GameService {
 
     public Game createGame (Game game) {
 
-        if (gameRepository.findByLobbyId(game.getLobbyId()) != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "There is already an ongoing Game in that lobby!");
-        }
-
         Lobby lobby = lobbyRepository.findByLobbyId(game.getLobbyId());
         if (lobby == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby does not exist!");
         }
-        // the lobby exists and the game in the lobby has not yet started
-        else {
-            lobby.setHasStarted(true);
-
-            game.setPlayers(createPlayers(lobby));
-
-            game = gameRepository.save(game);
-            gameRepository.flush();
-            lobby = lobbyRepository.save(lobby);
-            lobbyRepository.flush();
-
-            return game;
-
+        // check if a game already exists in the lobby and throw a conflict exception if it does
+        if (gameRepository.findByLobbyId(game.getLobbyId()) != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already an ongoing game in that lobby!");
         }
+
+        lobby.setHasStarted(true);
+        game.setPlayers(createPlayers(lobby));
+
+        game = gameRepository.save(game);
+        lobby = lobbyRepository.save(lobby);
+
+        return game;
     }
 
     private ArrayList<Player> createPlayers(Lobby lobby) {

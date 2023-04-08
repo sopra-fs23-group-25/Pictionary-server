@@ -1,38 +1,42 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
-import ch.uzh.ifi.hase.soprafs23.service.GameService;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
+@Entity
+@Table(name = "GAME")
 public class Game implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     private Long lobbyId;
 
-    @OneToMany
-    private ArrayList<Player> players;
+    @OneToMany (mappedBy = "userId")
+    private List<Player> players;
 
-    @OneToMany
-    private ArrayList<Long> painted;
+    @OneToMany (mappedBy = "userId")
+    private List<Player> painted;
 
-    @OneToMany
-    private ArrayList<Long> notPainted;
+    @OneToMany (mappedBy = "userId")
+    private List<Player> notPainted;
 
     // private Translator translator;
 
-    @OneToMany
-    private ArrayList <String> wordsPainted;
+    @ElementCollection
+    @CollectionTable(name = "words_painted")
+    @Column(name = "word")
+    private List<String> wordsPainted;
 
     private String word;
 
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
     public void setPlayers(ArrayList<Player> players) {this.players = players;}

@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface GameRepository extends JpaRepository<Game, Long> {
     Game findByLobbyId(long lobbyId);
 
-    Game findByLobbyName(String lobbyName);
 }
