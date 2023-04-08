@@ -19,7 +19,7 @@ public class Player implements Serializable, Comparable<Player> {
     @Column
     boolean isHost = false;
     @Column
-    PlayerRole currentRole;
+    PlayerRole currentRole = PlayerRole.GUESSER;
     /*@Column
     Guess currentGuess;*/
     @Column

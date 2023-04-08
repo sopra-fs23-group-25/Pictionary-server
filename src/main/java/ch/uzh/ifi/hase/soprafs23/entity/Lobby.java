@@ -43,7 +43,6 @@ public class Lobby implements Serializable {
     public String getLobbyName() {
         return lobbyName;
     }
-
     public void setLobbyName(String lobbyName) {
         this.lobbyName = lobbyName;
     }
@@ -51,7 +50,6 @@ public class Lobby implements Serializable {
     public Time getTimePerRound() {
         return timePerRound;
     }
-
     public void setTimePerRound(Time timePerRound) {
         this.timePerRound = timePerRound;
     }
@@ -59,7 +57,6 @@ public class Lobby implements Serializable {
     public int getNrOfRounds() {
         return nrOfRounds;
     }
-
     public void setNrOfRounds(int numberOfRounds) {
         this.nrOfRounds = numberOfRounds;
     }
@@ -67,25 +64,22 @@ public class Lobby implements Serializable {
     public List<User> getUsersInLobby() {
         return usersInLobby;
     }
-
     public void setUsersInLobby(List<User> usersInLobby) {
         this.usersInLobby = usersInLobby;
     }
 
-    public boolean isHasStarted() {
-        return hasStarted;
-    }
+    public boolean isHasStarted() {return hasStarted;}
+    public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
 
-    public void setHasStarted(boolean hasStarted) {
-        this.hasStarted = hasStarted;
-    }
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
-
     public void setNumberOfPlayers(int numberOfPlayersInLobby) {
         this.numberOfPlayers = numberOfPlayersInLobby;
     }
 
+    public boolean isFull() {
+        return getNumberOfPlayers() == usersInLobby.size();
+    }
 
 }

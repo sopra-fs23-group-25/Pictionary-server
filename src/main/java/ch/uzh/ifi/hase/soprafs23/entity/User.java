@@ -85,4 +85,11 @@ public class User implements Serializable {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
+
+    public Player convertToPlayer() {
+        Player player = new Player();
+        player.setUserId(this.getUserId());
+        player.setLanguage(this.language);
+        return player;
+    }
 }
