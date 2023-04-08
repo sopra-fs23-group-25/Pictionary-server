@@ -25,8 +25,6 @@ public class GameService {
     private final GameRepository gameRepository;
     private final LobbyRepository lobbyRepository;
 
-    private Lobby lobby;
-
     @Autowired
     public GameService(
             @Qualifier("gameRepository") GameRepository gameRepository,
@@ -50,21 +48,22 @@ public class GameService {
         // the lobby exists and the game in the lobby has not yet started
         else {
             lobby.setHasStarted(true);
-            lobby = lobbyRepository.save(lobby);
-            lobbyRepository.flush();
-            this.lobby = lobby;
 
-            game.setPlayers(createPlayers());
+            game.setPlayers(createPlayers(lobby));
+
             game = gameRepository.save(game);
             gameRepository.flush();
+            lobby = lobbyRepository.save(lobby);
+            lobbyRepository.flush();
+
             return game;
 
         }
     }
 
-    private ArrayList<Player> createPlayers() {
+    private ArrayList<Player> createPlayers(Lobby lobby) {
         List<User> usersInLobby = lobby.getUsersInLobby();
-        ArrayList<Player> usersToPlayers = new ArrayList<Player>();
+        ArrayList<Player> usersToPlayers = new ArrayList<>();
         for (User user : usersInLobby) {
             usersToPlayers.add(user.convertToPlayer());
         }
