@@ -62,4 +62,11 @@ public class GameService {
         }
         return usersToPlayers;
     }
+
+    public Game gameByLobbyId(Long lobbyId) {
+        Game game = gameRepository.findByLobbyId(lobbyId);
+        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game does not exist!");}
+
+        return game;
+    }
 }

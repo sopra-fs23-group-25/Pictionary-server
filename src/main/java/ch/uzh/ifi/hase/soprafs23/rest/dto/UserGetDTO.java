@@ -9,7 +9,6 @@ public class UserGetDTO {
   private String language;
   private Long lobbyId;
   private UserStatus status;
-
   private String token;
 
 
