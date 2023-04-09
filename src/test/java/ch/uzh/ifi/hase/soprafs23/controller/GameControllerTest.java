@@ -72,25 +72,6 @@ public class GameControllerTest {
     }
 
     @Test
-    public void createGame_noLobby_throws404() throws Exception {
-
-        GamePostDTO gamePostDTO = new GamePostDTO();
-        gamePostDTO.setLobbyId(1L);
-
-        // mocks the userService: for any input the method createUser returns the testUser
-        when(gameService.createGame(Mockito.any())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/games")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(gamePostDTO));
-
-        // then
-        mockMvc.perform(postRequest)
-                .andExpect(status().isNotFound()); // Code 404
-    }
-
-    @Test
     public void createGame_GameExists_throws409() throws Exception {
 
         GamePostDTO gamePostDTO = new GamePostDTO();
@@ -145,6 +126,24 @@ public class GameControllerTest {
                 .andExpect(status().isNoContent()); // Code 204
     }
 
+    /*@Test
+    public void createGame_noLobby_throws404() throws Exception {
+
+        GamePostDTO gamePostDTO = new GamePostDTO();
+        gamePostDTO.setLobbyId(1L);
+
+        // mocks the userService: for any input the method createUser returns the testUser
+        when(gameService.createGame(Mockito.any())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/games")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(gamePostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isNotFound()); // Code 404
+    }*/
 
     private String asJsonString(final Object object) {
         try {

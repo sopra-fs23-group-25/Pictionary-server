@@ -53,5 +53,10 @@ public class LobbyController {
         return lobbiesGetDTOs;
     }
 
+    @PutMapping("/lobbies/{id}/newGame")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void startGameInLobby(@PathVariable("id") long lobbyId) {
+        lobbyService.startGame(lobbyId);
+    }
 
 }
