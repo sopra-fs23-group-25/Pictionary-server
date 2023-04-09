@@ -35,7 +35,6 @@ public class GameService {
     }
 
     public Game createGame (Game game) {
-
         Lobby lobby = lobbyRepository.findByLobbyId(game.getLobbyId());
         if (lobby == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby does not exist!");
@@ -69,4 +68,9 @@ public class GameService {
 
         return game;
     }
+
+    public void deleteGame(Long lobbyId) {
+        gameRepository.deleteById(lobbyId);
+    }
+
 }

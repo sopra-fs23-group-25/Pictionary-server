@@ -34,4 +34,12 @@ public class GameController {
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
+
+    @DeleteMapping("/games/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteGame(@PathVariable("id") long lobbyId) {
+        gameService.deleteGame(lobbyId);
+
+    }
+
 }
