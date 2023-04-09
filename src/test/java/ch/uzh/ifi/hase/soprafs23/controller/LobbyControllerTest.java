@@ -42,7 +42,6 @@ public class LobbyControllerTest {
 
     Time time = new Time(100L);
 
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -112,6 +111,29 @@ public class LobbyControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void startGame_lobbyNotFound_throws404() throws Exception {
+        Mockito.doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND)).when(lobbyService).startGame(anyLong());
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/newGame", 1)
+                .contentType(MediaType.APPLICATION_JSON); //?
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void startGame_success() throws Exception {
+        Mockito.doNothing().when(lobbyService).startGame(anyLong());
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/newGame", 1)
+                .contentType(MediaType.APPLICATION_JSON); //?
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNoContent());
+    }
+
     /**
      * Helper Functions
      */
@@ -125,6 +147,5 @@ public class LobbyControllerTest {
                     String.format("The request body could not be created.%s", e.toString()));
         }
     }
-
 
 }

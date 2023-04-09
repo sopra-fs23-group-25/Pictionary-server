@@ -31,7 +31,6 @@ public class GameController {
     @ResponseBody
     public GameGetDTO getGame(@PathVariable("id") long lobbyId) {
         Game game = gameService.gameByLobbyId(lobbyId);
-
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
 
