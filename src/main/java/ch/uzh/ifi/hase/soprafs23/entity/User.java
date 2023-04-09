@@ -92,6 +92,7 @@ public class User implements Serializable {
         Player player = new Player();
         player.setUserId(this.getUserId());
         player.setLanguage(this.language);
+        player.setUsername(this.getUsername());
         return player;
     }
 }

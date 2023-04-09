@@ -27,7 +27,7 @@ public class Lobby implements Serializable {
     private int nrOfRounds;
 
     @OneToMany (mappedBy = "userId")
-    private List<User> usersInLobby;
+    private List<Player> playersInLobby;
 
     @Column(nullable = false)
     private boolean hasStarted;
@@ -61,11 +61,11 @@ public class Lobby implements Serializable {
         this.nrOfRounds = numberOfRounds;
     }
 
-    public List<User> getUsersInLobby() {
-        return usersInLobby;
+    public List<Player> getPlayersInLobby() {
+        return playersInLobby;
     }
-    public void setUsersInLobby(List<User> usersInLobby) {
-        this.usersInLobby = usersInLobby;
+    public void setUsersInLobby(List<Player> playersInLobby) {
+        this.playersInLobby = playersInLobby;
     }
 
     public boolean isHasStarted() {return hasStarted;}
@@ -79,7 +79,7 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return getNumberOfPlayers() == usersInLobby.size();
+        return getNumberOfPlayers() == playersInLobby.size();
     }
 
 }

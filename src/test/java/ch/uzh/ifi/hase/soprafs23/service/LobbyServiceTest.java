@@ -69,7 +69,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
         assertEquals(testLobby.getNumberOfPlayers(), createdLobby.getNumberOfPlayers());
-        assertEquals(testLobby.getUsersInLobby(), createdLobby.getUsersInLobby());
+        assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
 
 
     }
@@ -125,12 +125,12 @@ public class LobbyServiceTest {
         Game testGame = new Game();
         testGame.setLobbyId(testLobby.getLobbyId());
 
-        List<User> users = new ArrayList<>();
-        User testUser = new User();
-        testUser.setUserId(1L);
-        testUser.setLanguage("l");
-        users.add(testUser);
-        testLobby.setUsersInLobby(users);
+        List<Player> players = new ArrayList<>();
+        Player testPlayer = new Player();
+        testPlayer.setUserId(1L);
+        testPlayer.setLanguage("l");
+        players.add(testPlayer);
+        testLobby.setUsersInLobby(players);
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         when(gameRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testGame);

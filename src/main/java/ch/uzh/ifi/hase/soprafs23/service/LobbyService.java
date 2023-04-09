@@ -100,22 +100,12 @@ public class LobbyService {
         }
     }
 
-    private ArrayList<Player> createPlayers(Long lobbyId) {
-        Lobby lobby = getSingleLobby(lobbyId);
-        List<User> usersInLobby = lobby.getUsersInLobby();
-        ArrayList<Player> usersToPlayers = new ArrayList<>();
-        for (User user : usersInLobby) {
-            usersToPlayers.add(user.convertToPlayer());
-        }
-        return usersToPlayers;
-    }
-
     private Game initGame(Long lobbyId) {
 
         Game game = gameRepository.findByLobbyId(lobbyId);
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game was not found!");}
 
-        List<Player> players = createPlayers(lobbyId);
+        List<Player> players = getSingleLobby(lobbyId).getPlayersInLobby();
 
         game.setPlayers(players);
         game.setNotPainted(players);
