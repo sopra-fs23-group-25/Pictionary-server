@@ -16,6 +16,9 @@ public class Player implements Serializable, Comparable<Player> {
     private Long userId;
     @Column
     String language;
+
+    @Column
+    String username;
     @Column
     boolean isHost = false;
     @Column
@@ -51,5 +54,10 @@ public class Player implements Serializable, Comparable<Player> {
 
     public Duration getTotalTime() {return totalTime;}
     public void setTotalTime(Duration totalTime) {this.totalTime = totalTime;}
+
+    public String getUsername() {return username;}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
 
