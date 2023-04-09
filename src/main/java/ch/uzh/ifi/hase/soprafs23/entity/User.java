@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -27,6 +28,7 @@ import java.io.Serializable;
 @Table(name = "USER")
 public class User implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

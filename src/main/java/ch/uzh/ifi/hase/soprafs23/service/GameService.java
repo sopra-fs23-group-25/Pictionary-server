@@ -48,7 +48,7 @@ public class GameService {
         game.setPlayers(createPlayers(lobby));
 
         game = gameRepository.save(game);
-        lobby = lobbyRepository.save(lobby);
+        lobbyRepository.save(lobby);
 
         return game;
     }
