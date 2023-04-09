@@ -25,4 +25,21 @@ public class GameController {
         Game createdGame = gameService.createGame(newGame);
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(createdGame);
     }
+
+    @GetMapping ("/games/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GameGetDTO getGame(@PathVariable("id") long lobbyId) {
+        Game game = gameService.gameByLobbyId(lobbyId);
+
+        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
+    }
+
+    @DeleteMapping("/games/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteGame(@PathVariable("id") long lobbyId) {
+        gameService.deleteGame(lobbyId);
+
+    }
+
 }

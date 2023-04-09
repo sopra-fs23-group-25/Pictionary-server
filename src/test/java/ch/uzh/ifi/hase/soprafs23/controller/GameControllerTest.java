@@ -23,10 +23,12 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -107,6 +109,41 @@ public class GameControllerTest {
                 .andExpect(status().isConflict()); // Code 409
     }
 
+    @Test
+    public void getGame_returnsJsonArray() throws Exception {
+        when(gameService.gameByLobbyId(Mockito.anyLong())).thenReturn(testGame);
+
+        MockHttpServletRequestBuilder getRequest = get("/games/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isOk()); // Code 200
+    }
+
+    @Test
+    public void getGame_gameDoesNotExist_throws404() throws Exception {
+        when(gameService.gameByLobbyId(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder getRequest = get("/games/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(getRequest)
+                .andExpect(status().isNotFound()); // Code 404
+
+    }
+
+    @Test
+    public void delete_gameExists_returnsNoContent() throws Exception {
+        Mockito.doNothing().when(gameService).deleteGame(anyLong());
+
+        MockHttpServletRequestBuilder deleteRequest = delete("/games/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(deleteRequest)
+                .andExpect(status().isNoContent()); // Code 204
+    }
 
 
     private String asJsonString(final Object object) {
