@@ -61,6 +61,7 @@ public class LobbyService {
             newLobby = lobbyRepository.save(newLobby);
             lobbyRepository.flush();
 
+            log.debug("Created Information for Lobby: {}", newLobby);
             return newLobby;
         }
         catch (Exception e) {

@@ -25,17 +25,19 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public Game createGame (Game game) {
+    public Game createGame (Game newGame) {
 
         // check if a game already exists in the lobby and throw a conflict exception if it does
-        if (gameRepository.findByLobbyId(game.getLobbyId()) != null) {
+        if (gameRepository.findByLobbyId(newGame.getLobbyId()) != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already an ongoing game in that lobby!");
         }
 
         // save only if does not exist yet
-        game = gameRepository.save(game);
+        newGame = gameRepository.save(newGame);
+        gameRepository.flush();
+        log.debug("Created Information for Game: {}", newGame);
 
-        return game;
+        return newGame;
     }
 
     public Game gameByLobbyId(Long lobbyId) {
