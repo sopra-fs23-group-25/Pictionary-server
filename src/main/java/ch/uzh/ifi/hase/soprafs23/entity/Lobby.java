@@ -78,6 +78,10 @@ public class Lobby implements Serializable {
         this.numberOfPlayers = numberOfPlayersInLobby;
     }
 
+    public void addPlayer(Player player){
+        playersInLobby.add(player);
+    }
+
     public boolean isFull() {
         return getNumberOfPlayers() == playersInLobby.size();
     }

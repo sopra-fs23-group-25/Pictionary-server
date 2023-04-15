@@ -6,6 +6,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
+import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,18 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
+    private final UserRepository userRepository;
     private final GameRepository gameRepository;
 
     @Autowired
     public LobbyService(
             @Qualifier("gameRepository") GameRepository gameRepository,
-            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
+            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
+            @Qualifier("userRepository") UserRepository userRepository)
     {
         this.gameRepository = gameRepository;
         this.lobbyRepository = lobbyRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Lobby> getLobbies() {
@@ -70,6 +74,14 @@ public class LobbyService {
         }
     }
 
+
+    public void joinLobby(Long userId, Long lobbyId){
+        Lobby lobby = getSingleLobby(lobbyId);
+        User user = getSingleUser(userId);
+
+        lobby.addPlayer(user.convertToPlayer());
+    }
+
     public void startGame(Long lobbyId) {
 
         Lobby lobby = getSingleLobby(lobbyId);
@@ -90,6 +102,14 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby does not exist!");
         }
         return lobbyById;
+    }
+
+    public User getSingleUser(long id) {
+        User userById = userRepository.findByUserId(id);
+        if (userById == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
+        }
+        return userById;
     }
 
     private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
