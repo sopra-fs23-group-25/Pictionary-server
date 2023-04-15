@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -27,6 +28,7 @@ import java.io.Serializable;
 @Table(name = "USER")
 public class User implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -84,5 +86,13 @@ public class User implements Serializable {
     }
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public Player convertToPlayer() {
+        Player player = new Player();
+        player.setUserId(this.getUserId());
+        player.setLanguage(this.language);
+        player.setUsername(this.getUsername());
+        return player;
     }
 }

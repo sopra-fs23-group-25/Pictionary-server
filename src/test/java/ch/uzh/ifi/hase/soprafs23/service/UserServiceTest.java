@@ -31,7 +31,6 @@ public class UserServiceTest {
 
     private String token = "testToken";
 
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -78,7 +77,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser_duplicateInputs_throwsException() {
+    public void createUser_duplicateInputs_throwsException() throws Exception {
         // given -> a first user has already been created
         userService.createUser(testUser);
 

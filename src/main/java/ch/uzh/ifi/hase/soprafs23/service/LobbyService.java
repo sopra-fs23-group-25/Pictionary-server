@@ -1,7 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,9 +33,14 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
+    private final GameRepository gameRepository;
 
     @Autowired
-    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository) {
+    public LobbyService(
+            @Qualifier("gameRepository") GameRepository gameRepository,
+            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
+    {
+        this.gameRepository = gameRepository;
         this.lobbyRepository = lobbyRepository;
     }
 
@@ -57,16 +65,32 @@ public class LobbyService {
         }
         catch (Exception e) {
             String baseErrorMessage = "The %s provided is not unique. Therefore, the Lobby could not be created!";
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, e.getMessage()));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, e.getMessage()));
 
         }
     }
 
-    public Lobby getSingleLobby(long id) {
-        Lobby lobby = lobbyRepository.findByLobbyId(id);
-        return lobby;
+    public void startGame(Long lobbyId) {
+
+        Lobby lobby = getSingleLobby(lobbyId);
+        lobby.setHasStarted(true);
+
+        Game game = initGame(lobbyId);
+
+        gameRepository.save(game);
+        gameRepository.flush();
+        lobbyRepository.save(lobby);
+        lobbyRepository.flush();
+
     }
 
+    public Lobby getSingleLobby(long id) {
+        Lobby lobbyById = lobbyRepository.findByLobbyId(id);
+        if (lobbyById == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby does not exist!");
+        }
+        return lobbyById;
+    }
 
     private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
@@ -74,6 +98,22 @@ public class LobbyService {
         if (lobbyWithSameName != null) {
             throw new RuntimeException("name");
         }
+    }
+
+    private Game initGame(Long lobbyId) {
+
+        Game game = gameRepository.findByLobbyId(lobbyId);
+        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game was not found!");}
+
+        List<Player> players = getSingleLobby(lobbyId).getPlayersInLobby();
+
+        game.setPlayers(players);
+        game.setNotPainted(players);
+        game.setPainted(new ArrayList<Player>());
+        game.setWord(null);
+        game.setWordsPainted(new ArrayList<String>());
+
+        return game;
     }
 
 }
