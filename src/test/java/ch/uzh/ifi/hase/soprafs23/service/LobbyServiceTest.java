@@ -1,12 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.controller.LobbyController;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,8 +33,6 @@ public class LobbyServiceTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
-    @Mock
-    private GameRepository gameRepository;
 
     @InjectMocks
     private LobbyService lobbyService;
@@ -122,8 +116,6 @@ public class LobbyServiceTest {
 
     @Test
     public void startGame_success_changesGameAndLobby() throws Exception{
-        Game testGame = new Game();
-        testGame.setLobbyId(testLobby.getLobbyId());
 
         List<Player> players = new ArrayList<>();
         Player testPlayer = new Player();
@@ -133,32 +125,35 @@ public class LobbyServiceTest {
         testLobby.setUsersInLobby(players);
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-        when(gameRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testGame);
 
-
-        lobbyService.startGame(testLobby.getLobbyId());
+        Game createdGame = lobbyService.newGame(testLobby);
 
         assertTrue(testLobby.isHasStarted());
-        assertEquals(1L, testGame.getPlayers().get(0).getUserId());
-        assertEquals("l", testGame.getPlayers().get(0).getLanguage());
-
-
-
-    }
-
-    @Test
-    public void startGame_lobbyNotFound_throws404() {
-        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
-        assertThrows(ResponseStatusException.class, () -> lobbyService.startGame(testLobby.getLobbyId()));
+        assertEquals(1L, createdGame.getLobbyId());
+        assertEquals(1L, createdGame.getPlayers().get(0).getUserId());
+        assertEquals("l", createdGame.getPlayers().get(0).getLanguage());
 
     }
 
     @Test
-    public void startGame_GameNotFound_throws404() {
+    public void startGame_alreadyAGame_throws409() {
+        testLobby.setGame(new Game());
+        testLobby.setHasStarted(true);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-        when(gameRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
-        assertThrows(ResponseStatusException.class, () -> lobbyService.startGame(testLobby.getLobbyId()));
 
+        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby));
+
+    }
+
+    @Test
+    public void endGame_changesLobby() {
+        testLobby.setHasStarted(true);
+        testLobby.setGame(new Game());
+
+        lobbyService.endGame(testLobby);
+
+        assertFalse(testLobby.isHasStarted());
+        assertNull(testLobby.getGame());
     }
 
 

@@ -82,17 +82,19 @@ public class LobbyService {
         lobby.addPlayer(user.convertToPlayer());
     }
 
-    public void startGame(Long lobbyId) {
-
+    public Game startGame(Long lobbyId) {
         Lobby lobby = getSingleLobby(lobbyId);
+        if (lobby.getGame() != null && lobby.isHasStarted()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
+        }
         lobby.setHasStarted(true);
 
-        Game game = initGame(lobbyId);
+        Game game = initGame(lobby);
 
-        gameRepository.save(game);
-        gameRepository.flush();
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
+
+        return game;
 
     }
 
@@ -120,13 +122,13 @@ public class LobbyService {
         }
     }
 
-    private Game initGame(Long lobbyId) {
+    private Game initGame(Lobby lobby) {
 
-        Game game = gameRepository.findByLobbyId(lobbyId);
-        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game was not found!");}
+        Game game = new Game();
 
-        List<Player> players = getSingleLobby(lobbyId).getPlayersInLobby();
+        List<Player> players = lobby.getPlayersInLobby();
 
+        game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(players);
         game.setNotPainted(players);
         game.setPainted(new ArrayList<Player>());
@@ -134,6 +136,14 @@ public class LobbyService {
         game.setWordsPainted(new ArrayList<String>());
 
         return game;
+    }
+
+    public void endGame(Lobby lobby) {
+        lobby.setGame(null);
+        lobby.setHasStarted(false);
+        lobbyRepository.save(lobby);
+        lobbyRepository.flush();
+
     }
 
 }

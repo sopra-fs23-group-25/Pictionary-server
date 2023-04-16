@@ -56,14 +56,11 @@ public class LobbyController {
         }
         return lobbiesGetDTOs;
     }
-
-
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void addPlayerToLobby(@RequestBody LobbyPutDTO lobbyToJoin){
 
     }
-
     // gets the game of a lobby specified by lobbyId
     //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
     // to understand than GET games/{lobbyId}, since the former directly references the Lobby
@@ -90,6 +87,14 @@ public class LobbyController {
         Game game = lobbyService.newGame(lobby);
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
+    }
+
+    @DeleteMapping("/lobbies/{lobbyId}/game")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        lobbyService.endGame(lobby);
+
     }
 
     @DeleteMapping("/lobbies/{lobbyId}/game")
