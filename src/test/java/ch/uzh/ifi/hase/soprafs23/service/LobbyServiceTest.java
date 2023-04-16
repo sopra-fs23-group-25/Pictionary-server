@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,8 +31,6 @@ public class LobbyServiceTest {
     @Mock
     private LobbyRepository lobbyRepository;
 
-    @Mock
-    private GameRepository gameRepository;
     @InjectMocks
     private LobbyService lobbyService;
     @BeforeEach
