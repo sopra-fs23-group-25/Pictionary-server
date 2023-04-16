@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class LobbyControllerTest {
                 .andExpect(jsonPath("$.lobbyId").value(testLobby.getLobbyId()))
                 .andExpect(jsonPath("$.lobbyName", is(testLobby.getLobbyName())))
                 .andExpect(jsonPath("$.nrOfRounds", is(testLobby.getNrOfRounds())))
-                .andExpect(jsonPath("$.timePerRound", is(testLobby.getTimePerRound().toString())));
+                .andExpect(jsonPath("$.timePerRound").value(testLobby.getTimePerRound()));
     }
 
     @Test
