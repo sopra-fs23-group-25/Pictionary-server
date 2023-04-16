@@ -22,7 +22,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private int numberOfPlayers;
     @Column(nullable = false)
-    private Time timePerRound;
+    private Long timePerRound;
     @Column(nullable = false)
     private int nrOfRounds;
 
@@ -50,10 +50,10 @@ public class Lobby implements Serializable {
         this.lobbyName = lobbyName;
     }
 
-    public Time getTimePerRound() {
+    public Long getTimePerRound() {
         return timePerRound;
     }
-    public void setTimePerRound(Time timePerRound) {
+    public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }
 

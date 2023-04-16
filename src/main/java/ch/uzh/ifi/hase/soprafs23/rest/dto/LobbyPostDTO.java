@@ -6,7 +6,7 @@ public class LobbyPostDTO {
 
     private String lobbyName;
 
-    private Time timePerRound;
+    private Long timePerRound;
 
     private int nrOfRounds;
 
@@ -21,11 +21,11 @@ public class LobbyPostDTO {
         this.lobbyName = lobbyName;
     }
 
-    public Time getTimePerRound() {
+    public Long getTimePerRound() {
         return timePerRound;
     }
 
-    public void setTimePerRound(Time timePerRound) {
+    public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }
 

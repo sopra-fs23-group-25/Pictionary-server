@@ -29,8 +29,6 @@ public class LobbyServiceTest {
 
     Lobby testLobby = new Lobby();
 
-    Time time = new Time(100L);
-
     @Mock
     private LobbyRepository lobbyRepository;
 
@@ -44,7 +42,7 @@ public class LobbyServiceTest {
         testLobby.setLobbyId(1L);
         testLobby.setLobbyName("testLobby");
         testLobby.setNrOfRounds(2);
-        testLobby.setTimePerRound(time);
+        testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setUsersInLobby(null);
         testLobby.setNumberOfPlayers(0);

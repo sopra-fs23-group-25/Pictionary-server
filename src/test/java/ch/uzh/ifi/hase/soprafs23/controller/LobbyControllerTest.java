@@ -39,8 +39,6 @@ public class LobbyControllerTest {
     Lobby testLobby = new Lobby();
     Game testGame = new Game();
 
-    Time time = new Time(100L);
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,7 +52,7 @@ public class LobbyControllerTest {
         testLobby.setLobbyId(1L);
         testLobby.setLobbyName("testLobby");
         testLobby.setNrOfRounds(2);
-        testLobby.setTimePerRound(time);
+        testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setUsersInLobby(null);
         testLobby.setNumberOfPlayers(0);
@@ -79,7 +77,7 @@ public class LobbyControllerTest {
         LobbyPostDTO lobbyPostDTO = new LobbyPostDTO();
         lobbyPostDTO.setLobbyName("testLobby2");
         lobbyPostDTO.setNrOfRounds(2);
-        lobbyPostDTO.setTimePerRound(time);
+        lobbyPostDTO.setTimePerRound(60L);
 
         given(lobbyService.createLobby(Mockito.any())).willReturn(testLobby);
 
@@ -100,7 +98,7 @@ public class LobbyControllerTest {
         LobbyPostDTO lobbyPostDTO = new LobbyPostDTO();
         lobbyPostDTO.setLobbyName("testLobby");
         lobbyPostDTO.setNrOfRounds(2);
-        lobbyPostDTO.setTimePerRound(time);
+        lobbyPostDTO.setTimePerRound(60L);
 
         given(lobbyService.createLobby(Mockito.any())).willReturn(null);
 
