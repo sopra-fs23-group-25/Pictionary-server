@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
+import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +31,16 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
+    private final GameRepository gameRepository;
 
     @Autowired
-    public LobbyService(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
-    {this.lobbyRepository = lobbyRepository;}
+    public LobbyService(
+            @Qualifier("gameRepository") GameRepository gameRepository,
+            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
+    {
+        this.gameRepository = gameRepository;
+        this.lobbyRepository = lobbyRepository;
+    }
 
     public List<Lobby> getLobbies() {
         try {
@@ -63,19 +69,21 @@ public class LobbyService {
     }
 
     public Game newGame(Lobby lobby) {
-
         if (lobby.getGame() != null && lobby.isHasStarted()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }
+
         lobby.setHasStarted(true);
 
-        Game game = initGame(lobby);
+        Game game = new Game();
+        game.setLobbyId(lobby.getLobbyId());
+        game.setPlayers(lobby.getPlayersInLobby());
+        game.setNotPainted(lobby.getPlayersInLobby());
 
+        lobby.setGame(game);
         lobbyRepository.save(lobby);
-        lobbyRepository.flush();
 
         return game;
-
     }
 
     public Lobby getSingleLobby(long id) {
@@ -92,22 +100,6 @@ public class LobbyService {
         if (lobbyWithSameName != null) {
             throw new RuntimeException("name");
         }
-    }
-
-    private Game initGame(Lobby lobby) {
-
-        Game game = new Game();
-
-        List<Player> players = lobby.getPlayersInLobby();
-
-        game.setLobbyId(lobby.getLobbyId());
-        game.setPlayers(players);
-        game.setNotPainted(players);
-        game.setPainted(new ArrayList<Player>());
-        game.setWord(null);
-        game.setWordsPainted(new ArrayList<String>());
-
-        return game;
     }
 
     public void endGame(Lobby lobby) {

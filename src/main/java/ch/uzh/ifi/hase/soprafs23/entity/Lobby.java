@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +20,7 @@ public class Lobby implements Serializable {
     private String lobbyName;
 
     @Column(nullable = false)
-    private int numberOfPlayers;
+    private int nrOfPlayers;
     @Column(nullable = false)
     private Long timePerRound;
     @Column(nullable = false)
@@ -32,7 +32,8 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private boolean hasStarted;
 
-    @Column
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_lobbyId")
     private Game game;
 
     public Long getLobbyId() {
@@ -65,23 +66,26 @@ public class Lobby implements Serializable {
     }
 
     public List<Player> getPlayersInLobby() {
-        return playersInLobby;
+        List<Player> clonePlayers = new ArrayList<>();
+        if(playersInLobby != null) {
+            clonePlayers.addAll(playersInLobby);
+            return clonePlayers;}
+        return clonePlayers;
     }
-    public void setUsersInLobby(List<Player> playersInLobby) {
+
+    public void setPlayersInLobby(List<Player> playersInLobby) {
         this.playersInLobby = playersInLobby;
     }
 
     public boolean isHasStarted() {return hasStarted;}
     public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
     }
-    public void setNumberOfPlayers(int numberOfPlayersInLobby) {
-        this.numberOfPlayers = numberOfPlayersInLobby;
+    public void setNrOfPlayers(int numberOfPlayersInLobby) {
+        this.nrOfPlayers = numberOfPlayersInLobby;
     }
-
-
 
     public Game getGame() {
         return game;
@@ -92,7 +96,7 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return getNumberOfPlayers() == playersInLobby.size();
+        return getNrOfPlayers() == playersInLobby.size();
     }
 
 }
