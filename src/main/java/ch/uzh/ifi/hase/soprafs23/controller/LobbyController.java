@@ -1,7 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 
+import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
@@ -19,10 +21,9 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
 
-    LobbyController(LobbyService lobbyService) {
-        this.lobbyService = lobbyService;
-    }
+    LobbyController(LobbyService lobbyService) {this.lobbyService = lobbyService;}
 
+    // creates a new lobby
     @PostMapping("/lobbies")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -38,6 +39,7 @@ public class LobbyController {
 
     }
 
+    // gets all lobbies
     @GetMapping("/lobbies")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -53,10 +55,40 @@ public class LobbyController {
         return lobbiesGetDTOs;
     }
 
-    @PutMapping("/lobbies/{id}/newGame")
+    // gets the game of a lobby specified by lobbyId
+    //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
+    // to understand than GET games/{lobbyId}, since the former directly references the Lobby
+    // resource and the sub-resource Game, while the latter implies that you are retrieving a list of Game
+    // resources associated with a Lobby ID.
+    @GetMapping("/lobbies/{lobbyId}/game")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GameGetDTO getGameOfLobby(@PathVariable("lobbyId") long lobbyId) {
+
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        Game game = lobby.getGame();
+
+        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game has not started yet!");}
+
+        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
+    }
+
+    @PostMapping("/lobbies/{lobbyId}/game")
+    @ResponseStatus(HttpStatus.CREATED)
+    public GameGetDTO startGameInLobby(@PathVariable("lobbyId") long lobbyId) {
+
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        Game game = lobbyService.newGame(lobby);
+
+        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
+    }
+
+    @DeleteMapping("/lobbies/{lobbyId}/game")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void startGameInLobby(@PathVariable("id") long lobbyId) {
-        lobbyService.startGame(lobbyId);
+    public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        lobbyService.endGame(lobby);
+
     }
 
 }

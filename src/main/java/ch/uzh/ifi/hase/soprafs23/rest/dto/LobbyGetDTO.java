@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 
-import java.sql.Time;
+import ch.uzh.ifi.hase.soprafs23.entity.Game;
 
 public class LobbyGetDTO {
 
@@ -10,12 +10,11 @@ public class LobbyGetDTO {
 
     private String lobbyName;
 
-    private int numberOfPlayers;
+    private int nrOfPlayers;
 
     private int nrOfRounds;
 
-
-    private Time timePerRound;
+    private Long timePerRound;
 
     private boolean hasStarted;
 
@@ -35,12 +34,12 @@ public class LobbyGetDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+    public void setNrOfPlayers(int nrOfPlayers) {
+        this.nrOfPlayers = nrOfPlayers;
     }
 
     public boolean isHasStarted() {
@@ -57,11 +56,11 @@ public class LobbyGetDTO {
     public void setNrOfRounds(int nrOfRounds) {
         this.nrOfRounds = nrOfRounds;
     }
-    public Time getTimePerRound() {
+    public Long getTimePerRound() {
         return timePerRound;
     }
 
-    public void setTimePerRound(Time timePerRound) {
+    public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }
 }

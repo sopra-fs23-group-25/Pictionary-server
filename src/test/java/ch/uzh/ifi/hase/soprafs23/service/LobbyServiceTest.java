@@ -1,12 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.controller.LobbyController;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +28,11 @@ public class LobbyServiceTest {
 
     Lobby testLobby = new Lobby();
 
-    Time time = new Time(100L);
-
     @Mock
     private LobbyRepository lobbyRepository;
-    @Mock
-    private GameRepository gameRepository;
 
     @InjectMocks
     private LobbyService lobbyService;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -50,10 +40,10 @@ public class LobbyServiceTest {
         testLobby.setLobbyId(1L);
         testLobby.setLobbyName("testLobby");
         testLobby.setNrOfRounds(2);
-        testLobby.setTimePerRound(time);
+        testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
-        testLobby.setUsersInLobby(null);
-        testLobby.setNumberOfPlayers(0);
+        testLobby.setPlayersInLobby(null);
+        testLobby.setNrOfPlayers(0);
 
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
 
@@ -68,7 +58,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getLobbyName(), createdLobby.getLobbyName());
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
-        assertEquals(testLobby.getNumberOfPlayers(), createdLobby.getNumberOfPlayers());
+        assertEquals(testLobby.getNrOfPlayers(), createdLobby.getNrOfPlayers());
         assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
 
 
@@ -122,43 +112,45 @@ public class LobbyServiceTest {
 
     @Test
     public void startGame_success_changesGameAndLobby() throws Exception{
-        Game testGame = new Game();
-        testGame.setLobbyId(testLobby.getLobbyId());
 
         List<Player> players = new ArrayList<>();
         Player testPlayer = new Player();
         testPlayer.setUserId(1L);
         testPlayer.setLanguage("l");
         players.add(testPlayer);
-        testLobby.setUsersInLobby(players);
+        testLobby.setPlayersInLobby(players);
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-        when(gameRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testGame);
 
-
-        lobbyService.startGame(testLobby.getLobbyId());
+        Game createdGame = lobbyService.newGame(testLobby);
 
         assertTrue(testLobby.isHasStarted());
-        assertEquals(1L, testGame.getPlayers().get(0).getUserId());
-        assertEquals("l", testGame.getPlayers().get(0).getLanguage());
-
-
-
-    }
-
-    @Test
-    public void startGame_lobbyNotFound_throws404() {
-        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
-        assertThrows(ResponseStatusException.class, () -> lobbyService.startGame(testLobby.getLobbyId()));
+        assertEquals(createdGame, testLobby.getGame());
+        //assertEquals(1L, createdGame.getLobbyId());
+        assertEquals(1L, testLobby.getPlayersInLobby().get(0).getUserId());
+        //assertEquals("l", createdGame.getPlayers().get(0).getLanguage());
 
     }
 
     @Test
-    public void startGame_GameNotFound_throws404() {
+    public void startGame_alreadyAGame_throws409() {
+        testLobby.setGame(new Game());
+        testLobby.setHasStarted(true);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-        when(gameRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
-        assertThrows(ResponseStatusException.class, () -> lobbyService.startGame(testLobby.getLobbyId()));
 
+        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby));
+
+    }
+
+    @Test
+    public void endGame_changesLobby() {
+        testLobby.setHasStarted(true);
+        testLobby.setGame(new Game());
+
+        lobbyService.endGame(testLobby);
+
+        assertFalse(testLobby.isHasStarted());
+        assertNull(testLobby.getGame());
     }
 
 

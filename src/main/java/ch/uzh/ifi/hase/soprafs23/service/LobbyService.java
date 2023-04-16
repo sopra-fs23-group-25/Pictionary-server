@@ -2,9 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,14 +29,12 @@ public class LobbyService {
     private final Logger log = LoggerFactory.getLogger(LobbyService.class);
 
     private final LobbyRepository lobbyRepository;
-    private final GameRepository gameRepository;
 
     @Autowired
     public LobbyService(
-            @Qualifier("gameRepository") GameRepository gameRepository,
             @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
     {
-        this.gameRepository = gameRepository;
+
         this.lobbyRepository = lobbyRepository;
     }
 
@@ -70,18 +64,22 @@ public class LobbyService {
         }
     }
 
-    public void startGame(Long lobbyId) {
+    public Game newGame(Lobby lobby) {
+        if (lobby.getGame() != null && lobby.isHasStarted()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
+        }
 
-        Lobby lobby = getSingleLobby(lobbyId);
         lobby.setHasStarted(true);
 
-        Game game = initGame(lobbyId);
+        Game game = new Game();
+        game.setLobbyId(lobby.getLobbyId());
+        game.setPlayers(lobby.getPlayersInLobby());
+        game.setNotPainted(lobby.getPlayersInLobby());
 
-        gameRepository.save(game);
-        gameRepository.flush();
+        lobby.setGame(game);
         lobbyRepository.save(lobby);
-        lobbyRepository.flush();
 
+        return game;
     }
 
     public Lobby getSingleLobby(long id) {
@@ -100,20 +98,12 @@ public class LobbyService {
         }
     }
 
-    private Game initGame(Long lobbyId) {
+    public void endGame(Lobby lobby) {
+        lobby.setGame(null);
+        lobby.setHasStarted(false);
+        lobbyRepository.save(lobby);
+        lobbyRepository.flush();
 
-        Game game = gameRepository.findByLobbyId(lobbyId);
-        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game was not found!");}
-
-        List<Player> players = getSingleLobby(lobbyId).getPlayersInLobby();
-
-        game.setPlayers(players);
-        game.setNotPainted(players);
-        game.setPainted(new ArrayList<Player>());
-        game.setWord(null);
-        game.setWordsPainted(new ArrayList<String>());
-
-        return game;
     }
 
 }

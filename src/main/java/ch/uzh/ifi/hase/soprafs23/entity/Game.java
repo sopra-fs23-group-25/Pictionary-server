@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Table(name = "GAME")
 public class Game implements Serializable {
@@ -14,15 +13,16 @@ public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+
     private Long lobbyId;
 
-    @OneToMany (mappedBy = "userId")
+    @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
 
-    @OneToMany (mappedBy = "userId")
+    @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> painted;
 
-    @OneToMany (mappedBy = "userId")
+    @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> notPainted;
 
     // private Translator translator;
@@ -38,14 +38,27 @@ public class Game implements Serializable {
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
     public List<Player> getPlayers() {
-        return players;
+        return getCopy(players);
     }
+
+    private List<Player> getCopy(List<Player> players) {
+        List<Player> clonePlayers = new ArrayList<>();
+        if(players != null) {
+            clonePlayers.addAll(players);
+            return clonePlayers;}
+        return clonePlayers;
+    }
+
     public void setPlayers(List<Player> players) {this.players = players;}
 
-    public List<Player> getPainted() {return painted;}
+    public List<Player> getPainted() {
+        return getCopy(painted);
+    }
     public void setPainted(List<Player> painted) {this.painted = painted;}
 
-    public List<Player> getNotPainted() {return notPainted;}
+    public List<Player> getNotPainted() {
+        return getCopy(notPainted);
+    }
     public void setNotPainted(List<Player> notPainted) {this.notPainted = notPainted;}
 
     public List<String> getWordsPainted() {return wordsPainted;}
