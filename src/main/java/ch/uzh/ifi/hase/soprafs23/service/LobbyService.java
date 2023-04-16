@@ -35,15 +35,13 @@ public class LobbyService {
 
     private final LobbyRepository lobbyRepository;
     private final UserRepository userRepository;
-    private final GameRepository gameRepository;
 
     @Autowired
     public LobbyService(
-            @Qualifier("gameRepository") GameRepository gameRepository,
             @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
             @Qualifier("userRepository") UserRepository userRepository)
     {
-        this.gameRepository = gameRepository;
+
         this.lobbyRepository = lobbyRepository;
         this.userRepository = userRepository;
     }
@@ -100,7 +98,6 @@ public class LobbyService {
         lobbyRepository.flush();
 
         return game;
-
     }
 
     public Lobby getSingleLobby(long id) {
@@ -125,22 +122,6 @@ public class LobbyService {
         if (lobbyWithSameName != null) {
             throw new RuntimeException("name");
         }
-    }
-
-    private Game initGame(Lobby lobby) {
-
-        Game game = new Game();
-
-        List<Player> players = lobby.getPlayersInLobby();
-
-        game.setLobbyId(lobby.getLobbyId());
-        game.setPlayers(players);
-        game.setNotPainted(players);
-        game.setPainted(new ArrayList<Player>());
-        game.setWord(null);
-        game.setWordsPainted(new ArrayList<String>());
-
-        return game;
     }
 
     public void endGame(Lobby lobby) {
