@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
-@Table(name = "GAME")
 public class Game implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

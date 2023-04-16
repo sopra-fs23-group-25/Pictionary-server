@@ -72,9 +72,11 @@ public interface DTOMapper {
     Guess convertGuessPostDTOToEntity(GuessPostDTO newGuess);
 
     @Mapping(source="lobbyId", target="lobbyId")
-    Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
-
-    @Mapping(source="lobbyId", target="lobbyId")
+    @Mapping(source="players", target="players")
+    @Mapping(source="painted", target="painted")
+    @Mapping(source="notPainted", target="notPainted")
+    @Mapping(source="wordsPainted", target="wordsPainted")
+    @Mapping(source="word", target="word")
     GameGetDTO convertEntityToGameGetDTO (Game game);
 
 }

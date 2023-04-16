@@ -32,6 +32,9 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private boolean hasStarted;
 
+    @Column
+    private Game game;
+
     public Long getLobbyId() {
         return lobbyId;
     }
@@ -76,6 +79,16 @@ public class Lobby implements Serializable {
     }
     public void setNumberOfPlayers(int numberOfPlayersInLobby) {
         this.numberOfPlayers = numberOfPlayersInLobby;
+    }
+
+
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public boolean isFull() {
