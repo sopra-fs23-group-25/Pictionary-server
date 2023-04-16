@@ -53,8 +53,8 @@ public class LobbyControllerTest {
         testLobby.setNrOfRounds(2);
         testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
-        testLobby.setUsersInLobby(null);
-        testLobby.setNumberOfPlayers(0);
+        testLobby.setPlayersInLobby(null);
+        testLobby.setNrOfPlayers(0);
 
         testGame.setLobbyId(1L);
 

@@ -82,15 +82,20 @@ public class LobbyService {
         lobby.addPlayer(user.convertToPlayer());
     }
 
-    public Game startGame(Long lobbyId) {
+    public Game newGame(Long lobbyId) {
         Lobby lobby = getSingleLobby(lobbyId);
         if (lobby.getGame() != null && lobby.isHasStarted()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }
+
         lobby.setHasStarted(true);
 
-        Game game = initGame(lobby);
+        Game game = new Game();
+        game.setLobbyId(lobby.getLobbyId());
+        game.setPlayers(lobby.getPlayersInLobby());
+        game.setNotPainted(lobby.getPlayersInLobby());
 
+        lobby.setGame(game);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
 

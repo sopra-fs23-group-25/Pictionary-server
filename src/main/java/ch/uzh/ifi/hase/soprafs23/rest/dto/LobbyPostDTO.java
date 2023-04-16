@@ -8,6 +8,8 @@ public class LobbyPostDTO {
 
     private Long timePerRound;
 
+    private int nrOfPlayers;
+
     private int nrOfRounds;
 
 
@@ -35,6 +37,14 @@ public class LobbyPostDTO {
 
     public void setNrOfRounds(int nrOfRounds) {
         this.nrOfRounds = nrOfRounds;
+    }
+
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
+    }
+
+    public void setNrOfPlayers(int nrOfPlayers) {
+        this.nrOfPlayers = nrOfPlayers;
     }
 
 
