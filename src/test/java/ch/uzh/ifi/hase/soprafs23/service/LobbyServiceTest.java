@@ -31,10 +31,8 @@ public class LobbyServiceTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
-
     @InjectMocks
     private LobbyService lobbyService;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);

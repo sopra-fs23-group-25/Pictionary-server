@@ -15,7 +15,7 @@ public class LobbyGetDTO {
     private int nrOfRounds;
 
 
-    private Time timePerRound;
+    private Long timePerRound;
 
     private boolean hasStarted;
 
@@ -57,11 +57,11 @@ public class LobbyGetDTO {
     public void setNrOfRounds(int nrOfRounds) {
         this.nrOfRounds = nrOfRounds;
     }
-    public Time getTimePerRound() {
+    public Long getTimePerRound() {
         return timePerRound;
     }
 
-    public void setTimePerRound(Time timePerRound) {
+    public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }
 }
