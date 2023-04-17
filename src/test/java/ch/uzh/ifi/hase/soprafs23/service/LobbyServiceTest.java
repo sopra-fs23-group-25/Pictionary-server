@@ -44,6 +44,7 @@ public class LobbyServiceTest {
         testLobby.setHasStarted(false);
         testLobby.setPlayersInLobby(null);
         testLobby.setNumberOfPlayers(0);
+        testLobby.setHostId(1L);
 
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
 
@@ -60,6 +61,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
         assertEquals(testLobby.getNumberOfPlayers(), createdLobby.getNumberOfPlayers());
         assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
+        assertEquals(testLobby.getHostId(), createdLobby.getHostId());
 
 
     }
