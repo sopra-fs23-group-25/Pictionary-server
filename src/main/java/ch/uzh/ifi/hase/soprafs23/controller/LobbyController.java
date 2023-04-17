@@ -6,6 +6,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.http.HttpStatus;
@@ -58,8 +59,8 @@ public class LobbyController {
     }
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void addPlayerToLobby(@RequestBody LobbyPutDTO lobbyToJoin){
-
+    public void addPlayerToLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
+        lobbyService.joinLobby(lobbyId, userToAdd.getUserId());
     }
     // gets the game of a lobby specified by lobbyId
     //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
@@ -84,17 +85,9 @@ public class LobbyController {
     public GameGetDTO startGameInLobby(@PathVariable("lobbyId") long lobbyId) {
 
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        Game game = lobbyService.newGame(lobby);
+        Game game = lobbyService.newGame(lobbyId);
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
-    }
-
-    @DeleteMapping("/lobbies/{lobbyId}/game")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        lobbyService.endGame(lobby);
-
     }
 
     @DeleteMapping("/lobbies/{lobbyId}/game")

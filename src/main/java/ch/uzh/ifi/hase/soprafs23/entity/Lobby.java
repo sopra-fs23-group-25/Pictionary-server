@@ -32,6 +32,10 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private boolean hasStarted;
 
+
+    @Column
+    private Long hostId;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "game_lobbyId")
     private Game game;
@@ -80,11 +84,11 @@ public class Lobby implements Serializable {
     public boolean isHasStarted() {return hasStarted;}
     public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
-    public void setNrOfPlayers(int numberOfPlayersInLobby) {
-        this.nrOfPlayers = numberOfPlayersInLobby;
+    public void setNumberOfPlayers(int numberOfPlayersInLobby) {
+        this.numberOfPlayers = numberOfPlayersInLobby;
     }
 
     public void addPlayer(Player player){
@@ -100,7 +104,14 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return getNrOfPlayers() == playersInLobby.size();
+        return getNumberOfPlayers() == playersInLobby.size();
+    }
+    public Long getHostId() {
+        return hostId;
+    }
+
+    public void setHostId(Long hostId) {
+        this.hostId = hostId;
     }
 
 }

@@ -10,7 +10,7 @@ public class LobbyGetDTO {
 
     private String lobbyName;
 
-    private int nrOfPlayers;
+    private int numberOfPlayers;
 
     private int nrOfRounds;
 
@@ -34,12 +34,12 @@ public class LobbyGetDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
-    public void setNrOfPlayers(int nrOfPlayers) {
-        this.nrOfPlayers = nrOfPlayers;
+    public void setNumberOfPlayers(int nrOfPlayers) {
+        this.numberOfPlayers = nrOfPlayers;
     }
 
     public boolean isHasStarted() {

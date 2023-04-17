@@ -8,11 +8,11 @@ public class LobbyPostDTO {
 
     private Long timePerRound;
 
-    private int nrOfPlayers;
+    private int numberOfPlayers;
 
     private int nrOfRounds;
 
-
+    private Long hostId;
 
 
     public String getLobbyName() {
@@ -39,12 +39,19 @@ public class LobbyPostDTO {
         this.nrOfRounds = nrOfRounds;
     }
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
-    public void setNrOfPlayers(int nrOfPlayers) {
-        this.nrOfPlayers = nrOfPlayers;
+    public void setNumbrOfPlayers(int nrOfPlayers) {
+        this.numberOfPlayers = nrOfPlayers;
+    }
+    public Long getHostId() {
+        return hostId;
+    }
+
+    public void setHostId(Long hostId) {
+        this.hostId = hostId;
     }
 
 

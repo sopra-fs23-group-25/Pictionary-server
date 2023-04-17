@@ -4,7 +4,6 @@ import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.repository.GameRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.slf4j.Logger;
@@ -60,6 +59,7 @@ public class LobbyService {
         }
         try {
             checkIfLobbyExists(newLobby);
+            joinLobby(newLobby.getHostId(), newLobby.getLobbyId());
             newLobby = lobbyRepository.save(newLobby);
             lobbyRepository.flush();
 

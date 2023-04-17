@@ -4,7 +4,6 @@ public class LobbyPutDTO {
 
     private Long userId;
 
-    private Long lobbyId;
 
     public Long getUserId() {
         return userId;
@@ -14,12 +13,5 @@ public class LobbyPutDTO {
         this.userId = userId;
     }
 
-    public Long getLobbyId() {
-        return lobbyId;
-    }
-
-    public void setLobbyId(Long lobbyId) {
-        this.lobbyId = lobbyId;
-    }
 
 }

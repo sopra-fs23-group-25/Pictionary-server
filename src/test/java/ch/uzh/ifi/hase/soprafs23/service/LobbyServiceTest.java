@@ -43,7 +43,7 @@ public class LobbyServiceTest {
         testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setPlayersInLobby(null);
-        testLobby.setNrOfPlayers(0);
+        testLobby.setNumberOfPlayers(0);
 
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
 
@@ -58,7 +58,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getLobbyName(), createdLobby.getLobbyName());
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
-        assertEquals(testLobby.getNrOfPlayers(), createdLobby.getNrOfPlayers());
+        assertEquals(testLobby.getNumberOfPlayers(), createdLobby.getNumberOfPlayers());
         assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
 
 
@@ -122,7 +122,7 @@ public class LobbyServiceTest {
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
-        Game createdGame = lobbyService.newGame(testLobby);
+        Game createdGame = lobbyService.newGame(testLobby.getLobbyId());
 
         assertTrue(testLobby.isHasStarted());
         assertEquals(createdGame, testLobby.getGame());
@@ -138,7 +138,7 @@ public class LobbyServiceTest {
         testLobby.setHasStarted(true);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
-        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby));
+        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby.getLobbyId()));
 
     }
 

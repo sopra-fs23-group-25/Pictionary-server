@@ -54,7 +54,7 @@ public class LobbyControllerTest {
         testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setPlayersInLobby(null);
-        testLobby.setNrOfPlayers(0);
+        testLobby.setNumberOfPlayers(0);
 
         testGame.setLobbyId(1L);
 
@@ -124,7 +124,7 @@ public class LobbyControllerTest {
     @Test
     public void startGame_returnsJSONArray() throws Exception {
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
-        given(lobbyService.newGame(testLobby)).willReturn(testGame);
+        given(lobbyService.newGame(testLobby.getLobbyId())).willReturn(testGame);
 
 
 
@@ -164,7 +164,7 @@ public class LobbyControllerTest {
     @Test
     public void getGameOfLobby_gameHasNotStarted_throws409 () throws Exception {
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
-        given(lobbyService.newGame(testLobby)).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+        given(lobbyService.newGame(testLobby.getLobbyId())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game", 1)
                 .contentType(MediaType.APPLICATION_JSON); //?
