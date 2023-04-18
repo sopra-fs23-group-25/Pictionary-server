@@ -58,9 +58,9 @@ public class LobbyController {
         }
         return lobbiesGetDTOs;
     }
-    @PutMapping
+    @PutMapping("/lobbies/{lobbyId}")
     @ResponseStatus(HttpStatus.OK)
-    public void addPlayerToLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
+    public void joinLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
         User user = lobbyService.getSingleUser(userToAdd.getUserId());
 

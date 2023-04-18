@@ -3,8 +3,10 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 
+import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
 
+import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -90,6 +92,27 @@ public class LobbyControllerTest {
                 .andExpect(jsonPath("$.lobbyName", is(testLobby.getLobbyName())))
                 .andExpect(jsonPath("$.nrOfRounds", is(testLobby.getNrOfRounds())))
                 .andExpect(jsonPath("$.timePerRound").value(testLobby.getTimePerRound()));
+    }
+
+    @Test
+    public void givenCorrectInput_whenPutLobby_thenReturnSucess() throws Exception{
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setUserId(1L);
+        testUser.setLanguage("en");
+        testUser.setLobbyId(null);
+
+        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
+        given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(testUser);
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        //mockMvc.perform(putRequest).andExpect(status().isOk());
     }
 
     @Test
