@@ -107,12 +107,33 @@ public class LobbyControllerTest {
 
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
         given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(testUser);
-
+        given(lobbyService.joinLobby(Mockito.any(), Mockito.any())).willReturn(testLobby);
         MockHttpServletRequestBuilder putRequest = put("/lobbies/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(lobbyPutDTO));
 
-        //mockMvc.perform(putRequest).andExpect(status().isOk());
+        mockMvc.perform(putRequest).andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenCorrectInput_whenPutLobby_lobbyDoesNotExists_throws400() throws Exception{
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        User testUser = new User();
+        testUser.setUsername("testUser");
+        testUser.setUserId(1L);
+        testUser.setLanguage("en");
+        testUser.setLobbyId(null);
+
+        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
+        given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(testUser);
+        given(lobbyService.joinLobby(Mockito.any(), Mockito.any())).willReturn(null);
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        mockMvc.perform(putRequest).andExpect(status().isBadRequest());
     }
 
     @Test

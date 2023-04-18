@@ -23,7 +23,9 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
 
-    LobbyController(LobbyService lobbyService) {this.lobbyService = lobbyService;}
+    LobbyController(LobbyService lobbyService) {
+        this.lobbyService = lobbyService;
+    }
 
     // creates a new lobby
     @PostMapping("/lobbies")
@@ -36,7 +38,7 @@ public class LobbyController {
 
         Lobby createdLobby = lobbyService.createLobby(newLobby);
 
-        if(createdLobby == null) {
+        if (createdLobby == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be created");
         }
         return DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(createdLobby);
@@ -58,17 +60,25 @@ public class LobbyController {
         }
         return lobbiesGetDTOs;
     }
+
     @PutMapping("/lobbies/{lobbyId}")
     @ResponseStatus(HttpStatus.OK)
-    public void joinLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
+    @ResponseBody
+    public void joinLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd) {
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        User user = lobbyService.getSingleUser(userToAdd.getUserId());
+        if (lobby != null) {
+            User user = lobbyService.getSingleUser(userToAdd.getUserId());
 
-        Lobby joinedLobby = lobbyService.joinLobby(lobby, user);
-        if(joinedLobby == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined");
+            Lobby joinedLobby = lobbyService.joinLobby(lobby, user);
+            if (joinedLobby == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined");
+            }
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be found.");
         }
     }
+
     // gets the game of a lobby specified by lobbyId
     //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
     // to understand than GET games/{lobbyId}, since the former directly references the Lobby
@@ -82,7 +92,9 @@ public class LobbyController {
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
         Game game = lobby.getGame();
 
-        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game has not started yet!");}
+        if (game == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game has not started yet!");
+        }
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
