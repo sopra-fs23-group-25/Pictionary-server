@@ -3,8 +3,10 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
+import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 
+import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +29,12 @@ import java.util.List;
 public class LobbyServiceTest {
 
     Lobby testLobby = new Lobby();
-
+    User testUser = new User();
     @Mock
     private LobbyRepository lobbyRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private LobbyService lobbyService;
@@ -46,15 +51,25 @@ public class LobbyServiceTest {
         testLobby.setNumberOfPlayers(0);
         testLobby.setHostId(1L);
 
+        testUser.setUsername("testUser");
+        testUser.setUserId(1L);
+        testUser.setLanguage("en");
+        testUser.setLobbyId(null);
+
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
 
     }
 
     @Test
     public void createLobby_validInput_success(){
-        Lobby createdLobby = lobbyService.createLobby(testLobby);
 
+        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        Lobby createdLobby = lobbyService.createLobby(testLobby);
         Mockito.verify(lobbyRepository, Mockito.times(1)).save(Mockito.any());
+
 
         assertEquals(testLobby.getLobbyName(), createdLobby.getLobbyName());
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
@@ -62,8 +77,6 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getNumberOfPlayers(), createdLobby.getNumberOfPlayers());
         assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
         assertEquals(testLobby.getHostId(), createdLobby.getHostId());
-
-
     }
 
     @Test
@@ -153,6 +166,18 @@ public class LobbyServiceTest {
 
         assertFalse(testLobby.isHasStarted());
         assertNull(testLobby.getGame());
+    }
+
+    @Test
+    public void joinLobby_gameNotStarted_Success(){
+        /*when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser);
+        Mockito.verify(lobbyRepository, Mockito.times(1)).save(Mockito.any());
+
+        assertEquals(testLobby.getLobbyName(), joinedLobby.getLobbyName());*/
     }
 
 

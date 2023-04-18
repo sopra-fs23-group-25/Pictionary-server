@@ -54,17 +54,24 @@ public class LobbyService {
     }
 
     public Lobby createLobby(Lobby newLobby) {
+
         if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
+
+        User user = getSingleUser(newLobby.getHostId());
+        newLobby.setPlayersInLobby(new ArrayList<>());
+        newLobby.addPlayer(user.convertToPlayer());
+
         try {
             checkIfLobbyExists(newLobby);
-            joinLobby(newLobby.getHostId(), newLobby.getLobbyId());
+
             newLobby = lobbyRepository.save(newLobby);
             lobbyRepository.flush();
 
             return newLobby;
         }
+
         catch (Exception e) {
             String baseErrorMessage = "The %s provided is not unique. Therefore, the Lobby could not be created!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, e.getMessage()));
@@ -73,15 +80,23 @@ public class LobbyService {
     }
 
 
-    public void joinLobby(Long userId, Long lobbyId){
-        Lobby lobby = getSingleLobby(lobbyId);
-        User user = getSingleUser(userId);
+    public Lobby joinLobby(Lobby lobby, User user){
 
-        lobby.addPlayer(user.convertToPlayer());
+        if (lobby != null && user != null) {
+            try {
+                lobby.addPlayer(user.convertToPlayer());
+                return lobby;
+            }
+            catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "There was a Problem joining the Lobby");
+            }
+        }
+        return null;
     }
 
     public Game newGame(Long lobbyId) {
         Lobby lobby = getSingleLobby(lobbyId);
+
         if (lobby.getGame() != null && lobby.isHasStarted()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }
@@ -116,7 +131,7 @@ public class LobbyService {
         return userById;
     }
 
-    private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
+    void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
 
         if (lobbyWithSameName != null) {

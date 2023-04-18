@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
@@ -60,7 +61,10 @@ public class LobbyController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void addPlayerToLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
-        lobbyService.joinLobby(lobbyId, userToAdd.getUserId());
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        User user = lobbyService.getSingleUser(userToAdd.getUserId());
+
+        lobbyService.joinLobby(lobby, user);
     }
     // gets the game of a lobby specified by lobbyId
     //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
