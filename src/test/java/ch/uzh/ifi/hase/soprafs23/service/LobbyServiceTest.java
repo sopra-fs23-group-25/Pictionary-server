@@ -5,7 +5,6 @@ import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,16 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.web.server.ResponseStatusException;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 public class LobbyServiceTest {
 
@@ -38,6 +35,7 @@ public class LobbyServiceTest {
 
     @InjectMocks
     private LobbyService lobbyService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -48,7 +46,7 @@ public class LobbyServiceTest {
         testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setPlayersInLobby(null);
-        testLobby.setNumberOfPlayers(0);
+        testLobby.setNumberOfPlayers(5);
         testLobby.setHostId(1L);
 
         testUser.setUsername("testUser");
@@ -61,7 +59,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void createLobby_validInput_success(){
+    public void createLobby_validInput_success() {
 
         when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
@@ -80,20 +78,20 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void createLobby_invalidInput_BadRequest(){
+    public void createLobby_invalidInput_BadRequest() {
         testLobby.setLobbyName(null);
 
         Mockito.verify(lobbyRepository, Mockito.times(0)).save(Mockito.any());
 
-        assertThrows(ResponseStatusException.class,()->lobbyService.createLobby(testLobby));
+        assertThrows(ResponseStatusException.class, () -> lobbyService.createLobby(testLobby));
     }
 
     @Test
-    public void createLobby_conflictingName_throws409(){
+    public void createLobby_conflictingName_throws409() {
 
         when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(testLobby);
 
-        assertThrows(ResponseStatusException.class,()->lobbyService.createLobby(testLobby));
+        assertThrows(ResponseStatusException.class, () -> lobbyService.createLobby(testLobby));
     }
 
     @Test
@@ -126,7 +124,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void startGame_success_changesGameAndLobby() throws Exception{
+    public void startGame_success_changesGameAndLobby() throws Exception {
 
         List<Player> players = new ArrayList<>();
         Player testPlayer = new Player();
@@ -169,15 +167,71 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobby_gameNotStarted_Success(){
-        /*when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+    public void joinLobby_gameNotStarted_Success() {
+        User testUser2 = new User();
+
+        testUser2.setUsername("testUser2");
+        testUser2.setUserId(2L);
+        testUser2.setLanguage("en");
+        testUser2.setLobbyId(null);
+
+        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser);
-        Mockito.verify(lobbyRepository, Mockito.times(1)).save(Mockito.any());
+        lobbyService.createLobby(testLobby);
 
-        assertEquals(testLobby.getLobbyName(), joinedLobby.getLobbyName());*/
+        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
+
+        assertEquals(testLobby.getLobbyName(), joinedLobby.getLobbyName());
+    }
+
+    @Test
+    public void joinLobby_gameStarted_noSuccess() {
+        User testUser2 = new User();
+
+
+        testUser2.setUsername("testUser2");
+        testUser2.setUserId(2L);
+        testUser2.setLanguage("en");
+        testUser2.setLobbyId(null);
+
+        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        lobbyService.createLobby(testLobby);
+
+        for (int i = 0; i <= 4; i++) {
+            lobbyService.joinLobby(testLobby, testUser);
+        }
+
+        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
+
+        assertNull(joinedLobby);
+    }
+
+    @Test
+    public void joinLobby_isFull_noSuccess() {
+        User testUser2 = new User();
+
+
+        testUser2.setUsername("testUser2");
+        testUser2.setUserId(2L);
+        testUser2.setLanguage("en");
+        testUser2.setLobbyId(null);
+
+        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        lobbyService.createLobby(testLobby);
+        testLobby.setHasStarted(true);
+        //when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+
+        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
+
+        assertNull(joinedLobby);
     }
 
 

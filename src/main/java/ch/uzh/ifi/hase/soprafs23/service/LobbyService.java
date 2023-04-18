@@ -58,7 +58,7 @@ public class LobbyService {
         if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
-
+        newLobby.setHasStarted(false);
         User user = getSingleUser(newLobby.getHostId());
         newLobby.setPlayersInLobby(new ArrayList<>());
         newLobby.addPlayer(user.convertToPlayer());
@@ -82,7 +82,7 @@ public class LobbyService {
 
     public Lobby joinLobby(Lobby lobby, User user){
 
-        if (lobby != null && user != null) {
+        if (lobby != null && user != null  && !lobby.isHasStarted() && !lobby.isFull()) {
             try {
                 lobby.addPlayer(user.convertToPlayer());
                 return lobby;
@@ -144,7 +144,6 @@ public class LobbyService {
         lobby.setHasStarted(false);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
-
     }
 
 }
