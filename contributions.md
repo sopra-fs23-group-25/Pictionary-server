@@ -19,3 +19,15 @@
 |Pepe|#2|created registration page|
 ||#1, #4, #5|created login page|
 ||#15|implemented routing between login&registration page|
+
+## Week 1
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Leo|#83| websockets server |
+||#38|add user to lobby functionality|
+||#109|guess entity|
+||#64|implement Lobby entity|
+|Joana|#105|reset game of a lobby functionality and endpoint|
+||#69|game endpoints|
+||#27|creation and storing of game object|
+||#67|start game logic (init)|
