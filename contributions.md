@@ -20,14 +20,24 @@
 ||#1, #4, #5|created login page|
 ||#15|implemented routing between login&registration page|
 
-## Week 1
+## Week 2
 |  Name|  Issue(s)| Description |
 |--|--|--|
 |Leo|#83| websockets server |
 ||#38|add user to lobby functionality|
 ||#109|guess entity|
 ||#64|implement Lobby entity|
-|Joana|#105|reset game of a lobby functionality and endpoint|
+|Joana|#105|reset game of a lobby - functionality and endpoint|
 ||#69|game endpoints|
 ||#27|creation and storing of game object|
 ||#67|start game logic (init)|
+|Nico|#33, #37, #34|drawing board component with drawing functionality and paint toolbar|
+||#40|gamepage inlcuding text-field for guesses|
+||#9, #38|component to establish websocket connection|
+||#13, #25|lobby joining and redirecting to game-page|
+||#7, #9, #38|weboscket functionality sending/receiving messages|
+||#12|component for player ranking (list)|
+|Pepe|#51|pop-up window to display results of game|
+||#52|play again button and functionality|
+||#53|exit button and functionality|
+||#45|display end of turn results|
