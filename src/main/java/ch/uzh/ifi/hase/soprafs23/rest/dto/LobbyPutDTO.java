@@ -4,7 +4,6 @@ public class LobbyPutDTO {
 
     private Long userId;
 
-
     public Long getUserId() {
         return userId;
     }

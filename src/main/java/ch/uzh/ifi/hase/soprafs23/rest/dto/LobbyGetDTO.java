@@ -13,8 +13,6 @@ public class LobbyGetDTO {
 
     private Long timePerRound;
 
-    private boolean hasStarted;
-
     public Long getLobbyId() {
         return lobbyId;
     }
@@ -39,13 +37,6 @@ public class LobbyGetDTO {
         this.nrOfPlayers = nrOfPlayers;
     }
 
-    public boolean isHasStarted() {
-        return hasStarted;
-    }
-
-    public void setHasStarted(boolean hasStarted) {
-        this.hasStarted = hasStarted;
-    }
     public int getNrOfRounds() {
         return nrOfRounds;
     }
