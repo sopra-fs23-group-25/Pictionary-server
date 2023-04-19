@@ -9,8 +9,6 @@ public class UserGetDTO {
   private String language;
   private Long lobbyId;
   private UserStatus status;
-  private String token;
-
 
     public Long getId() { return userId; }
     public void setId(Long userId) {
@@ -36,7 +34,4 @@ public class UserGetDTO {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
-
-    public String getToken() {return token;}
-    public void setToken(String token) {this.token = token;}
 }
