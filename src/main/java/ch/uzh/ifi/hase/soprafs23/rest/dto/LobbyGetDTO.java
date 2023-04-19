@@ -1,16 +1,13 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-
 public class LobbyGetDTO {
-
 
     private Long lobbyId;
 
     private String lobbyName;
 
-    private int numberOfPlayers;
+    private int nrOfPlayers;
 
     private int nrOfRounds;
 
@@ -34,12 +31,12 @@ public class LobbyGetDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
     }
 
-    public void setNumberOfPlayers(int nrOfPlayers) {
-        this.numberOfPlayers = nrOfPlayers;
+    public void setNrOfPlayers(int nrOfPlayers) {
+        this.nrOfPlayers = nrOfPlayers;
     }
 
     public boolean isHasStarted() {

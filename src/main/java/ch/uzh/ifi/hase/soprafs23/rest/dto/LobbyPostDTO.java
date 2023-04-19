@@ -1,14 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-import java.sql.Time;
-
 public class LobbyPostDTO {
 
     private String lobbyName;
 
     private Long timePerRound;
 
-    private int numberOfPlayers;
+    private int nrOfPlayers;
 
     private int nrOfRounds;
 
@@ -39,12 +37,12 @@ public class LobbyPostDTO {
         this.nrOfRounds = nrOfRounds;
     }
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    public int getNrOfPlayers() {
+        return nrOfPlayers;
     }
 
-    public void setNumbrOfPlayers(int nrOfPlayers) {
-        this.numberOfPlayers = nrOfPlayers;
+    public void setNrOfPlayers(int nrOfPlayers) {
+        this.nrOfPlayers = nrOfPlayers;
     }
     public Long getHostId() {
         return hostId;
