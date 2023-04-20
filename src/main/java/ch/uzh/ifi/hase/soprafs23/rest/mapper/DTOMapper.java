@@ -67,16 +67,27 @@ public interface DTOMapper {
 
     @Mapping(source="userId", target="userId")
     @Mapping(source="guess", target="guess")
-    @Mapping(source="time", target="time")
     @Mapping(source="score", target="score")
-    Guess convertGuessPostDTOToEntity(GuessPostDTO newGuess);
+    Guess convertGuessDTOToEntity(GuessDTO newGuess);
 
     @Mapping(source="lobbyId", target="lobbyId")
     @Mapping(source="players", target="players")
     @Mapping(source="painted", target="painted")
     @Mapping(source="notPainted", target="notPainted")
     @Mapping(source="wordsPainted", target="wordsPainted")
-    @Mapping(source="word", target="word")
     GameGetDTO convertEntityToGameGetDTO (Game game);
 
+    @Mapping(source = "painterId", target = "painterId")
+    @Mapping(source = "timePerRound", target = "timePerRound")
+    @Mapping(source = "word", target = "word")
+    @Mapping(source = "guesses", target = "guesses")
+    TurnGetDTO convertEntityToTurnGetDTO (Turn turn);
+
+
+    @Mapping(source = "totalScore", target = "totalScore")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "host", target = "host")
+    @Mapping(source = "currentRole", target = "currentRole")
+    PlayerGetDTO convertEntitytoPlayerGetDTO (Player player);
 }

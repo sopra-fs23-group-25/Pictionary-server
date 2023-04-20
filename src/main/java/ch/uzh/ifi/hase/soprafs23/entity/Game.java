@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
+import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -7,14 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "GAME")
+@Table(name = "Game")
 public class Game implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @Id
+    private Long lobbyId; //can delete
 
-    private Long lobbyId;
+    private int nrOfRounds;
+
+    private long timePerRound;
 
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
@@ -25,14 +28,13 @@ public class Game implements Serializable {
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> notPainted;
 
-    // private Translator translator;
-
     @ElementCollection
     @CollectionTable(name = "words_painted")
     @Column(name = "word")
     private List<String> wordsPainted;
 
-    private String word;
+    @Lob
+    private Turn turn;
 
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
@@ -64,6 +66,34 @@ public class Game implements Serializable {
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
 
-    public String getWord() {return word;}
-    public void setWord(String word) {this.word = word;}
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public void setTurn(Turn turn) {this.turn = turn;}
+
+    public int getNrOfRounds() {
+        return nrOfRounds;
+    }
+
+    public void setNrOfRounds(int nrOfRounds) {
+        this.nrOfRounds = nrOfRounds;
+    }
+
+    public Long getTimePerRound() {
+        return timePerRound;
+    }
+
+    public void setTimePerRound(Long timePerRound) {
+        this.timePerRound = timePerRound;
+    }
+
+    public Long getPainter() {
+        for (Player player: players) {
+            if (player.getCurrentRole() == PlayerRole.PAINTER) {
+                return player.getUserId(); // why is it null
+            }
+        }
+        return null;
+    }
 }

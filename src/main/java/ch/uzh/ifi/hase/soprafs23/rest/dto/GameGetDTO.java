@@ -19,8 +19,6 @@ public class GameGetDTO {
 
     private List<String> wordsPainted;
 
-    private String word;
-
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
@@ -38,6 +36,4 @@ public class GameGetDTO {
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
 
-    public String getWord() {return word;}
-    public void setWord(String word) {this.word = word;}
 }

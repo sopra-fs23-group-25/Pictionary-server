@@ -1,37 +1,24 @@
-package ch.uzh.ifi.hase.soprafs23.entity;
+package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
 import java.time.Duration;
 
-@Entity
-@Table(name = "PLAYER")
-public class Player implements Serializable, Comparable<Player> {
-    @Id
+public class PlayerGetDTO {
+
     private Long userId;
-    @Column
-    String language;
 
-    @Column
-    String username;
-    @Column
+    private String language;
+
+
+    private String username;
+
     boolean isHost = false;
-    @Column
-    PlayerRole currentRole = PlayerRole.GUESSER;
-    @Column
-    Long totalScore;
-    @Column
-    Duration totalTime;
 
-    @Override
-    public int compareTo(Player player) {
-        return this.totalScore.compareTo(player.totalScore);
-    }
+    private PlayerRole currentRole = PlayerRole.GUESSER;
+
+    private Long totalScore;
 
     public Long getUserId() { return userId; }
     public void setUserId(Long id) {
@@ -42,7 +29,7 @@ public class Player implements Serializable, Comparable<Player> {
     public void setLanguage(String language) {this.language = language;}
 
     public boolean isHost() {return isHost;}
-    public void makeHost() {this.isHost = true;}
+    public void setHost(boolean isHost) {this.isHost = true;}
 
     public PlayerRole getCurrentRole() {return currentRole;}
     public void setCurrentRole(PlayerRole role) {this.currentRole = role;}
@@ -50,12 +37,8 @@ public class Player implements Serializable, Comparable<Player> {
     public Long getTotalScore() {return totalScore;}
     public void setTotalScore(Long totalScore) {this.totalScore = totalScore;}
 
-    public Duration getTotalTime() {return totalTime;}
-    public void setTotalTime(Duration totalTime) {this.totalTime = totalTime;}
-
     public String getUsername() {return username;}
     public void setUsername(String username) {
         this.username = username;
     }
 }
-
