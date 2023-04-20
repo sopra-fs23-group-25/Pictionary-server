@@ -5,7 +5,7 @@ runtime: java
 env: flex
 
 network:
-  name: pictionary
+  name: default
   session_affinity: true
 
 runtime_config:
