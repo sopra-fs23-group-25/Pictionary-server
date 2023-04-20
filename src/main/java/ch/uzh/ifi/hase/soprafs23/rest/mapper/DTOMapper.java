@@ -33,7 +33,6 @@ public interface DTOMapper {
     @Mapping(source = "lobbyId", target = "lobbyId")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "status", target = "status")
-    @Mapping(source = "token", target = "token")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     // PUT /users/{userId}
