@@ -35,4 +35,12 @@ public class TurnController {
         turnService.verifyGuess(turn, guess);
     }
 
+    @GetMapping("/lobbies/{lobbyId}/game/turn")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId) {
+        Turn turn = turnService.getTurnByLobbyId(lobbyId);
+        return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
+    }
+
 }
