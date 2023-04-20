@@ -4,3 +4,13 @@
 runtime: java17
 instance_class: F2
 env: flex
+network:
+  instance_tag: TAG_NAME
+  name: NETWORK_NAME
+  session_affinity: true (optional)
+  subnetwork_name: SUBNETWORK_NAME (optional)
+  forwarded_ports: (optional)
+    - PORT
+    - HOST_PORT:CONTAINER_PORT
+    - PORT/tcp
+    - HOST_PORT:CONTAINER_PORT/udp
