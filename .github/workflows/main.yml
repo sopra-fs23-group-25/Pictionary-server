@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     name: Deploying to Google Cloud
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     needs: test
 
     steps:
