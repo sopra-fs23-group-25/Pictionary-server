@@ -94,7 +94,6 @@ public class TurnServiceTest {
 
     @Test
     public void getTurn_notFound() {
-
         testGame.setTurn(null);
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
