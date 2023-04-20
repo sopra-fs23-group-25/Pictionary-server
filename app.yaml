@@ -4,6 +4,10 @@
 runtime: java
 env: flex
 
+network:
+  name: pictionary
+  session_affinity: true
+
 runtime_config:
   operating_system: "ubuntu22"
   runtime_version: "17"
