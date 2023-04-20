@@ -1,9 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.entity.*;
+import ch.uzh.ifi.hase.soprafs23.entity.Game;
+import ch.uzh.ifi.hase.soprafs23.entity.Guess;
+import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

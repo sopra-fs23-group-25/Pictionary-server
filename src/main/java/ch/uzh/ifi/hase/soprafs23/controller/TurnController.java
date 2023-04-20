@@ -2,9 +2,9 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.TurnGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
-import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
