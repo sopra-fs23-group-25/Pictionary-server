@@ -36,24 +36,11 @@ public class TurnControllerTest {
     @MockBean
     private TurnService turnService;
 
-    Lobby testLobby = new Lobby();
-    Game testGame = new Game();
     Turn testTurn = new Turn();
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-
-        testLobby.setLobbyId(1L);
-        testLobby.setPlayersInLobby(new ArrayList<>());
-        testLobby.setHostId(1L);
-        testLobby.setNrOfRounds(1);
-        testLobby.setMaxNrOfPlayers(1);
-        testLobby.setTimePerRound(1L);
-
-        testGame.setPlayers(new ArrayList<>());
-        testGame.setLobbyId(1L);
-        testGame.setTimePerRound(1L);
 
         testTurn.setWord("testWord");
         testTurn.setGuesses(new ArrayList<>());
@@ -61,8 +48,6 @@ public class TurnControllerTest {
         testTurn.setCorrectGuesses(0);
         testTurn.setTimePerRound(1L);
 
-        testLobby.setGame(testGame);
-        testGame.setTurn(testTurn);
 
     }
 
@@ -77,8 +62,8 @@ public class TurnControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated()) // Code 201
                 .andExpect(jsonPath("$.word", is(testTurn.getWord())))
-                .andExpect(jsonPath("$.painterId").value(testLobby.getLobbyId()))
-                .andExpect(jsonPath("$.timePerRound").value(testLobby.getTimePerRound()));
+                .andExpect(jsonPath("$.painterId").value(testTurn.getPainterId()))
+                .andExpect(jsonPath("$.timePerRound").value(testTurn.getTimePerRound()));
     }
 
     @Test

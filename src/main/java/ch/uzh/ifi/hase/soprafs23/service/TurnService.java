@@ -7,7 +7,9 @@ import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -26,7 +28,12 @@ public class TurnService {
     public Turn initTurn(Long lobbyId) {
 
         Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
-        Game game = lobbyRepository.findByLobbyId(lobbyId).getGame();
+
+        if (lobby == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turn could not be started for non-existing Lobby!");
+        }
+
+        Game game = lobby.getGame();
 
         Turn newTurn = new Turn();
         newTurn.setTimePerRound(game.getTimePerRound());
@@ -43,7 +50,11 @@ public class TurnService {
     }
 
     public Turn getTurnByLobbyId(Long lobbyId) {
-        return lobbyRepository.findByLobbyId(lobbyId).getGame().getTurn();
+        Turn turn = lobbyRepository.findByLobbyId(lobbyId).getGame().getTurn();
+        if (turn == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");
+        }
+        return turn;
     }
 
     public void verifyGuess(Turn turn, Guess guess) {
