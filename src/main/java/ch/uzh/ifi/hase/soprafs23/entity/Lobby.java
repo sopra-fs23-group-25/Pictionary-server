@@ -24,7 +24,7 @@ public class Lobby implements Serializable {
     private String lobbyName;
 
     @Column(nullable = false)
-    private int nrOfPlayers;
+    private int maxNrOfPlayers;
     @Column(nullable = false)
     private Long timePerRound;
     @Column(nullable = false)
@@ -87,11 +87,11 @@ public class Lobby implements Serializable {
     public boolean isHasStarted() {return hasStarted;}
     public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getMaxNrOfPlayers() {
+        return maxNrOfPlayers;
     }
-    public void setNrOfPlayers(int numberOfPlayersInLobby) {
-        this.nrOfPlayers = numberOfPlayersInLobby;
+    public void setMaxNrOfPlayers(int numberOfPlayersInLobby) {
+        this.maxNrOfPlayers = numberOfPlayersInLobby;
     }
 
     public void addPlayer(Player player){
@@ -107,7 +107,7 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return getNrOfPlayers() == playersInLobby.size();
+        return getMaxNrOfPlayers() == playersInLobby.size();
     }
     public Long getHostId() {
         return hostId;

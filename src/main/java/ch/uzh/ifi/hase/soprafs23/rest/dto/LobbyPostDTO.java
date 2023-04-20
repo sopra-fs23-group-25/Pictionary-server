@@ -6,7 +6,7 @@ public class LobbyPostDTO {
 
     private Long timePerRound;
 
-    private int nrOfPlayers;
+    private int maxNrOfPlayers;
 
     private int nrOfRounds;
 
@@ -37,12 +37,12 @@ public class LobbyPostDTO {
         this.nrOfRounds = nrOfRounds;
     }
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getmaxNrOfPlayers() {
+        return maxNrOfPlayers;
     }
 
-    public void setNrOfPlayers(int nrOfPlayers) {
-        this.nrOfPlayers = nrOfPlayers;
+    public void setmaxNrOfPlayers(int maxNrOfPlayers) {
+        this.maxNrOfPlayers = maxNrOfPlayers;
     }
     public Long getHostId() {
         return hostId;

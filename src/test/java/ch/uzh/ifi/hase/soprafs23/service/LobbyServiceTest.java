@@ -46,7 +46,7 @@ public class LobbyServiceTest {
         testLobby.setTimePerRound(60L);
         testLobby.setHasStarted(false);
         testLobby.setPlayersInLobby(null);
-        testLobby.setNrOfPlayers(5);
+        testLobby.setMaxNrOfPlayers(5);
         testLobby.setHostId(1L);
 
         testUser.setUsername("testUser");
@@ -72,7 +72,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getLobbyName(), createdLobby.getLobbyName());
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
-        assertEquals(testLobby.getNrOfPlayers(), createdLobby.getNrOfPlayers());
+        assertEquals(testLobby.getMaxNrOfPlayers(), createdLobby.getMaxNrOfPlayers());
         assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
         assertEquals(testLobby.getHostId(), createdLobby.getHostId());
     }

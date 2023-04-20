@@ -7,7 +7,7 @@ public class LobbyGetDTO {
 
     private String lobbyName;
 
-    private int nrOfPlayers;
+    private int maxNrOfPlayers;
 
     private int nrOfRounds;
 
@@ -29,12 +29,12 @@ public class LobbyGetDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getNrOfPlayers() {
-        return nrOfPlayers;
+    public int getmaxNrOfPlayers() {
+        return maxNrOfPlayers;
     }
 
-    public void setNrOfPlayers(int nrOfPlayers) {
-        this.nrOfPlayers = nrOfPlayers;
+    public void setmaxNrOfPlayers(int maxNrOfPlayers) {
+        this.maxNrOfPlayers = maxNrOfPlayers;
     }
 
     public int getNrOfRounds() {
