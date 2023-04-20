@@ -5,5 +5,5 @@ runtime: java17
 env: flex
 
 runtime_config:
-  operating_system: "ubuntu22"
+  operating_system: "debian10"
   runtime_version: "17"
