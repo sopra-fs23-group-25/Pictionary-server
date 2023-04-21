@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
+import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,14 @@ import java.util.ArrayList;
 public class TurnService {
 
     private final LobbyRepository lobbyRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public TurnService(
-            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
-    {this.lobbyRepository = lobbyRepository;}
+            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
+            @Qualifier("userRepository") UserRepository userRepository) {
+        this.lobbyRepository = lobbyRepository;
+        this.userRepository = userRepository;}
 
     public Turn initTurn(Long lobbyId) {
 
@@ -68,5 +72,12 @@ public class TurnService {
         else {guess.setScore(0);}
 
         turn.addGuess(guess);// add guess to list
+    }
+
+    public Guess addUsername(Guess guess) {
+        String username = userRepository.findByUserId(guess.getUserId()).getUsername();
+        guess.setUsername(username);
+
+        return guess;
     }
 }
