@@ -26,6 +26,8 @@ public class TurnServiceTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
+    @Mock
+    private UserRepository userRepository;
     @InjectMocks
     private TurnService turnService;
 
@@ -122,6 +124,19 @@ public class TurnServiceTest {
     }
 
     // missing: test for correct guess
+
+    @Test
+    public void getUsername_addsUsername() {
+        User user = new User();
+        user.setUsername("name");
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(user);
+
+        Guess guess = new Guess();
+        guess.setUserId(1L);
+        turnService.addUsername(guess);
+
+        assertEquals(user.getUsername(),guess.getUsername());
+    }
 
 
 

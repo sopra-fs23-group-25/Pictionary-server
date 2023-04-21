@@ -2,8 +2,8 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 
-import javax.persistence.Column;
-import java.time.Duration;
+
+// think we don't need it and the DTO mapper too
 
 public class PlayerGetDTO {
 
