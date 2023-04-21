@@ -3,11 +3,9 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.http.HttpStatus;
@@ -103,8 +101,8 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.CREATED)
     public GameGetDTO startGameInLobby(@PathVariable("lobbyId") long lobbyId) {
 
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        Game game = lobbyService.newGame(lobbyId);
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId); // if deleted does not throw not found
+        Game game = lobbyService.newGame(lobby);
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
@@ -113,6 +111,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+
         lobbyService.endGame(lobby);
 
     }

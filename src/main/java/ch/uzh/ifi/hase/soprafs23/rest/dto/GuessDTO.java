@@ -1,12 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-import java.time.Duration;
-
-public class GuessPostDTO {
+public class GuessDTO {
 
     private Long userId;
     private String guess;
-    private Duration time;
+
     private Long score;
 
     public Long getUserId() {
@@ -23,14 +21,6 @@ public class GuessPostDTO {
 
     public void setGuess(String guess) {
         this.guess = guess;
-    }
-
-    public Duration getTime() {
-        return time;
-    }
-
-    public void setTime(Duration time) {
-        this.time = time;
     }
 
     public Long getScore() {
