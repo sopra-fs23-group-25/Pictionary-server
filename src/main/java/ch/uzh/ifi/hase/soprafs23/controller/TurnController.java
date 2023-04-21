@@ -2,7 +2,8 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.TurnGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
@@ -29,9 +30,9 @@ public class TurnController {
     @PutMapping("/lobbies/{lobbyId}/game/turn")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void submitGuess(@PathVariable("lobbyId") long lobbyId, @RequestBody GuessDTO guessToAdd) {
+    public void submitGuess(@PathVariable("lobbyId") long lobbyId, @RequestBody GuessPutDTO guessToAdd) {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
-        Guess guess = DTOMapper.INSTANCE.convertGuessDTOToEntity(guessToAdd);
+        Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         turnService.verifyGuess(turn, guess);
     }
 

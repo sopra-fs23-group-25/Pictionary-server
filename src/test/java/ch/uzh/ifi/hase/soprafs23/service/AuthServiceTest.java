@@ -67,7 +67,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void invalidPassword_throws401 () throws Exception {
+    public void invalidPassword_throws401 () {
         testUser.setPassword("actualPW");
 
         when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
@@ -79,7 +79,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void noUser_throws404 () throws Exception {
+    public void noUser_throws404 () {
         testUser.setPassword("actualPW");
 
         when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
@@ -90,7 +90,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void validCredentials_createsSession () throws Exception {
+    public void validCredentials_createsSession () {
         testUser.setPassword(testSession.getPassword());
 
         when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
@@ -104,7 +104,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void authUser_invalidToken_throws401 () throws Exception {
+    public void authUser_invalidToken_throws401 () {
 
         testUser.setToken("wrongToken"); //token of user not in list of all tokens
 
@@ -117,14 +117,14 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void authUserForId_invalidUserId_throws400 () throws Exception {
+    public void authUserForId_invalidUserId_throws400 () {
         when(userRepository.findById(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
 
         assertThrows(ResponseStatusException.class, () -> authService.authUserForUserId(token,testUser.getUserId()));
     }
 
     @Test
-    public void authUserForId_invalidToken_throws401 () throws Exception {
+    public void authUserForId_invalidToken_throws401 () {
 
         testUser.setToken("wrongToken");
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(testUser));
@@ -133,13 +133,13 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void logoutUser_invalidToken () throws Exception {
+    public void logoutUser_invalidToken () {
         when(userRepository.findByToken(Mockito.any())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> authService.logout(token));
     }
 
     @Test
-    public void logoutUser_validToken_returnsUserId () throws Exception {
+    public void logoutUser_validToken_returnsUserId () {
         when(userRepository.findByToken(Mockito.any())).thenReturn(testUser);
         assertEquals(authService.logout(token), testUser.getUserId());
     }

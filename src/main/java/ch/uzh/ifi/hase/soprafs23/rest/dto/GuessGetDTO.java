@@ -1,19 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-public class GuessDTO {
+public class GuessGetDTO {
 
-    private Long userId;
+    private String username;
     private String guess;
-
     private Long score;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getGuess() {
         return guess;
@@ -30,5 +21,9 @@ public class GuessDTO {
     public void setScore(Long score) {
         this.score = score;
     }
+
+    public String getUsername() {return this.username;}
+
+    public void setUsername(String username) {this.username = username;}
 
 }

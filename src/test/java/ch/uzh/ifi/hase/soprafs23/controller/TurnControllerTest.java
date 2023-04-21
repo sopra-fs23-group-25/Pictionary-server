@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessGetDTO;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +46,6 @@ public class TurnControllerTest {
         testTurn.setCorrectGuesses(0);
         testTurn.setTimePerRound(1L);
 
-
     }
 
     @Test
@@ -80,15 +77,15 @@ public class TurnControllerTest {
 
     @Test
     public void submitGuess_response204() throws Exception {
-        GuessDTO guessDTO = new GuessDTO();
-        guessDTO.setUserId(1L);
+        GuessGetDTO guessGetDTO = new GuessGetDTO();
+        guessGetDTO.setUsername("name");
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willReturn(testTurn);
 
 
         MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game/turn", 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(guessDTO));
+                .content(asJsonString(guessGetDTO));
 
         // then
         mockMvc.perform(putRequest)
@@ -97,15 +94,15 @@ public class TurnControllerTest {
 
     @Test
     public void submitGuess_lobbyNotFound() throws Exception {
-        GuessDTO guessDTO = new GuessDTO();
-        guessDTO.setUserId(1L);
+        GuessGetDTO guessGetDTO = new GuessGetDTO();
+        guessGetDTO.setUsername("name");
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 
         MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game/turn", 1)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(guessDTO));
+                .content(asJsonString(guessGetDTO));
 
         // then
         mockMvc.perform(putRequest)
@@ -114,8 +111,8 @@ public class TurnControllerTest {
 
     @Test
     public void getResult_returnsTurnGetDTO() throws Exception {
-        GuessDTO guessDTO = new GuessDTO();
-        guessDTO.setUserId(1L);
+        GuessGetDTO guessGetDTO = new GuessGetDTO();
+        guessGetDTO.setUsername("name");
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willReturn(testTurn);
 
@@ -129,8 +126,8 @@ public class TurnControllerTest {
     }
 
     public void getResult_LobbyNotFound_returns404() throws Exception {
-        GuessDTO guessDTO = new GuessDTO();
-        guessDTO.setUserId(1L);
+        GuessGetDTO guessGetDTO = new GuessGetDTO();
+        guessGetDTO.setUsername("name");
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -142,8 +139,6 @@ public class TurnControllerTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isNotFound());
     }
-
-
 
     private String asJsonString(final Object object) {
         try {

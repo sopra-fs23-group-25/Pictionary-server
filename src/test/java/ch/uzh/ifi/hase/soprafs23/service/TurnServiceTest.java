@@ -4,21 +4,18 @@ import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
@@ -26,6 +23,8 @@ public class TurnServiceTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
+    @Mock
+    private UserRepository userRepository;
     @InjectMocks
     private TurnService turnService;
 
@@ -123,11 +122,16 @@ public class TurnServiceTest {
 
     // missing: test for correct guess
 
+    @Test
+    public void getUsername_addsUsername() {
+        User user = new User();
+        user.setUsername("name");
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(user);
 
+        Guess guess = new Guess();
+        guess.setUserId(1L);
+        turnService.addUsername(guess);
 
-
-
-
-
-
+        assertEquals(user.getUsername(),guess.getUsername());
+    }
 }

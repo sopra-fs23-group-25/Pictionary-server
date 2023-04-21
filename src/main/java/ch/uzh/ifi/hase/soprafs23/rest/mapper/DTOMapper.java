@@ -67,8 +67,12 @@ public interface DTOMapper {
 
     @Mapping(source="userId", target="userId")
     @Mapping(source="guess", target="guess")
+    Guess convertGuessPutDTOToEntity(GuessPutDTO newGuess);
+
+    @Mapping(source="username", target="username")
+    @Mapping(source="guess", target="guess")
     @Mapping(source="score", target="score")
-    Guess convertGuessDTOToEntity(GuessDTO newGuess);
+    GuessGetDTO convertEntityToGuessGetDTO(Guess guess);
 
     @Mapping(source="lobbyId", target="lobbyId")
     @Mapping(source="players", target="players")
