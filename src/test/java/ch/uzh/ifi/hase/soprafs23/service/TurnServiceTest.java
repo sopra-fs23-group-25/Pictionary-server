@@ -101,6 +101,27 @@ public class TurnServiceTest {
         assertThrows(ResponseStatusException.class, () -> turnService.getTurnByLobbyId(testLobby.getLobbyId()));
     }
 
+    @Test
+    public void verifyGuess_incorrect_0points () {
+        Guess guess = new Guess();
+        guess.setUserId(1L);
+        turnService.verifyGuess(testTurn, guess);
+
+        assertEquals(0, guess.getScore());
+
+    }
+
+    @Test
+    public void verifyGuess_incorrect_addsGuessToTurn () {
+        Guess guess = new Guess();
+        guess.setUserId(1L);
+        turnService.verifyGuess(testTurn, guess);
+
+        assertEquals(guess, testTurn.getGuesses().get(0));
+
+    }
+
+    // missing: test for correct guess
 
 
 
