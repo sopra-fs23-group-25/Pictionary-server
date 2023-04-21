@@ -40,6 +40,7 @@ public class TurnController {
     @ResponseBody
     public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId) {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
+
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 

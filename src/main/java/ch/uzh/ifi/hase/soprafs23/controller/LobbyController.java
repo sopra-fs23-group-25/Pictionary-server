@@ -101,8 +101,8 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.CREATED)
     public GameGetDTO startGameInLobby(@PathVariable("lobbyId") long lobbyId) {
 
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        Game game = lobbyService.newGame(lobbyId);
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId); // if deleted does not throw not found
+        Game game = lobbyService.newGame(lobby);
 
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
@@ -111,6 +111,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+
         lobbyService.endGame(lobby);
 
     }

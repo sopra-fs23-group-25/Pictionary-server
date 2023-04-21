@@ -135,7 +135,7 @@ public class LobbyServiceTest {
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
-        Game createdGame = lobbyService.newGame(testLobby.getLobbyId());
+        Game createdGame = lobbyService.newGame(testLobby);
 
         assertTrue(testLobby.isHasStarted());
         assertEquals(createdGame, testLobby.getGame());
@@ -151,7 +151,7 @@ public class LobbyServiceTest {
         testLobby.setHasStarted(true);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
-        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby.getLobbyId()));
+        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby));
 
     }
 
