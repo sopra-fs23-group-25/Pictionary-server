@@ -3,21 +3,25 @@ package ch.uzh.ifi.hase.soprafs23.translator;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TranslatorTest {
-    Translator translator = new Translator();
+    Translator translator = Translator.getInstance();
+
+    public TranslatorTest() throws IOException {
+    }
 
     @Test
     public void testTranslator_singleWordInput() {
         String testString = "Er";
         String testLanguage = "de";
         try {
-            assertEquals(translator.translateSingle(testString, testLanguage), "He");
+            assertEquals(translator.getSingleTranslation(testString, testLanguage), "He");
         }
         catch (Exception e) {
         }
@@ -26,11 +30,11 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_multipleWords() {
-        List<String> testList = Arrays.asList("Sie", "du", "er");
-        List<String> translatedTestList = Arrays.asList("She", "you", "he");
+        LinkedList<String> testList = (LinkedList<String>) Arrays.asList("Sie", "du", "er");
+        LinkedList<String> translatedTestList = (LinkedList<String>) Arrays.asList("She", "you", "he");
         String testLanguage = "de";
         try {
-            assertEquals(translator.translateList(testList, testLanguage), translatedTestList);
+            assertEquals(translator.getListTranslation(testList, testLanguage), translatedTestList);
         }
         catch (Exception e) {
         }
