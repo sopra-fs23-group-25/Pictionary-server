@@ -47,6 +47,7 @@ public class TurnService {
         return newTurn;
     }
 
+
     public void endTurn(Long lobbyId) {
         Turn turn = getTurnByLobbyId(lobbyId);
 
