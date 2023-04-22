@@ -16,7 +16,7 @@ public class TranslatorTest {
 
     public TranslatorTest() throws IOException {
     }
-/*
+
     @Test
     public void testTranslator_singleWordInput() {
         String testString = "Er";
@@ -31,13 +31,13 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_multipleWords() {
-        LinkedList<String> testList = (LinkedList<String>) Arrays.asList("Sie", "du", "er");
-        LinkedList<String> translatedTestList = (LinkedList<String>) Arrays.asList("She", "you", "he");
+        LinkedList<String> testList = new LinkedList<String>( Arrays.asList("Sie", "du", "er"));
+        LinkedList<String> translatedTestList = new LinkedList<String>( Arrays.asList("She", "you", "he"));
         String testLanguage = "de";
         try {
             assertEquals(translator.getListTranslation(testList, testLanguage), translatedTestList);
         }
         catch (Exception e) {
         }
-    }*/
+    }
 }
