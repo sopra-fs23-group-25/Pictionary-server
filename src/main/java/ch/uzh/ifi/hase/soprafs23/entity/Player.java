@@ -23,10 +23,8 @@ public class Player implements Serializable, Comparable<Player> {
     boolean isHost = false;
     @Column
     PlayerRole currentRole = PlayerRole.GUESSER;
-    /*@Column
-    Guess currentGuess;*/
     @Column
-    Long totalScore;
+    Long totalScore = 0L;
     @Column
     Duration totalTime;
 

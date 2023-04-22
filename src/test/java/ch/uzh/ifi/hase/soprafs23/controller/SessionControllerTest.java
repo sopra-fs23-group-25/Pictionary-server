@@ -117,8 +117,6 @@ public class SessionControllerTest {
                 .andExpect(status().isCreated()) // Code 201
                 .andExpect(jsonPath("$.username", is(testSession.getUsername())))
                 .andExpect(jsonPath("$.token", is(testSession.getToken())));
-
-
     }
 
     @Test

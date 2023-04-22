@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
@@ -58,15 +59,18 @@ public class LobbyService {
         if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
-        newLobby.setHasStarted(false);
+        newLobby.setRunning(false);
         User user = getSingleUser(newLobby.getHostId());
+        Player host = user.convertToPlayer();
+        host.makeHost();
+        host.setCurrentRole(PlayerRole.PAINTER);
         newLobby.setPlayersInLobby(new ArrayList<>());
-        newLobby.addPlayer(user.convertToPlayer());
+        newLobby.addPlayer(host);
 
         try {
             checkIfLobbyExists(newLobby);
 
-            newLobby = lobbyRepository.save(newLobby);
+            lobbyRepository.save(newLobby);
             lobbyRepository.flush();
 
             return newLobby;
@@ -82,7 +86,7 @@ public class LobbyService {
 
     public Lobby joinLobby(Lobby lobby, User user){
 
-        if (lobby != null && user != null  && !lobby.isHasStarted() && !lobby.isFull()) {
+        if (lobby != null && user != null  && !lobby.isRunning() && !lobby.isFull()) {
             try {
                 lobby.addPlayer(user.convertToPlayer());
                 return lobby;
@@ -94,23 +98,23 @@ public class LobbyService {
         return null;
     }
 
-    public Game newGame(Long lobbyId) {
-        Lobby lobby = getSingleLobby(lobbyId);
+    public Game newGame(Lobby lobby) {
 
-        if (lobby.getGame() != null && lobby.isHasStarted()) {
+        if (lobby.getGame() != null && lobby.isRunning()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }
 
-        lobby.setHasStarted(true);
+        lobby.setRunning(true);
 
         Game game = new Game();
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayersInLobby());
         game.setNotPainted(lobby.getPlayersInLobby());
+        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
+        game.setTimePerRound(lobby.getTimePerRound());
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);
-        lobbyRepository.flush();
 
         return game;
     }
@@ -141,7 +145,7 @@ public class LobbyService {
 
     public void endGame(Lobby lobby) {
         lobby.setGame(null);
-        lobby.setHasStarted(false);
+        lobby.setRunning(false);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
     }

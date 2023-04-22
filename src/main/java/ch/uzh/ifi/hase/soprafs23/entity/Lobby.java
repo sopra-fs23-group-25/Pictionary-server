@@ -25,16 +25,17 @@ public class Lobby implements Serializable {
 
     @Column(nullable = false)
     private int maxNrOfPlayers;
+
     @Column(nullable = false)
     private Long timePerRound;
     @Column(nullable = false)
     private int nrOfRounds;
 
-    @OneToMany (mappedBy = "userId")
+    @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> playersInLobby;
 
     @Column(nullable = false)
-    private boolean hasStarted;
+    private boolean isRunning;
 
     @Column
     private Long hostId;
@@ -84,8 +85,8 @@ public class Lobby implements Serializable {
         this.playersInLobby = playersInLobby;
     }
 
-    public boolean isHasStarted() {return hasStarted;}
-    public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
+    public boolean isRunning() {return isRunning;}
+    public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
 
     public int getMaxNrOfPlayers() {
         return maxNrOfPlayers;
@@ -107,7 +108,7 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return getMaxNrOfPlayers() == playersInLobby.size();
+        return maxNrOfPlayers == playersInLobby.size();
     }
     public Long getHostId() {
         return hostId;
@@ -116,5 +117,7 @@ public class Lobby implements Serializable {
     public void setHostId(Long hostId) {
         this.hostId = hostId;
     }
+
+    public int getCurrentNrOfPlayers() {return playersInLobby.size();}
 
 }

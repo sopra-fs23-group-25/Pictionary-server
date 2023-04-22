@@ -2,19 +2,20 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.time.Duration;
 
-public class Guess {
+public class Guess implements Serializable {
 
     private Long userId;
+    private String username;
     private String guess;
-    private Duration time;
+
     private Long score;
 
-    public Guess(Long userId, String guess, Duration time, long score){
+    public Guess(Long userId, String guess, long score){
         this.userId = userId;
         this.guess = guess;
-        this.time = time;
         this.score = score;
     }
 
@@ -36,19 +37,19 @@ public class Guess {
         this.guess = guess;
     }
 
-    public Duration getTime() {
-        return time;
-    }
-
-    public void setTime(Duration time) {
-        this.time = time;
-    }
-
     public long getScore() {
         return score;
     }
 
     public void setScore(long score) {
         this.score = score;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
