@@ -1,58 +1,157 @@
-
 package ch.uzh.ifi.hase.soprafs23.translator;
 // Imports the Google Cloud Translation library.
 
 import com.google.cloud.translate.v3.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Translator {
     static String projectId = "sopra-fs23-group-25-server";
     static LocationName parent = LocationName.of(projectId, "global");
+    private static Translator instance = null;
+    private static TranslationServiceClient client = null;
+    private static Queue<TranslationRequest> requestQueue = new LinkedList<>();
 
-    private static TranslateTextResponse translateText(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
+    private Translator() throws IOException {
+        String projectId = "sopra-fs23-group-25-server";
+        LocationName parent = LocationName.of(projectId, "global");
 
-        // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
-        TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode("en").addContents(word).build();
+        // Initialize the TranslationServiceClient once when the Translator object is created
+        try {
+            client = TranslationServiceClient.create();
+            Thread translationThread = new Thread(new TranslationThread());
 
-        return client.translateText(request);
+        }
+        catch (Exception e) {
+        }
     }
 
-    public String translateSingle(String word, String language) throws IOException {
-        String translationText = "";
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. using it in a try statement should ensure automatic close call, need to see if this is a problem
-        try (TranslationServiceClient client = TranslationServiceClient.create()) {
-            TranslateTextResponse response = translateText(language, word, client);
-            for (Translation translation : response.getTranslationsList()) {
-                translationText = translation.getTranslatedText();
+    public static synchronized Translator getInstance() throws IOException {
+        if (instance == null) {
+            instance = new Translator();
+        }
+        return instance;
+    }
+
+
+    public String getSingleTranslation(String word, String language) throws InterruptedException {
+        TranslationRequest currentRequest = new TranslationRequest(word, language);
+        addSingleRequest(currentRequest);
+        while (currentRequest.translatedWord == null) {
+            wait(100);
+        }
+        return currentRequest.translatedWord;
+    }
+
+    public LinkedList<String> getListTranslation(LinkedList<String> wordList, String language) throws InterruptedException {
+        LinkedList<String> translatedWordList = new LinkedList<>();
+        for (String word:wordList){
+            TranslationRequest currentRequest = new TranslationRequest(word, language);
+            addSingleRequest(currentRequest);
+            while (currentRequest.translatedWord == null) {
+                wait(50);
             }
+            translatedWordList.add(currentRequest.translatedWord);
+
         }
-        catch (IOException e) {
-            System.out.print(e.getMessage());
-        }
-        return translationText;
+        return translatedWordList;
     }
 
-    public List<String> translateList(List<String> wordList, String language) throws IOException {
 
-        List<String> translatedStrings = new ArrayList<String>();
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. using it in a try statement should ensure automatic close call, need to see if this is a problem
-        try (TranslationServiceClient client = TranslationServiceClient.create()) {
-            for (String word : wordList) {
-                TranslateTextResponse response = translateText(language, word, client);
-                for (Translation translation : response.getTranslationsList()) {
-                    translatedStrings.add(translation.getTranslatedText());
 
+/////// Helper Classes and functions
+    private synchronized void addSingleRequest(TranslationRequest newRequest) {
+        requestQueue.add(newRequest);
+    }
+
+    private synchronized void addMultipleRequest(LinkedList<TranslationRequest> newRequestList) {
+        requestQueue.addAll(newRequestList);
+    }
+    private static class TranslationRequest {
+
+        public String translatedWord;
+        private String word;
+        private String language;
+
+        public TranslationRequest(String word, String language) {
+            this.word = word;
+            this.language = language;
+            this.translatedWord = null;
+        }
+
+        public String getWord() {
+            return word;
+        }
+
+        public void setWord(String word) {
+            this.word = word;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+
+    }
+
+    private class TranslationThread implements Runnable {
+
+        private TranslationRequest currentRequest;
+        private TranslateTextResponse response;
+
+        @Override
+        public void run() {
+            while (true) {
+                synchronized (requestQueue) {
+                    while (requestQueue.isEmpty()) {
+                        try {
+                            requestQueue.wait();
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    while (!requestQueue.isEmpty()) {
+                        currentRequest = requestQueue.poll();
+                        try {
+                            response = translateText(currentRequest.getLanguage(), currentRequest.getWord(), client);
+                            setTranslationText(currentRequest);
+                        }
+                        catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
                 }
             }
         }
-        catch (IOException e) {
-            System.out.print(e.getMessage());
+
+        private static TranslateTextResponse translateText(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
+
+            // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
+            TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode("en").addContents(word).build();
+
+            return client.translateText(request);
         }
-        return translatedStrings;
+
+
+
+
+        private void setTranslationText(TranslationRequest request) {
+
+            for (Translation translation : response.getTranslationsList()) {
+                 request.translatedWord = translation.getTranslatedText();
+            }
+
+        }
     }
 }
+
+
