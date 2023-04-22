@@ -59,7 +59,7 @@ public class LobbyService {
         if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
-        newLobby.setHasStarted(false);
+        newLobby.setRunning(false);
         User user = getSingleUser(newLobby.getHostId());
         Player host = user.convertToPlayer();
         host.makeHost();
@@ -86,7 +86,7 @@ public class LobbyService {
 
     public Lobby joinLobby(Lobby lobby, User user){
 
-        if (lobby != null && user != null  && !lobby.isHasStarted() && !lobby.isFull()) {
+        if (lobby != null && user != null  && !lobby.isRunning() && !lobby.isFull()) {
             try {
                 lobby.addPlayer(user.convertToPlayer());
                 return lobby;
@@ -100,18 +100,17 @@ public class LobbyService {
 
     public Game newGame(Lobby lobby) {
 
-
-        if (lobby.getGame() != null && lobby.isHasStarted()) {
+        if (lobby.getGame() != null && lobby.isRunning()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }
 
-        lobby.setHasStarted(true);
+        lobby.setRunning(true);
 
         Game game = new Game();
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayersInLobby());
         game.setNotPainted(lobby.getPlayersInLobby());
-        game.setNrOfRounds(lobby.getNrOfRounds());
+        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
         game.setTimePerRound(lobby.getTimePerRound());
 
         lobby.setGame(game);
@@ -146,7 +145,7 @@ public class LobbyService {
 
     public void endGame(Lobby lobby) {
         lobby.setGame(null);
-        lobby.setHasStarted(false);
+        lobby.setRunning(false);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
     }

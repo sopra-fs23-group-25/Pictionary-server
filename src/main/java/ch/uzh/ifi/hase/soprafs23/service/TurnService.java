@@ -31,13 +31,7 @@ public class TurnService {
 
     public Turn initTurn(Long lobbyId) {
 
-        Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
-
-        if (lobby == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turn could not be started for non-existing Lobby!");
-        }
-
-        Game game = lobby.getGame();
+        Game game = getGameByLobbyId(lobbyId);
 
         Turn newTurn = new Turn();
         newTurn.setTimePerRound(game.getTimePerRound());
@@ -48,17 +42,18 @@ public class TurnService {
 
         game.setTurn(newTurn);
 
-        lobbyRepository.save(lobby);
+        lobbyRepository.save(getLobbyByLobbyId(lobbyId));
 
         return newTurn;
     }
 
-    public Turn getTurnByLobbyId(Long lobbyId) {
-        Turn turn = lobbyRepository.findByLobbyId(lobbyId).getGame().getTurn();
-        if (turn == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");
-        }
-        return turn;
+    public void endTurn(Long lobbyId) {
+        Turn turn = getTurnByLobbyId(lobbyId);
+
+        Game game = getGameByLobbyId(lobbyId);
+        game.endTurn(turn);
+
+        lobbyRepository.save(getLobbyByLobbyId(lobbyId)); // does this work to persist changes in lobby?
     }
 
     public void verifyGuess(Turn turn, Guess guess) {
@@ -79,5 +74,23 @@ public class TurnService {
         guess.setUsername(username);
 
         return guess;
+    }
+
+    public Turn getTurnByLobbyId(Long lobbyId) {
+        Turn turn = getGameByLobbyId(lobbyId).getTurn();
+        if (turn == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");}
+        return turn;
+    }
+
+    private Lobby getLobbyByLobbyId(long lobbyId) {
+        Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
+        if (lobby == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby not found!");}
+        return lobby;
+    }
+
+    private Game getGameByLobbyId(Long lobbyId) {
+        Game game = getLobbyByLobbyId(lobbyId).getGame();
+        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
+        return game;
     }
 }

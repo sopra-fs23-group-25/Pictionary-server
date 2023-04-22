@@ -24,7 +24,7 @@ public class Player implements Serializable, Comparable<Player> {
     @Column
     PlayerRole currentRole = PlayerRole.GUESSER;
     @Column
-    Long totalScore;
+    Long totalScore = 0L;
     @Column
     Duration totalTime;
 
