@@ -9,6 +9,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 @RestController
 public class TurnController {
@@ -33,7 +34,13 @@ public class TurnController {
     public void submitGuess(@PathVariable("lobbyId") long lobbyId, @RequestBody GuessPutDTO guessToAdd) {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
-        turnService.verifyGuess(turn, guess);
+        try {
+            turnService.verifyGuess(turn, guess);
+        }
+        catch (InterruptedException e) {
+            throw new HttpStatusCodeException(HttpStatus.INTERNAL_SERVER_ERROR, "Guess couldn't be submitted \n Exception: " + e.getMessage()) {
+            };
+        }
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")

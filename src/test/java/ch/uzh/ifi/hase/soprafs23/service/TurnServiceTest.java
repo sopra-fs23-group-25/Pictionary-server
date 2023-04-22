@@ -101,7 +101,7 @@ public class TurnServiceTest {
     }
 
     @Test
-    public void verifyGuess_incorrect_0points () {
+    public void verifyGuess_incorrect_0points () throws InterruptedException {
         Guess guess = new Guess();
         guess.setUserId(1L);
         turnService.verifyGuess(testTurn, guess);
@@ -111,7 +111,7 @@ public class TurnServiceTest {
     }
 
     @Test
-    public void verifyGuess_incorrect_addsGuessToTurn () {
+    public void verifyGuess_incorrect_addsGuessToTurn () throws InterruptedException {
         Guess guess = new Guess();
         guess.setUserId(1L);
         turnService.verifyGuess(testTurn, guess);
@@ -121,6 +121,7 @@ public class TurnServiceTest {
     }
 
     // missing: test for correct guess
+
 
     @Test
     public void getUsername_addsUsername() {

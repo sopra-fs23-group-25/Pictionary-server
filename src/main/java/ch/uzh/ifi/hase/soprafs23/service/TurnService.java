@@ -67,11 +67,11 @@ public class TurnService {
         lobbyRepository.save(getLobbyByLobbyId(lobbyId)); // does this work to persist changes in lobby?
     }
 
-    public void verifyGuess(Turn turn, Guess guess) {
+    public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
         //error if user has already guesses
 
-        String translatedGuess = "generate Word"; // translate guess implement
+        String translatedGuess = translateGuess(guess); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
