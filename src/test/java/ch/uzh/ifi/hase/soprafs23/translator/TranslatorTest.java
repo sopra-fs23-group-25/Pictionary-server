@@ -13,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TranslatorTest {
     Translator translator = Translator.getInstance();
 
-   /* public TranslatorTest() throws IOException {
-    }
 
+    public TranslatorTest() throws IOException {
+    }
+/*
     @Test
     public void testTranslator_singleWordInput() {
         String testString = "Er";
