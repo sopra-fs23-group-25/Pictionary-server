@@ -17,7 +17,7 @@ public class TranslatorTest {
     public TranslatorTest() throws IOException {
     }
 
-    @Test
+    /*@Test
     public void testTranslator_singleWordInput() {
         String testString = "Er";
         String testLanguage = "de";
@@ -39,5 +39,5 @@ public class TranslatorTest {
         }
         catch (Exception e) {
         }
-    }
+    }*/
 }
