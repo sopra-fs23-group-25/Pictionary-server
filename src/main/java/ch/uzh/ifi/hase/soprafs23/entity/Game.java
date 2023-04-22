@@ -144,6 +144,7 @@ public class Game implements Serializable {
         }
         // this is not the last turn, just select next painter
         else {setNextPainter();}
+        setTurn(null);
     }
 
     private Player findPlayerById(long userId) {

@@ -45,4 +45,11 @@ public class TurnController {
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 
+    @DeleteMapping("/lobbies/{lobbyId}/game/turn")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void endTurn(@PathVariable("lobbyId") long lobbyId) {
+        turnService.endTurn(lobbyId);
+    }
+
 }
