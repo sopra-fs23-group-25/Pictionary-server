@@ -111,7 +111,7 @@ public class LobbyService {
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayersInLobby());
         game.setNotPainted(lobby.getPlayersInLobby());
-        game.setNrOfRounds(lobby.getNrOfRounds());
+        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
         game.setTimePerRound(lobby.getTimePerRound());
 
         lobby.setGame(game);

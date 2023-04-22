@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,10 @@ public class Game implements Serializable {
     private Long lobbyId; //can delete
 
     @Column
-    private int nrOfRounds;
+    private int nrOfRoundsTotal;
+
+    @Column
+    private int nrOfRoundsPlayed;
 
     @Column
     private long timePerRound;
@@ -74,21 +76,21 @@ public class Game implements Serializable {
     public Turn getTurn() {
         return turn;
     }
-
     public void setTurn(Turn turn) {this.turn = turn;}
 
-    public int getNrOfRounds() {
-        return nrOfRounds;
+    public int getNrOfRoundsTotal() {
+        return nrOfRoundsTotal;
+    }
+    public void setNrOfRoundsTotal(int nrOfRoundsTotal) {
+        this.nrOfRoundsTotal = nrOfRoundsTotal;
     }
 
-    public void setNrOfRounds(int nrOfRounds) {
-        this.nrOfRounds = nrOfRounds;
-    }
+    public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
+    public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
 
     public Long getTimePerRound() {
         return timePerRound;
     }
-
     public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }
