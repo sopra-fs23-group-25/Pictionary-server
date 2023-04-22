@@ -68,7 +68,7 @@ public class LobbyController {
 
             Lobby joinedLobby = lobbyService.joinLobby(lobby, user);
             if (joinedLobby == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined!");
             }
         }
         else {
@@ -115,4 +115,10 @@ public class LobbyController {
 
     }
 
+    @DeleteMapping("/lobbies/{lobbyId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLobby(@PathVariable("lobbyId") long lobbyId) {
+       lobbyService.deleteLobby(lobbyService.getSingleLobby(lobbyId));
+
+    }
 }

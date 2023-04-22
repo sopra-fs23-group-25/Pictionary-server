@@ -47,6 +47,7 @@ public class TurnService {
         return newTurn;
     }
 
+
     public void endTurn(Long lobbyId) {
         Turn turn = getTurnByLobbyId(lobbyId);
 
@@ -58,9 +59,11 @@ public class TurnService {
 
     public void verifyGuess(Turn turn, Guess guess) {
 
+        //error if user has already guesses
+
         String translatedGuess = "generate Word"; // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
-            turn.setCorrectGuesses(turn.getCorrectGuesses() + 1L); // update number pf correct guesses
+            turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
             guess.setScore(score);
         }

@@ -59,7 +59,6 @@ public class LobbyService {
         if (newLobby.getLobbyName() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
         }
-        newLobby.setRunning(false);
         User user = getSingleUser(newLobby.getHostId());
         Player host = user.convertToPlayer();
         host.makeHost();
@@ -86,16 +85,15 @@ public class LobbyService {
 
     public Lobby joinLobby(Lobby lobby, User user){
 
-        if (lobby != null && user != null  && !lobby.isRunning() && !lobby.isFull()) {
-            try {
-                lobby.addPlayer(user.convertToPlayer());
-                return lobby;
-            }
-            catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "There was a Problem joining the Lobby");
-            }
-        }
-        return null;
+        if (lobby.isFull()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is full!");}
+        if (lobby.isRunning()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is running!");}
+
+        lobby.addPlayer(user.convertToPlayer());
+
+        // could be void
+
+        return lobby;
+
     }
 
     public Game newGame(Lobby lobby) {
@@ -147,6 +145,11 @@ public class LobbyService {
         lobby.setGame(null);
         lobby.setRunning(false);
         lobbyRepository.save(lobby);
+        lobbyRepository.flush();
+    }
+
+    public void deleteLobby(Lobby lobby) {
+        lobbyRepository.delete(lobby);
         lobbyRepository.flush();
     }
 
