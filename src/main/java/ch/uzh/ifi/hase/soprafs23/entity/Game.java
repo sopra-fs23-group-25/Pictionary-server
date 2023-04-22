@@ -34,14 +34,9 @@ public class Game implements Serializable {
     private List<Player> players;
 
     @OneToMany (cascade = CascadeType.PERSIST)
-    private List<Player> painted;
-
-    @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> notPainted;
 
     @ElementCollection
-    @CollectionTable(name = "words_painted")
-    @Column(name = "word")
     private List<String> wordsPainted;
 
     @Lob
@@ -64,15 +59,19 @@ public class Game implements Serializable {
 
     public void setPlayers(List<Player> players) {this.players = players;}
 
-    public List<Player> getPainted() {
-        return getCopy(painted);
-    }
-    public void setPainted(List<Player> painted) {this.painted = painted;}
-
     public List<Player> getNotPainted() {
         return getCopy(notPainted);
     }
-    public void setNotPainted(List<Player> notPainted) {this.notPainted = notPainted;}
+    public void setNotPainted(List<Player> notPainted) {
+        List<Player> guessers = new ArrayList<>();
+
+        for (Player player : notPainted) {
+            if (player.getCurrentRole() == PlayerRole.GUESSER) {
+                guessers.add(player);
+
+            }
+        }
+        this.notPainted = guessers;}
 
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
@@ -108,7 +107,11 @@ public class Game implements Serializable {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No painter found!");
     }
 
-    private void setNextPainter() {} // implement selection logic private maybe
+    private void setNextPainter() {
+        long nextPainterId = notPainted.remove(0).getUserId();
+        Player nextPainter = findPlayerById(nextPainterId);
+        nextPainter.setCurrentRole(PlayerRole.PAINTER);
+    } // implement selection logic private maybe
 
     public boolean isRunning() {return isRunning;}
     public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
