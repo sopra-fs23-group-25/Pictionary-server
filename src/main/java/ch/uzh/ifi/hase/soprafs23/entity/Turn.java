@@ -11,7 +11,7 @@ public class Turn implements Serializable {
 
     private long timePerRound;
 
-    private long correctGuesses;
+    private int correctGuesses;
 
     private List<Guess> guesses;
 
@@ -28,11 +28,11 @@ public class Turn implements Serializable {
         this.guesses = guesses;
     }
 
-    public long getCorrectGuesses() {
+    public int getCorrectGuesses() {
         return correctGuesses;
     }
 
-    public void setCorrectGuesses(long correctGuesses) {
+    public void setCorrectGuesses(int correctGuesses) {
         this.correctGuesses = correctGuesses;
     }
 

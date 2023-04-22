@@ -35,7 +35,7 @@ public class Lobby implements Serializable {
     private List<Player> playersInLobby;
 
     @Column(nullable = false)
-    private boolean isRunning;
+    private boolean isRunning = false;
 
     @Column
     private Long hostId;
