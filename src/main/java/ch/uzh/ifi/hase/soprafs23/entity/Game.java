@@ -15,9 +15,14 @@ public class Game implements Serializable {
     @Id
     private Long lobbyId; //can delete
 
+    @Column
     private int nrOfRounds;
 
+    @Column
     private long timePerRound;
+
+    @Column
+    private boolean isRunning;
 
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
@@ -96,4 +101,7 @@ public class Game implements Serializable {
         }
         return null;
     }
+
+    public boolean isRunning() {return isRunning;}
+    public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
 }

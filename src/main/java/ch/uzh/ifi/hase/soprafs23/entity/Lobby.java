@@ -35,7 +35,7 @@ public class Lobby implements Serializable {
     private List<Player> playersInLobby;
 
     @Column(nullable = false)
-    private boolean hasStarted;
+    private boolean isRunning;
 
     @Column
     private Long hostId;
@@ -85,8 +85,8 @@ public class Lobby implements Serializable {
         this.playersInLobby = playersInLobby;
     }
 
-    public boolean isHasStarted() {return hasStarted;}
-    public void setHasStarted(boolean hasStarted) {this.hasStarted = hasStarted;}
+    public boolean isRunning() {return isRunning;}
+    public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
 
     public int getMaxNrOfPlayers() {
         return maxNrOfPlayers;
