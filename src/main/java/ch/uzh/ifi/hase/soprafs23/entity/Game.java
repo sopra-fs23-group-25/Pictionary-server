@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -103,7 +105,7 @@ public class Game implements Serializable {
                 return player.getUserId(); // why is it null
             }
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No painter found!");
     }
 
     private void setNextPainter() {} // implement selection logic private maybe
@@ -116,22 +118,41 @@ public class Game implements Serializable {
 
     public void endTurn(Turn turn) {
 
-        //distribute points
+        //distribute points for painter
+        Player painter = findPlayerById(turn.getPainterId());
+        painter.setTotalScore(painter.getTotalScore() + (5 * turn.getCorrectGuesses()));
+        // make painter guesser again
+        painter.setCurrentRole(PlayerRole.GUESSER);
+        //distribute points for guessers
+        for(Guess guess : turn.getGuesses()) {
+            Player guesser = findPlayerById(guess.getUserId());
+            guesser.setTotalScore(guesser.getTotalScore() + guess.getScore());
+        }
 
-        if (getNotPainted().size() == 0) { // last turn is ending, if last round end game
-            if (getNrOfRoundsPlayed() == getNrOfRoundsTotal()) { // is last round
+        //check if this is the last turn
+        if (getNotPainted().size() == 0) {
+            // check if this is the last turn of the last round
+            if (getNrOfRoundsPlayed() == getNrOfRoundsTotal()) {
                 setGameOver(true);
                 setRunning(false);
             }
+            //start new round: update number of rounds played, reset list for painter logic, set next painter
             else {
                 setNrOfRoundsPlayed(getNrOfRoundsPlayed() + 1);
-                // reset list for painter logic
                 setNextPainter();
             }
         }
-        else {setNextPainter();} // normal turn, not end of round
+        // this is not the last turn, just select next painter
+        else {setNextPainter();}
+    }
 
-
+    private Player findPlayerById(long userId) {
+        for (Player player : players) {
+            if (player.getUserId() == userId) {
+                return player;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found!");
     }
 
 }
