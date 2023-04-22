@@ -48,8 +48,10 @@ public class TurnService {
     }
 
     public void endTurn(Long lobbyId) {
+        Turn turn = getTurnByLobbyId(lobbyId);
+
         Game game = getGameByLobbyId(lobbyId);
-        game.endTurn();
+        game.endTurn(turn);
 
         lobbyRepository.save(getLobbyByLobbyId(lobbyId)); // does this work to persist changes in lobby?
     }

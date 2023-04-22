@@ -114,7 +114,10 @@ public class Game implements Serializable {
     public boolean getGameOver () {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
-    public void endTurn() {
+    public void endTurn(Turn turn) {
+
+        //distribute points
+
         if (getNotPainted().size() == 0) { // last turn is ending, if last round end game
             if (getNrOfRoundsPlayed() == getNrOfRoundsTotal()) { // is last round
                 setGameOver(true);
@@ -127,6 +130,8 @@ public class Game implements Serializable {
             }
         }
         else {setNextPainter();} // normal turn, not end of round
+
+
     }
 
 }
