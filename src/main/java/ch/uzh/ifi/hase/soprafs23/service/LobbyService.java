@@ -100,7 +100,6 @@ public class LobbyService {
 
     public Game newGame(Lobby lobby) {
 
-
         if (lobby.getGame() != null && lobby.isRunning()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
         }

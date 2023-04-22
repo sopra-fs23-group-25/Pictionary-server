@@ -26,6 +26,8 @@ public class Game implements Serializable {
     @Column
     private boolean isRunning;
 
+    @Column boolean gameOver;
+
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
 
@@ -104,6 +106,27 @@ public class Game implements Serializable {
         return null;
     }
 
+    private void setNextPainter() {} // implement selection logic private maybe
+
     public boolean isRunning() {return isRunning;}
     public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
+
+    public boolean getGameOver () {return gameOver;}
+    public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
+
+    public void endTurn() {
+        if (getNotPainted().size() == 0) { // last turn is ending, if last round end game
+            if (getNrOfRoundsPlayed() == getNrOfRoundsTotal()) { // is last round
+                setGameOver(true);
+                setRunning(false);
+            }
+            else {
+                setNrOfRoundsPlayed(getNrOfRoundsPlayed() + 1);
+                // reset list for painter logic
+                setNextPainter();
+            }
+        }
+        else {setNextPainter();} // normal turn, not end of round
+    }
+
 }
