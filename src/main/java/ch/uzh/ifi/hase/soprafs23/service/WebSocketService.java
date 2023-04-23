@@ -45,11 +45,5 @@ public class WebSocketService {
             return listOfPlayers;
 
         }
-
-        public void startGame(Long lobbyId){
-            Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
-            lobby.setRunning(true);
-            lobby.getGame().setRunning(true);
-        }
-
+        
 }
