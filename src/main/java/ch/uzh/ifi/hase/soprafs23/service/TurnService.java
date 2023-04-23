@@ -47,9 +47,12 @@ public class TurnService {
         Turn newTurn = new Turn();
         newTurn.setTimePerRound(game.getTimePerRound());
         newTurn.setWord("duck");
-        newTurn.setCorrectGuesses(0);
+        newTurn.setCorrectGuesses(0); // can use default value
         newTurn.setGuesses(new ArrayList<>());
         newTurn.setPainterId(game.getPainter());
+
+        Guess painterResult = new Guess(game.getPainter(), null,0);
+        newTurn.addGuess(painterResult);
 
         game.setTurn(newTurn);
 
@@ -60,7 +63,7 @@ public class TurnService {
 
     public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
-        //error if user has already guesses
+        //implement error if user has already guessed
 
         //update painter score
 
@@ -69,6 +72,7 @@ public class TurnService {
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
             guess.setScore(score);
+            givePainterPoints(turn);
         }
         else {guess.setScore(0);}
 
@@ -114,4 +118,12 @@ public class TurnService {
     }
 
     public void setTranslator(Translator newTranslator){translator=newTranslator;}
+
+    private void givePainterPoints(Turn turn) {
+        for (Guess guess : turn.getGuesses()) {
+            if (guess.getUserId() == turn.getPainterId()) {
+                guess.setScore(guess.getScore() + 5);
+            }
+        }
+    }
 }
