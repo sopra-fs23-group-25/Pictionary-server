@@ -37,7 +37,7 @@ public class WebSocketService {
         public List<UserSocketGetDTO> getUsersInLobby(Long lobbyId) {
             Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
             List<UserSocketGetDTO> listOfPlayers = new ArrayList<>();
-            for (Player player:lobby.getPlayersInLobby()){
+            for (Player player:lobby.getPlayers()){
                 UserSocketGetDTO currentPlayer = new UserSocketGetDTO();
                 currentPlayer.setUsername(player.getUsername());
                 listOfPlayers.add(currentPlayer);
