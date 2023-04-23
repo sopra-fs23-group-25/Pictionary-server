@@ -36,8 +36,8 @@ public class GameService {
 
         Game game = new Game();
         game.setLobbyId(lobby.getLobbyId());
-        game.setPlayers(lobby.getPlayersInLobby());
-        game.setNotPainted(lobby.getPlayersInLobby());
+        game.setPlayers(lobby.getPlayers());
+        game.setNotPainted(lobby.getPlayers());
         game.setNrOfRoundsTotal(lobby.getNrOfRounds());
         game.setTimePerRound(lobby.getTimePerRound());
 

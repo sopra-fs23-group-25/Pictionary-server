@@ -11,9 +11,10 @@ public class GameGetDTO {
 
     private List<Player> players;
 
-    private List<Player> painted;
 
     private List<String> wordsPainted;
+
+    private int nrOfRoundsPlayed;
 
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
@@ -23,10 +24,10 @@ public class GameGetDTO {
     }
     public void setPlayers(List<Player> players) {this.players = players;}
 
-    public List<Player> getPainted() {return painted;}
-    public void setPainted(List<Player> painted) {this.painted = painted;}
-
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
+
+    public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
+    public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
 
 }

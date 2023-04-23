@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
@@ -63,7 +62,7 @@ public class LobbyService {
         Player host = user.convertToPlayer();
         host.makeHost();
         host.setCurrentRole(PlayerRole.PAINTER);
-        newLobby.setPlayersInLobby(new ArrayList<>());
+        newLobby.setPlayers(new ArrayList<>());
         newLobby.addPlayer(host);
 
         try {
