@@ -25,8 +25,6 @@ public class Player implements Serializable, Comparable<Player> {
     PlayerRole currentRole = PlayerRole.GUESSER;
     @Column
     Long totalScore = 0L;
-    @Column
-    Duration totalTime;
 
     @Override
     public int compareTo(Player player) {
@@ -49,9 +47,6 @@ public class Player implements Serializable, Comparable<Player> {
 
     public Long getTotalScore() {return totalScore;}
     public void setTotalScore(Long totalScore) {this.totalScore = totalScore;}
-
-    public Duration getTotalTime() {return totalTime;}
-    public void setTotalTime(Duration totalTime) {this.totalTime = totalTime;}
 
     public String getUsername() {return username;}
     public void setUsername(String username) {
