@@ -128,6 +128,7 @@ public class TurnServiceTest {
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         turnService.verifyGuess(testTurn, guess);
+
         assertEquals(0, guess.getScore());
 
     }
@@ -149,6 +150,7 @@ public class TurnServiceTest {
         turnService.verifyGuess(testTurn, guess);
 
         assertEquals(guess, testTurn.getGuesses().get(0));
+
     }
 
     // missing: test for correct guess
@@ -166,5 +168,4 @@ public class TurnServiceTest {
 
         assertEquals(user.getUsername(),guess.getUsername());
     }
-
 }
