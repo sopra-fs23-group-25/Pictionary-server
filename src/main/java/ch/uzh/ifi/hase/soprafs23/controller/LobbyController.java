@@ -53,7 +53,7 @@ public class LobbyController {
 
         // convert each lobby to the API representation
         for (Lobby lobby : lobbies) {
-            if (!lobby.isRunning()) {lobbiesGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(lobby));}
+            if (!lobby.isRunning() && !lobby.isFull()) {lobbiesGetDTOs.add(DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(lobby));}
         }
         return lobbiesGetDTOs;
     }

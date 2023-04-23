@@ -56,6 +56,7 @@ public interface DTOMapper {
     @Mapping(source = "nrOfRounds", target = "nrOfRounds")
     @Mapping(source = "maxNrOfPlayers", target = "maxNrOfPlayers")
     @Mapping(source = "timePerRound", target = "timePerRound")
+    @Mapping(source = "players", target = "players")
     LobbyGetDTO convertEntityToLobbiesGetDTO(Lobby lobby);
 
     @Mapping(source = "lobbyName", target = "lobbyName")
@@ -77,6 +78,7 @@ public interface DTOMapper {
     @Mapping(source="lobbyId", target="lobbyId")
     @Mapping(source="players", target="players")
     @Mapping(source="wordsPainted", target="wordsPainted")
+    @Mapping(source="nrOfRoundsPlayed", target="nrOfRoundsPlayed")
     GameGetDTO convertEntityToGameGetDTO (Game game);
 
     @Mapping(source = "painterId", target = "painterId")
@@ -84,7 +86,6 @@ public interface DTOMapper {
     @Mapping(source = "word", target = "word")
     @Mapping(source = "guesses", target = "guesses")
     TurnGetDTO convertEntityToTurnGetDTO (Turn turn);
-
 
     @Mapping(source = "totalScore", target = "totalScore")
     @Mapping(source = "username", target = "username")

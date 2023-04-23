@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -45,7 +43,7 @@ public class LobbyServiceTest {
         testLobby.setNrOfRounds(2);
         testLobby.setTimePerRound(60L);
         testLobby.setRunning(false);
-        testLobby.setPlayersInLobby(new ArrayList<>());
+        testLobby.setPlayers(new ArrayList<>());
         testLobby.setMaxNrOfPlayers(5);
         testLobby.setHostId(1L);
 
@@ -73,7 +71,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
         assertEquals(testLobby.getTimePerRound(), createdLobby.getTimePerRound());
         assertEquals(testLobby.getMaxNrOfPlayers(), createdLobby.getMaxNrOfPlayers());
-        assertEquals(testLobby.getPlayersInLobby(), createdLobby.getPlayersInLobby());
+        assertEquals(testLobby.getPlayers(), createdLobby.getPlayers());
         assertEquals(testLobby.getHostId(), createdLobby.getHostId());
     }
 
@@ -135,7 +133,7 @@ public class LobbyServiceTest {
 
         lobbyService.joinLobby(testLobby, testUser);
 
-        assertEquals(testUser.convertToPlayer().getUserId(), testLobby.getPlayersInLobby().get(0).getUserId());
+        assertEquals(testUser.convertToPlayer().getUserId(), testLobby.getPlayers().get(0).getUserId());
 
     }
 

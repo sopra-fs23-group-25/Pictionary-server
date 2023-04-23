@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -138,6 +139,16 @@ public class TurnControllerTest {
         // then
         mockMvc.perform(getRequest)
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deleteTurn_exists() throws Exception {
+        doNothing().when(turnService).endTurn(Mockito.anyLong());
+
+        MockHttpServletRequestBuilder deleteRequest = delete("/lobbies/{id}/game/turn", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(deleteRequest).andExpect(status().isNoContent());
     }
 
     private String asJsonString(final Object object) {

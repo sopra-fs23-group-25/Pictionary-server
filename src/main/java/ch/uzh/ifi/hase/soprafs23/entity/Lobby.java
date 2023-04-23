@@ -13,7 +13,7 @@ public class Lobby implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Lobby() {
-        setPlayersInLobby(new ArrayList<>());
+        setPlayers(new ArrayList<>());
     }
 
     @Id
@@ -32,7 +32,7 @@ public class Lobby implements Serializable {
     private int nrOfRounds;
 
     @OneToMany (cascade = CascadeType.PERSIST)
-    private List<Player> playersInLobby;
+    private List<Player> players;
 
     @Column(nullable = false)
     private boolean isRunning = false;
@@ -73,16 +73,16 @@ public class Lobby implements Serializable {
         this.nrOfRounds = numberOfRounds;
     }
 
-    public List<Player> getPlayersInLobby() {
+    public List<Player> getPlayers() {
         List<Player> clonePlayers = new ArrayList<>();
-        if(playersInLobby != null) {
-            clonePlayers.addAll(playersInLobby);
+        if(players != null) {
+            clonePlayers.addAll(players);
             return clonePlayers;}
         return clonePlayers;
     }
 
-    public void setPlayersInLobby(List<Player> playersInLobby) {
-        this.playersInLobby = playersInLobby;
+    public void setPlayers(List<Player> playersInLobby) {
+        this.players = playersInLobby;
     }
 
     public boolean isRunning() {return isRunning;}
@@ -96,7 +96,7 @@ public class Lobby implements Serializable {
     }
 
     public void addPlayer(Player player){
-        playersInLobby.add(player);
+        players.add(player);
     }
 
     public Game getGame() {
@@ -108,7 +108,7 @@ public class Lobby implements Serializable {
     }
 
     public boolean isFull() {
-        return maxNrOfPlayers == playersInLobby.size();
+        return maxNrOfPlayers == players.size();
     }
     public Long getHostId() {
         return hostId;
@@ -118,6 +118,6 @@ public class Lobby implements Serializable {
         this.hostId = hostId;
     }
 
-    public int getCurrentNrOfPlayers() {return playersInLobby.size();}
+    public int getCurrentNrOfPlayers() {return players.size();}
 
 }

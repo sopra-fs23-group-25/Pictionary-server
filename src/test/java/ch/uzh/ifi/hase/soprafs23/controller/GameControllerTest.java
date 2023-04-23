@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
-import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,7 +44,7 @@ public class GameControllerTest {
         testLobby.setNrOfRounds(2);
         testLobby.setTimePerRound(60L);
         testLobby.setRunning(false);
-        testLobby.setPlayersInLobby(new ArrayList<>());
+        testLobby.setPlayers(new ArrayList<>());
         testLobby.setMaxNrOfPlayers(0);
 
         testGame.setLobbyId(1L);

@@ -20,7 +20,7 @@ public class Game implements Serializable {
     private int nrOfRoundsTotal;
 
     @Column
-    private int nrOfRoundsPlayed;
+    private int nrOfRoundsPlayed = 0;
 
     @Column
     private long timePerRound;
