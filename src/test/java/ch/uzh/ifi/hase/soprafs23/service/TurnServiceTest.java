@@ -23,8 +23,6 @@ public class TurnServiceTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
-    @Mock
-    private UserRepository userRepository;
     @InjectMocks
     private TurnService turnService;
 

@@ -101,6 +101,4 @@ public class GameServiceTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> gameService.getLobbyByLobbyId(1L));
     }
-
-
 }

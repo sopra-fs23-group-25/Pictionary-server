@@ -2,17 +2,17 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Duration;
 
 @Entity
-@Table(name = "PLAYER")
 public class Player implements Serializable, Comparable<Player> {
     @Id
+    @GeneratedValue
+    private long playerId;
+
+    @Column
     private Long userId;
     @Column
     String language;
