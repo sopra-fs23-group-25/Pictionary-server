@@ -104,18 +104,19 @@ public class Translator {
         public void setLanguage(String language) {
             this.language = language;
         }
-
-
     }
 
     private class TranslationThread implements Runnable {
 
         private TranslationRequest currentRequest;
         private TranslateTextResponse response;
-
+        private volatile boolean running = true;
+        public void stop() {
+            running = false;
+        }
         @Override
         public void run() {
-            while (true) {
+            while (running) {
                 synchronized (Translator.this) {
                     while (requestQueue.isEmpty()) {
                         try {
@@ -151,11 +152,9 @@ public class Translator {
         }
 
         private void setTranslationText(TranslationRequest request) {
-
             for (Translation translation : response.getTranslationsList()) {
                  request.translatedWord = translation.getTranslatedText();
             }
-
         }
     }
 }
