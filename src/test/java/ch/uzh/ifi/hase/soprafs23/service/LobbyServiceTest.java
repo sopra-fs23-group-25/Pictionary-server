@@ -123,48 +123,10 @@ public class LobbyServiceTest {
         assertThrows(ResponseStatusException.class, () -> lobbyService.getSingleLobby(testLobby.getLobbyId()));
     }
 
-    @Test
-    public void startGame_success_changesGameAndLobby() throws Exception {
 
-        List<Player> players = new ArrayList<>();
-        Player testPlayer = new Player();
-        testPlayer.setUserId(1L);
-        testPlayer.setLanguage("l");
-        players.add(testPlayer);
-        testLobby.setPlayersInLobby(players);
 
-        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
-        Game createdGame = lobbyService.newGame(testLobby);
 
-        assertTrue(testLobby.isRunning());
-        assertEquals(createdGame, testLobby.getGame());
-        //assertEquals(1L, createdGame.getLobbyId());
-        assertEquals(1L, testLobby.getPlayersInLobby().get(0).getUserId());
-        //assertEquals("l", createdGame.getPlayers().get(0).getLanguage());
-
-    }
-
-    @Test
-    public void startGame_alreadyAGame_throws409() {
-        testLobby.setGame(new Game());
-        testLobby.setRunning(true);
-        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-
-        assertThrows(ResponseStatusException.class, () -> lobbyService.newGame(testLobby));
-
-    }
-
-    @Test
-    public void endGame_changesLobby() {
-        testLobby.setRunning(true);
-        testLobby.setGame(new Game());
-
-        lobbyService.endGame(testLobby);
-
-        assertFalse(testLobby.isRunning());
-        assertNull(testLobby.getGame());
-    }
 
     @Test
     public void joinLobby_success() {

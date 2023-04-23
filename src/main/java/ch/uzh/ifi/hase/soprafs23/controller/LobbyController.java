@@ -81,39 +81,6 @@ public class LobbyController {
     // to understand than GET games/{lobbyId}, since the former directly references the Lobby
     // resource and the sub-resource Game, while the latter implies that you are retrieving a list of Game
     // resources associated with a Lobby ID.
-    @GetMapping("/lobbies/{lobbyId}/game")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public GameGetDTO getGameOfLobby(@PathVariable("lobbyId") long lobbyId) {
-
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-        Game game = lobby.getGame();
-
-        if (game == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game has not started yet!");
-        }
-
-        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
-    }
-
-    @PostMapping("/lobbies/{lobbyId}/game")
-    @ResponseStatus(HttpStatus.CREATED)
-    public GameGetDTO startGameInLobby(@PathVariable("lobbyId") long lobbyId) {
-
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId); // if deleted does not throw not found
-        Game game = lobbyService.newGame(lobby);
-
-        return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
-    }
-
-    @DeleteMapping("/lobbies/{lobbyId}/game")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGame(@PathVariable("lobbyId") long lobbyId) {
-        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
-
-        lobbyService.endGame(lobby);
-
-    }
 
     @DeleteMapping("/lobbies/{lobbyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
