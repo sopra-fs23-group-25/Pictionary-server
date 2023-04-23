@@ -11,7 +11,6 @@ public class GameGetDTO {
 
     private List<Player> players;
 
-
     private List<String> wordsPainted;
 
     private int nrOfRoundsPlayed;

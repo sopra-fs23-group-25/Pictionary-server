@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -45,7 +46,7 @@ public class TurnService {
 
         Turn newTurn = new Turn();
         newTurn.setTimePerRound(game.getTimePerRound());
-        newTurn.setWord("generate Word");
+        newTurn.setWord("duck");
         newTurn.setCorrectGuesses(0);
         newTurn.setGuesses(new ArrayList<>());
         newTurn.setPainterId(game.getPainter());
@@ -57,8 +58,19 @@ public class TurnService {
         return newTurn;
     }
 
+    // calculates result for painter and returns all points
+    public List<Guess> generateTurnResult (long lobbyId) {
+        Turn turn = getTurnByLobbyId(lobbyId);
+        Guess painterRes = new Guess();
+        painterRes.setUserId(turn.getPainterId());
+        painterRes.setScore(5L * turn.getCorrectGuesses());
+        painterRes.setGuess("");
+        turn.addGuess(painterRes);
 
-    public void endTurn(Long lobbyId) {
+        return turn.getGuesses();
+    }
+
+    public void updateGameEndOfTurn(Long lobbyId) {
         Turn turn = getTurnByLobbyId(lobbyId);
 
         Game game = getGameByLobbyId(lobbyId);

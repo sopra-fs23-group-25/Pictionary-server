@@ -107,31 +107,31 @@ public class Game implements Serializable {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No painter found!");
     }
 
-    private void setNextPainter() {
-        long nextPainterId = notPainted.remove(0).getUserId();
-        Player nextPainter = findPlayerById(nextPainterId);
-        nextPainter.setCurrentRole(PlayerRole.PAINTER);
-    } // implement selection logic private maybe
-
     public boolean isRunning() {return isRunning;}
     public void setRunning(boolean isRunning) {this.isRunning = isRunning;}
 
     public boolean getGameOver () {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
+    private void updatePoints(Turn turn) {
+        for(Guess guess : turn.getGuesses()) {
+            Player player = findPlayerById(guess.getUserId());
+            player.setTotalScore(player.getTotalScore() + guess.getScore());
+        }
+    }
+
+    private void redistributeRoles() {
+        for (Player player: players) {
+            player.setCurrentRole(PlayerRole.GUESSER);
+        }
+        long nextPainterId = notPainted.remove(0).getUserId();
+        Player nextPainter = findPlayerById(nextPainterId);
+        nextPainter.setCurrentRole(PlayerRole.PAINTER);
+    } // implement selection logic private maybe
+
     public void endTurn(Turn turn) {
 
-        //distribute points for painter
-        Player painter = findPlayerById(turn.getPainterId());
-        painter.setTotalScore(painter.getTotalScore() + (5 * turn.getCorrectGuesses()));
-        // make painter guesser again
-        painter.setCurrentRole(PlayerRole.GUESSER);
-        //distribute points for guessers
-        for(Guess guess : turn.getGuesses()) {
-            Player guesser = findPlayerById(guess.getUserId());
-            guesser.setTotalScore(guesser.getTotalScore() + guess.getScore());
-        }
-
+        updatePoints(turn);
         //check if this is the last turn
         if (getNotPainted().size() == 0) {
             // check if this is the last turn of the last round
@@ -142,12 +142,11 @@ public class Game implements Serializable {
             //start new round: update number of rounds played, reset list for painter logic, set next painter
             else {
                 setNrOfRoundsPlayed(getNrOfRoundsPlayed() + 1);
-                setNextPainter();
+                redistributeRoles();
             }
         }
         // this is not the last turn, just select next painter
-        else {setNextPainter();}
-        setTurn(null);
+        else {redistributeRoles();}
     }
 
     private Player findPlayerById(long userId) {
