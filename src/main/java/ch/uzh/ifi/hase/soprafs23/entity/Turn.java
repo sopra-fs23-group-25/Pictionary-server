@@ -11,7 +11,7 @@ public class Turn implements Serializable {
 
     private long timePerRound;
 
-    private int correctGuesses;
+    private int correctGuesses = 0;
 
     private List<Guess> guesses;
 

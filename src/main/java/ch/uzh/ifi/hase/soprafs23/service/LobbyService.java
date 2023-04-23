@@ -40,7 +40,6 @@ public class LobbyService {
             @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
             @Qualifier("userRepository") UserRepository userRepository)
     {
-
         this.lobbyRepository = lobbyRepository;
         this.userRepository = userRepository;
     }
@@ -77,7 +76,6 @@ public class LobbyService {
         catch (Exception e) {
             String baseErrorMessage = "The %s provided is not unique. Therefore, the Lobby could not be created!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, e.getMessage()));
-
         }
     }
 

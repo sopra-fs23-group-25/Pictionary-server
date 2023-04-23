@@ -10,7 +10,6 @@ public class Guess implements Serializable {
     private Long userId;
     private String username;
     private String guess;
-
     private Long score;
 
     public Guess(Long userId, String guess, long score){

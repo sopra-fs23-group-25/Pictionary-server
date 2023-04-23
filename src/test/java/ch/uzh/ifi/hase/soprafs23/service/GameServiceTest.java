@@ -38,7 +38,6 @@ public class GameServiceTest {
         testLobby.setNrOfRounds(1);
         testLobby.setMaxNrOfPlayers(1);
         testLobby.setTimePerRound(1L);
-
     }
 
     // start Game: success - already started (409)
@@ -99,4 +98,5 @@ public class GameServiceTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> gameService.getLobbyByLobbyId(1L));
     }
+
 }

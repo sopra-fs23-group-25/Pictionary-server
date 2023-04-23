@@ -18,14 +18,12 @@ import javax.transaction.Transactional;
 public class GameService {
 
     private final LobbyRepository lobbyRepository;
-    private final UserRepository userRepository;
 
     @Autowired
     public GameService(
-            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
-            @Qualifier("userRepository") UserRepository userRepository) {
+            @Qualifier("lobbyRepository") LobbyRepository lobbyRepository) {
         this.lobbyRepository = lobbyRepository;
-        this.userRepository = userRepository;}
+       }
 
     public Game newGame(Lobby lobby) {
 
@@ -36,12 +34,12 @@ public class GameService {
         lobby.setRunning(true);
 
         Game game = new Game();
+        game.setTurn(new Turn()); //instantiate game with new turn because we call delete at start of every round
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayers());
         game.setNotPainted(lobby.getPlayers());
-        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
-        game.setTimePerRound(lobby.getTimePerRound());
-        game.setTurn(new Turn());
+        game.setNrOfRoundsTotal(lobby.getNrOfRounds()); //if client can get the settings from lobby we don't need that in game
+        game.setTimePerRound(lobby.getTimePerRound()); //if client can get the settings from lobby we don't need that in game
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);
