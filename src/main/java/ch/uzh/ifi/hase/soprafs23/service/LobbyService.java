@@ -96,26 +96,7 @@ public class LobbyService {
 
     }
 
-    public Game newGame(Lobby lobby) {
 
-        if (lobby.getGame() != null && lobby.isRunning()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "There is already a Game in that Lobby!");
-        }
-
-        lobby.setRunning(true);
-
-        Game game = new Game();
-        game.setLobbyId(lobby.getLobbyId());
-        game.setPlayers(lobby.getPlayersInLobby());
-        game.setNotPainted(lobby.getPlayersInLobby());
-        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
-        game.setTimePerRound(lobby.getTimePerRound());
-
-        lobby.setGame(game);
-        lobbyRepository.save(lobby);
-
-        return game;
-    }
 
     public Lobby getSingleLobby(long id) {
         Lobby lobbyById = lobbyRepository.findByLobbyId(id);
@@ -139,13 +120,6 @@ public class LobbyService {
         if (lobbyWithSameName != null) {
             throw new RuntimeException("name");
         }
-    }
-
-    public void endGame(Lobby lobby) {
-        lobby.setGame(null);
-        lobby.setRunning(false);
-        lobbyRepository.save(lobby);
-        lobbyRepository.flush();
     }
 
     public void deleteLobby(Lobby lobby) {

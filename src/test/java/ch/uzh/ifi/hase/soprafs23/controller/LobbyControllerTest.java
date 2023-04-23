@@ -153,62 +153,15 @@ public class LobbyControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void startGame_lobbyNotFound_throws404() throws Exception {
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        MockHttpServletRequestBuilder postRequest = post("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
-
-        mockMvc.perform(postRequest)
-                .andExpect(status().isNotFound());
-
-    }
-
-    @Test
-    public void startGame_returnsJSONArray() throws Exception {
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
-        given(lobbyService.newGame(testLobby)).willReturn(testGame);
 
 
 
-        MockHttpServletRequestBuilder postRequest = post("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
 
-        mockMvc.perform(postRequest)
-                .andExpect(status().isCreated());
-    }
 
-    @Test
-    public void getGameOfLobby_returnsJSONArray() throws Exception {
-        testLobby.setGame(testGame);
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
-
-        MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
-
-        mockMvc.perform(getRequest)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.lobbyId").value(testGame.getLobbyId()));
-
-    }
 
     @Test
     public void getGameOfLobby_LobbyNotExists_throws404 () throws Exception {
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
-
-        mockMvc.perform(getRequest)
-                .andExpect(status().isNotFound());
-
-    }
-
-    @Test
-    public void getGameOfLobby_gameHasNotStarted_throws409 () throws Exception {
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
-        given(lobbyService.newGame(testLobby)).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game", 1)
                 .contentType(MediaType.APPLICATION_JSON); //?
@@ -230,18 +183,7 @@ public class LobbyControllerTest {
 
     }
 
-    @Test
-    public void deleteGameOfLobby_returns204() throws Exception {
-        testLobby.setGame(testGame);
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
 
-        MockHttpServletRequestBuilder deleteRequest = delete("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
-
-        mockMvc.perform(deleteRequest)
-                .andExpect(status().isNoContent());
-
-    }
 
     /**
      * Helper Functions
