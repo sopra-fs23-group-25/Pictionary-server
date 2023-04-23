@@ -95,6 +95,27 @@ public class LobbyControllerTest {
     }
 
     @Test
+    public void getLobby_exists() throws Exception{
+        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
+
+        MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest).andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteLobby_exists() throws Exception {
+        given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
+
+        MockHttpServletRequestBuilder deleteRequest = delete("/lobbies/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(deleteRequest).andExpect(status().isNoContent());
+
+    }
+
+    @Test
     public void givenCorrectInput_whenPutLobby_thenReturnSucess() throws Exception{
         LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
         lobbyPutDTO.setUserId(1L);
