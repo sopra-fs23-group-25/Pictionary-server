@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,38 @@ public class GameService {
         return game;
     }
 
+    public void integrateTurnResults(long lobbyId) {
+
+        Game game = lobbyRepository.findByLobbyId(lobbyId).getGame();
+        Turn turn = game.getTurn();
+
+        game.updatePoints(turn);
+        //check if this is the last turn
+        if (game.getNotPainted().size() == 0) {
+            // check if this is the last turn of the last round
+            if (game.getNrOfRoundsPlayed() == game.getNrOfRoundsTotal()) {
+                game.setGameOver(true);
+                game.setRunning(false);
+            }
+            //start new round: update number of rounds played, reset list for painter logic, set next painter
+            else {
+                game.setNrOfRoundsPlayed(game.getNrOfRoundsPlayed() + 1);
+                game.redistributeRoles();
+            }
+        }
+        // this is not the last turn, just select next painter
+        else {game.redistributeRoles();}
+
+        lobbyRepository.save(getLobbyByLobbyId(lobbyId));
+    }
+
+
     public void endGame(Lobby lobby) {
         lobby.setGame(null);
         lobby.setRunning(false);
         lobbyRepository.save(lobby);
         lobbyRepository.flush();
     }
-
-
 
     public Lobby getLobbyByLobbyId(long lobbyId) {
         Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);

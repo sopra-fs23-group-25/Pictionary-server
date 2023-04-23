@@ -31,6 +31,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public void endOfTurnUpdate (@PathVariable("lobbyId") long lobbyId) {
 
+        gameService.integrateTurnResults(lobbyId);
     }
 
 

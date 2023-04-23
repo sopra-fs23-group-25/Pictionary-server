@@ -113,40 +113,11 @@ public class Game implements Serializable {
     public boolean getGameOver () {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
-    private void updatePoints(Turn turn) {
+    public void updatePoints(Turn turn) {
         for(Guess guess : turn.getGuesses()) {
             Player player = findPlayerById(guess.getUserId());
             player.setTotalScore(player.getTotalScore() + guess.getScore());
         }
-    }
-
-    private void redistributeRoles() {
-        for (Player player: players) {
-            player.setCurrentRole(PlayerRole.GUESSER);
-        }
-        long nextPainterId = notPainted.remove(0).getUserId();
-        Player nextPainter = findPlayerById(nextPainterId);
-        nextPainter.setCurrentRole(PlayerRole.PAINTER);
-    } // implement selection logic private maybe
-
-    public void endTurn(Turn turn) {
-
-        updatePoints(turn);
-        //check if this is the last turn
-        if (getNotPainted().size() == 0) {
-            // check if this is the last turn of the last round
-            if (getNrOfRoundsPlayed() == getNrOfRoundsTotal()) {
-                setGameOver(true);
-                setRunning(false);
-            }
-            //start new round: update number of rounds played, reset list for painter logic, set next painter
-            else {
-                setNrOfRoundsPlayed(getNrOfRoundsPlayed() + 1);
-                redistributeRoles();
-            }
-        }
-        // this is not the last turn, just select next painter
-        else {redistributeRoles();}
     }
 
     private Player findPlayerById(long userId) {
@@ -157,5 +128,14 @@ public class Game implements Serializable {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found!");
     }
+
+    public void redistributeRoles() {
+        for (Player player: players) {
+            player.setCurrentRole(PlayerRole.GUESSER);
+        }
+        long nextPainterId = notPainted.remove(0).getUserId();
+        Player nextPainter = findPlayerById(nextPainterId);
+        nextPainter.setCurrentRole(PlayerRole.PAINTER);
+    } // implement selection logic private maybe
 
 }
