@@ -13,6 +13,7 @@ public class Translator {
     private static Translator instance = null;
     private static TranslationServiceClient client = null;
     private static Queue<TranslationRequest> requestQueue = new LinkedList<>();
+    private Thread translationThread;
 
     private Translator() throws IOException {
         String projectId = "sopra-fs23-group-25-server";
@@ -21,10 +22,12 @@ public class Translator {
         // Initialize the TranslationServiceClient once when the Translator object is created
         try {
             client = TranslationServiceClient.create();
-            Thread translationThread = new Thread(new TranslationThread());
+            translationThread = new Thread(new TranslationThread());
+            translationThread.start();
 
         }
         catch (Exception e) {
+            System.err.println(e);
         }
     }
 
@@ -36,22 +39,22 @@ public class Translator {
     }
 
 
-    public String getSingleTranslation(String word, String language) throws InterruptedException {
+    public synchronized String getSingleTranslation(String word, String language) throws InterruptedException {
         TranslationRequest currentRequest = new TranslationRequest(word, language);
         addSingleRequest(currentRequest);
         while (currentRequest.translatedWord == null) {
-            wait(100);
+            this.wait();
         }
         return currentRequest.translatedWord;
     }
 
-    public LinkedList<String> getListTranslation(LinkedList<String> wordList, String language) throws InterruptedException {
+    public synchronized LinkedList<String> getListTranslation(LinkedList<String> wordList, String language) throws InterruptedException {
         LinkedList<String> translatedWordList = new LinkedList<>();
         for (String word:wordList){
             TranslationRequest currentRequest = new TranslationRequest(word, language);
             addSingleRequest(currentRequest);
             while (currentRequest.translatedWord == null) {
-                wait(50);
+                this.wait();
             }
             translatedWordList.add(currentRequest.translatedWord);
 
@@ -64,6 +67,7 @@ public class Translator {
 /////// Helper Classes and functions
     private synchronized void addSingleRequest(TranslationRequest newRequest) {
         requestQueue.add(newRequest);
+        this.notifyAll();
     }
 
     private synchronized void addMultipleRequest(LinkedList<TranslationRequest> newRequestList) {
@@ -108,10 +112,10 @@ public class Translator {
         @Override
         public void run() {
             while (true) {
-                synchronized (requestQueue) {
+                synchronized (Translator.this) {
                     while (requestQueue.isEmpty()) {
                         try {
-                            requestQueue.wait();
+                            Translator.this.wait();
                         }
                         catch (InterruptedException e) {
                             e.printStackTrace();
@@ -123,6 +127,7 @@ public class Translator {
                         try {
                             response = translateText(currentRequest.getLanguage(), currentRequest.getWord(), client);
                             setTranslationText(currentRequest);
+                            Translator.this.notifyAll();
                         }
                         catch (IOException e) {
                             throw new RuntimeException(e);
@@ -140,9 +145,6 @@ public class Translator {
 
             return client.translateText(request);
         }
-
-
-
 
         private void setTranslationText(TranslationRequest request) {
 

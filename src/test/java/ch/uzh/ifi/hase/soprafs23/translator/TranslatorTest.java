@@ -17,14 +17,16 @@ public class TranslatorTest {
     public TranslatorTest() throws IOException {
     }
 
-    /*@Test
+    @Test
     public void testTranslator_singleWordInput() {
         String testString = "Er";
         String testLanguage = "de";
         try {
-            assertEquals(translator.getSingleTranslation(testString, testLanguage), "He");
+            String testResult = translator.getSingleTranslation(testString, testLanguage);
+            assertEquals( testResult, "He");
         }
         catch (Exception e) {
+            System.err.println("we got this Errror:    " + e);
         }
 
     }
@@ -39,5 +41,5 @@ public class TranslatorTest {
         }
         catch (Exception e) {
         }
-    }*/
+    }
 }
