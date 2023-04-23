@@ -186,7 +186,7 @@ public class LobbyServiceTest {
         assertEquals(testLobby.getLobbyName(), joinedLobby.getLobbyName());
     }
 
-    /*@Test
+    @Test
     public void joinLobby_gameStarted_noSuccess() {
         User testUser2 = new User();
 
@@ -195,6 +195,9 @@ public class LobbyServiceTest {
         testUser2.setUserId(2L);
         testUser2.setLanguage("en");
         testUser2.setLobbyId(null);
+
+        testLobby.setMaxNrOfPlayers(1);
+
 
         when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
@@ -209,7 +212,7 @@ public class LobbyServiceTest {
         Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
 
         assertNull(joinedLobby);
-    }*/
+    }
 
     /*@Test
     public void joinLobby_isFull_noSuccess() {
