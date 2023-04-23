@@ -58,6 +58,15 @@ public class LobbyController {
         return lobbiesGetDTOs;
     }
 
+    @GetMapping("/lobbies/{lobbyId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public LobbyGetDTO getLobby(@PathVariable("lobbyId") long lobbyId) {
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+
+        return DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(lobby);
+    }
+
     @PutMapping("/lobbies/{lobbyId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -70,9 +79,6 @@ public class LobbyController {
             if (joinedLobby == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined!");
             }
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be found.");
         }
     }
 
