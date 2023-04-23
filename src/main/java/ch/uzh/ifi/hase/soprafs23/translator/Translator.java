@@ -5,6 +5,7 @@ import com.google.cloud.translate.v3.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class Translator {
@@ -40,6 +41,9 @@ public class Translator {
 
 
     public synchronized String getSingleTranslation(String word, String language) throws InterruptedException {
+        if(Objects.equals(language, "en")){
+            return word;
+        }
         TranslationRequest currentRequest = new TranslationRequest(word, language);
         addSingleRequest(currentRequest);
         while (currentRequest.translatedWord == null) {
