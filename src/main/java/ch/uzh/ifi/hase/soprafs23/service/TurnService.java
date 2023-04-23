@@ -1,11 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-import ch.uzh.ifi.hase.soprafs23.entity.Guess;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Turn;
+import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs23.translator.Translator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Service
@@ -21,6 +20,17 @@ public class TurnService {
 
     private final LobbyRepository lobbyRepository;
     private final UserRepository userRepository;
+
+    private Translator translator;
+
+    {
+        try {
+            translator = Translator.getInstance();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Autowired
     public TurnService(
@@ -57,11 +67,11 @@ public class TurnService {
         lobbyRepository.save(getLobbyByLobbyId(lobbyId)); // does this work to persist changes in lobby?
     }
 
-    public void verifyGuess(Turn turn, Guess guess) {
+    public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
         //error if user has already guesses
 
-        String translatedGuess = "generate Word"; // translate guess implement
+        String translatedGuess = translateGuess(guess); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
@@ -70,6 +80,14 @@ public class TurnService {
         else {guess.setScore(0);}
 
         turn.addGuess(guess);// add guess to list
+    }
+
+    private String translateGuess(Guess guess) throws InterruptedException {
+        String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
+        String guessedWord = guess.getGuess();
+
+        return translator.getSingleTranslation(guessedWord, language);
+
     }
 
     public Guess addUsername(Guess guess) {
