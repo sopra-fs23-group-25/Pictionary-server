@@ -42,7 +42,7 @@ public class TurnServiceTest {
         MockitoAnnotations.openMocks(this);
 
         testLobby.setLobbyId(1L);
-        testLobby.setPlayersInLobby(new ArrayList<>());
+        testLobby.setPlayers(new ArrayList<>());
         testLobby.setHostId(1L);
         testLobby.setNrOfRounds(1);
         testLobby.setMaxNrOfPlayers(1);
@@ -78,7 +78,7 @@ public class TurnServiceTest {
         host.setCurrentRole(PlayerRole.PAINTER);
         host.setUserId(1L);
         testLobby.addPlayer(host);
-        testGame.setPlayers(testLobby.getPlayersInLobby());
+        testGame.setPlayers(testLobby.getPlayers());
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 

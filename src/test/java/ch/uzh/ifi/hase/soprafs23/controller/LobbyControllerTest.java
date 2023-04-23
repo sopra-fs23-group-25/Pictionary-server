@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -55,8 +55,8 @@ public class LobbyControllerTest {
         testLobby.setNrOfRounds(2);
         testLobby.setTimePerRound(60L);
         testLobby.setRunning(false);
-        testLobby.setPlayersInLobby(null);
-        testLobby.setMaxNrOfPlayers(0);
+        testLobby.setPlayers(new ArrayList<>());
+        testLobby.setMaxNrOfPlayers(1);
 
         testGame.setLobbyId(1L);
 
@@ -65,7 +65,8 @@ public class LobbyControllerTest {
     @Test
     public void givenLobbies_whenGetLobbies_thenReturnJSONArray() throws Exception{
 
-        List<Lobby> allLobbies = Collections.singletonList(testLobby);
+        List<Lobby> allLobbies = new ArrayList<>();
+        allLobbies.add(testLobby);
         given(lobbyService.getLobbies()).willReturn(allLobbies);
 
         MockHttpServletRequestBuilder getRequest = get("/lobbies").contentType(MediaType.APPLICATION_JSON);
@@ -112,7 +113,6 @@ public class LobbyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(deleteRequest).andExpect(status().isNoContent());
-
     }
 
     @Test
