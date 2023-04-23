@@ -59,9 +59,8 @@ public class WebSocketController {
 
     @MessageMapping("/lobbies/{lobbyId}/start-game")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/start-game")
-    public UserJoinGameDTO startGame(@Payload UserJoinGameDTO message, @DestinationVariable Long lobbyId) {
+    public UserJoinGameDTO startGame(@Payload UserJoinGameDTO message) {
         // set gameHasStarted
-        websocketService.startGame(lobbyId);
         return message;
     }
 }
