@@ -114,4 +114,6 @@ public class TurnService {
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
         return game;
     }
+
+    public void setTranslator(Translator newTranslator){translator=newTranslator;}
 }
