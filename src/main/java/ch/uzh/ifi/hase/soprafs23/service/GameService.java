@@ -41,6 +41,7 @@ public class GameService {
         game.setNotPainted(lobby.getPlayers());
         game.setNrOfRoundsTotal(lobby.getNrOfRounds());
         game.setTimePerRound(lobby.getTimePerRound());
+        game.setTurn(new Turn());
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);
