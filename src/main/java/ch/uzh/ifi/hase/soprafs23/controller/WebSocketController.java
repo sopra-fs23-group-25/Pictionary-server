@@ -3,10 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.service.WebSocketService;
 import ch.uzh.ifi.hase.soprafs23.websockets.WebSocketConnectListener;
 import ch.uzh.ifi.hase.soprafs23.websockets.WebSocketDisconnectListener;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.ClearMessageDTO;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.UserJoinGameDTO;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.UserSocketGetDTO;
+import ch.uzh.ifi.hase.soprafs23.websockets.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -41,7 +38,7 @@ public class WebSocketController {
 
     @MessageMapping("/lobbies/{lobbyId}/drawing-clear")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/drawing-clear")
-    public ClearMessageDTO clearDrawing(@Payload ClearMessageDTO message) {
+    public MessageRelayDTO clearDrawing(@Payload MessageRelayDTO message) {
         return message;
     }
 
@@ -59,8 +56,13 @@ public class WebSocketController {
 
     @MessageMapping("/lobbies/{lobbyId}/start-game")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/start-game")
-    public UserJoinGameDTO startGame(@Payload UserJoinGameDTO message) {
-        // set gameHasStarted
+    public MessageRelayDTO startGame(@Payload MessageRelayDTO message) {
+        return message;
+    }
+
+    @MessageMapping("/lobbies/{lobbyId}/game-state")
+    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/game-state")
+    public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message){
         return message;
     }
 }
