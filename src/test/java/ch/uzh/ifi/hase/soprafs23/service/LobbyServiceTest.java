@@ -45,7 +45,7 @@ public class LobbyServiceTest {
         testLobby.setNrOfRounds(2);
         testLobby.setTimePerRound(60L);
         testLobby.setRunning(false);
-        testLobby.setPlayersInLobby(null);
+        testLobby.setPlayersInLobby(new ArrayList<>());
         testLobby.setMaxNrOfPlayers(5);
         testLobby.setHostId(1L);
 
@@ -167,75 +167,38 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobby_gameNotStarted_Success() {
-        User testUser2 = new User();
-
-        testUser2.setUsername("testUser2");
-        testUser2.setUserId(2L);
-        testUser2.setLanguage("en");
-        testUser2.setLobbyId(null);
-
-        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
+    public void joinLobby_success() {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        lobbyService.createLobby(testLobby);
+        lobbyService.joinLobby(testLobby, testUser);
 
-        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
+        assertEquals(testUser.convertToPlayer().getUserId(), testLobby.getPlayersInLobby().get(0).getUserId());
 
-        assertEquals(testLobby.getLobbyName(), joinedLobby.getLobbyName());
     }
 
     @Test
-    public void joinLobby_gameStarted_noSuccess() {
-        User testUser2 = new User();
+    public void joinLobby_lobbyFull_returns400() {
 
+        testLobby.setMaxNrOfPlayers(0);
 
-        testUser2.setUsername("testUser2");
-        testUser2.setUserId(2L);
-        testUser2.setLanguage("en");
-        testUser2.setLobbyId(null);
-
-        testLobby.setMaxNrOfPlayers(1);
-
-
-        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        lobbyService.createLobby(testLobby);
-
-        for (int i = 0; i <= 4; i++) {
-            lobbyService.joinLobby(testLobby, testUser);
-        }
-
-        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
-
-        assertNull(joinedLobby);
+        assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby,testUser));
     }
 
-    /*@Test
-    public void joinLobby_isFull_noSuccess() {
-        User testUser2 = new User();
+    @Test
+    public void joinLobby_isRunning_returns400() {
 
+        testLobby.setMaxNrOfPlayers(1);
+        testLobby.setRunning(true);
 
-        testUser2.setUsername("testUser2");
-        testUser2.setUserId(2L);
-        testUser2.setLanguage("en");
-        testUser2.setLobbyId(null);
-
-        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(null);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        lobbyService.createLobby(testLobby);
-        testLobby.setRunning(true);
-        //when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
-
-        Lobby joinedLobby = lobbyService.joinLobby(testLobby, testUser2);
-
-        assertNull(joinedLobby);
-    }*/
+        assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby,testUser));
+    }
 
 
     /**
