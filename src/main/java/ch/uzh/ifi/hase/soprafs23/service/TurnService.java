@@ -58,30 +58,11 @@ public class TurnService {
         return newTurn;
     }
 
-    // calculates result for painter and returns all points
-    public List<Guess> generateTurnResult (long lobbyId) {
-        Turn turn = getTurnByLobbyId(lobbyId);
-        Guess painterRes = new Guess();
-        painterRes.setUserId(turn.getPainterId());
-        painterRes.setScore(5L * turn.getCorrectGuesses());
-        painterRes.setGuess("");
-        turn.addGuess(painterRes);
-
-        return turn.getGuesses();
-    }
-
-    public void updateGameEndOfTurn(Long lobbyId) {
-        Turn turn = getTurnByLobbyId(lobbyId);
-
-        Game game = getGameByLobbyId(lobbyId);
-        game.endTurn(turn);
-
-        lobbyRepository.save(getLobbyByLobbyId(lobbyId)); // does this work to persist changes in lobby?
-    }
-
     public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
         //error if user has already guesses
+
+        //update painter score
 
         String translatedGuess = translateGuess(guess); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
@@ -99,7 +80,12 @@ public class TurnService {
         String guessedWord = guess.getGuess();
 
         return translator.getSingleTranslation(guessedWord, language);
+    }
 
+    public void deleteTurn(long lobbyId) {
+
+        Game game = getGameByLobbyId(lobbyId);
+        game.setTurn(null);
     }
 
     public Guess addUsername(Guess guess) {

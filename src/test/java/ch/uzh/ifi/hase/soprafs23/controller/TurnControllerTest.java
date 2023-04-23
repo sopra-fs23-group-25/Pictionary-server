@@ -143,7 +143,7 @@ public class TurnControllerTest {
 
     @Test
     public void deleteTurn_exists() throws Exception {
-        doNothing().when(turnService).updateGameEndOfTurn(Mockito.anyLong());
+        doNothing().when(turnService).deleteTurn(Mockito.anyLong());
 
         MockHttpServletRequestBuilder deleteRequest = delete("/lobbies/{id}/game/turn", 1)
                 .contentType(MediaType.APPLICATION_JSON);
