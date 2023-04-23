@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs23.translator.Translator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,12 +26,16 @@ public class TurnServiceTest {
     private LobbyRepository lobbyRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private Translator translator;
     @InjectMocks
     private TurnService turnService;
 
     Lobby testLobby = new Lobby();
     Game testGame = new Game();
     Turn testTurn = new Turn();
+
+    User testUser = new User();
 
     @BeforeEach
     public void setup() {
@@ -56,6 +61,14 @@ public class TurnServiceTest {
 
         testLobby.setGame(testGame);
         testGame.setTurn(testTurn);
+
+        testUser.setUserId(1L);
+        testUser.setLanguage("en");
+        testUser.setUsername("testUser");
+
+        // Create a mock Translator instance
+        translator = Mockito.mock(Translator.class);
+        turnService.setTranslator(translator);
 
     }
 
@@ -103,9 +116,18 @@ public class TurnServiceTest {
     @Test
     public void verifyGuess_incorrect_0points () throws InterruptedException {
         Guess guess = new Guess();
+        guess.setGuess("");
+        guess.setUsername("testUser");
+        guess.setScore(0);
         guess.setUserId(1L);
-        turnService.verifyGuess(testTurn, guess);
 
+        // Specify the behavior of the getSingleTranslation() method
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any()))
+                .thenReturn("mock translation");
+
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        turnService.verifyGuess(testTurn, guess);
         assertEquals(0, guess.getScore());
 
     }
@@ -113,11 +135,20 @@ public class TurnServiceTest {
     @Test
     public void verifyGuess_incorrect_addsGuessToTurn () throws InterruptedException {
         Guess guess = new Guess();
+        guess.setGuess("");
+        guess.setUsername("testUser");
+        guess.setScore(0);
         guess.setUserId(1L);
+
+        // Specify the behavior of the getSingleTranslation() method
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any()))
+                .thenReturn("mock translation");
+
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
         turnService.verifyGuess(testTurn, guess);
 
         assertEquals(guess, testTurn.getGuesses().get(0));
-
     }
 
     // missing: test for correct guess
@@ -135,4 +166,5 @@ public class TurnServiceTest {
 
         assertEquals(user.getUsername(),guess.getUsername());
     }
+
 }
