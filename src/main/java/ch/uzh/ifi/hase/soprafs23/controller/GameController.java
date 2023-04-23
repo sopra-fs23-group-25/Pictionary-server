@@ -27,6 +27,13 @@ public class GameController {
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
     }
 
+    @PutMapping("/lobbies/{lobbyId}/game")
+    @ResponseStatus(HttpStatus.OK)
+    public void endOfTurnUpdate (@PathVariable("lobbyId") long lobbyId) {
+
+    }
+
+
     @GetMapping("/lobbies/{lobbyId}/game")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
