@@ -68,7 +68,7 @@ public class TurnService {
 
         //update painter score
 
-        String translatedGuess = translateGuess(guess); // translate guess implement
+        String translatedGuess = translateGuess(guess, true); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
             guess.setGuess(translatedGuess);
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
@@ -121,11 +121,16 @@ public class TurnService {
         }
     }
 
-    private String translateGuess(Guess guess) throws InterruptedException {
+
+    //used to prepare a guess for translation
+    // translator need to know which way to translate, therefore a flag (playerToSystem) is set accordingly
+    private String translateGuess(Guess guess, boolean playerToSystem) throws InterruptedException {
+
+
         String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
         String guessedWord = guess.getGuess();
 
-        return translator.getSingleTranslation(guessedWord, language, true);
+        return translator.getSingleTranslation(guessedWord, language, playerToSystem);
     }
     protected Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
         int loopCounter = 0;
@@ -148,7 +153,9 @@ public class TurnService {
 
         return newTurn;
     }
-    public void setTranslator(Translator newTranslator){translator=newTranslator;}
+
+    // used for testing
+    protected void setTranslator(Translator newTranslator){translator=newTranslator;}
 
 
 }

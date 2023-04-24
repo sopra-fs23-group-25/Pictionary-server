@@ -15,6 +15,8 @@ public class Translator {
     private static Queue<TranslationRequest> requestQueue = new LinkedList<>();
     private Thread translationThread;
 
+
+    // Constructor setting up Connection to Google Cloud Translate
     private Translator() throws IOException {
         String projectId = "sopra-fs23-group-25-server";
         LocationName parent = LocationName.of(projectId, "global");
@@ -31,6 +33,7 @@ public class Translator {
         }
     }
 
+    // Ensure only one Instance of Translator can exist at any Time
     public static synchronized Translator getInstance() throws IOException {
         if (instance == null) {
             instance = new Translator();
@@ -38,9 +41,11 @@ public class Translator {
         return instance;
     }
 
-
+    // Entry Point To Single Word Translation
+    // Adds one word to the Translation Queue,
+    // waits till its solved then returns it as a String
     public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) throws InterruptedException {
-        if(Objects.equals(language, "en")){
+        if (Objects.equals(language, "en")) {
             return word;
         }
         TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
@@ -51,10 +56,12 @@ public class Translator {
         return currentRequest.translatedWord;
     }
 
-
+    // Entry Point To List Translation
+    // Adds a List of words to the Translation Queue one by one
+    // waits till its solved, then returns them as a List
     public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) throws InterruptedException {
         List<String> translatedWordList = new ArrayList<>();
-        for (String word:wordList){
+        for (String word : wordList) {
             TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
             addSingleRequest(currentRequest);
             while (currentRequest.translatedWord == null) {
@@ -67,8 +74,7 @@ public class Translator {
     }
 
 
-
-/////// Helper Classes and functions
+    // Helper Classes and functions
     private synchronized void addSingleRequest(TranslationRequest newRequest) {
         requestQueue.add(newRequest);
         this.notifyAll();
@@ -77,6 +83,8 @@ public class Translator {
     private synchronized void addMultipleRequest(LinkedList<TranslationRequest> newRequestList) {
         requestQueue.addAll(newRequestList);
     }
+
+    // Class Entity used in Queue
     private static class TranslationRequest {
 
         public String translatedWord;
@@ -108,14 +116,17 @@ public class Translator {
         }
     }
 
+    // Always running thread, solving Requests in Queue
     private class TranslationThread implements Runnable {
 
         private TranslationRequest currentRequest;
         private TranslateTextResponse response;
         private volatile boolean running = true;
+
         public void stop() {
             running = false;
         }
+
         @Override
         public void run() {
             while (running) {
@@ -132,9 +143,10 @@ public class Translator {
                         currentRequest = requestQueue.poll();
                         try {
                             String currentRequestLanguage = currentRequest.getLanguage();
-                            if(currentRequest.playerToSystem){
+                            if (currentRequest.playerToSystem) {
                                 response = translateTextToServerLanguage(currentRequestLanguage, currentRequest.getWord(), client);
-                            }else{
+                            }
+                            else {
                                 response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
                             }
                             setTranslationText(currentRequest);
@@ -147,6 +159,7 @@ public class Translator {
                 }
             }
         }
+
         private static TranslateTextResponse translateTextToServerLanguage(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
 
             // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
@@ -165,7 +178,7 @@ public class Translator {
 
         private void setTranslationText(TranslationRequest request) {
             for (Translation translation : response.getTranslationsList()) {
-                 request.translatedWord = translation.getTranslatedText();
+                request.translatedWord = translation.getTranslatedText();
             }
         }
     }
