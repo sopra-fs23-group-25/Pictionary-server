@@ -69,6 +69,7 @@ public class TurnService {
 
         String translatedGuess = translateGuess(guess); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
+            guess.setGuess(translatedGuess);
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
             guess.setScore(score);
@@ -79,12 +80,6 @@ public class TurnService {
         turn.addGuess(guess);// add guess to list
     }
 
-    private String translateGuess(Guess guess) throws InterruptedException {
-        String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
-        String guessedWord = guess.getGuess();
-
-        return translator.getSingleTranslation(guessedWord, language);
-    }
 
     public void deleteTurn(long lobbyId) {
 
@@ -117,8 +112,6 @@ public class TurnService {
         return game;
     }
 
-    public void setTranslator(Translator newTranslator){translator=newTranslator;}
-
     private void givePainterPoints(Turn turn) {
         for (Guess guess : turn.getGuesses()) {
             if (guess.getUserId() == turn.getPainterId()) {
@@ -126,4 +119,35 @@ public class TurnService {
             }
         }
     }
+
+    private String translateGuess(Guess guess) throws InterruptedException {
+        String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
+        String guessedWord = guess.getGuess();
+
+        return translator.getSingleTranslation(guessedWord, language, true);
+    }
+    protected Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
+        int loopCounter = 0;
+        Turn newTurn = new Turn(turn.getPainterId(), turn.getTimePerRound(), turn.getCorrectGuesses(), turn.getGuesses(), turn.getWord());
+        String language = userRepository.findByUserId(userId).getLanguage();
+        List<Guess> originalGuesses = new ArrayList<>(newTurn.getGuesses());
+        List<Guess> translatedGuesses = new ArrayList<>();
+        List<String> queries = new ArrayList<>();
+        for (Guess guess : originalGuesses) {
+            translatedGuesses.add(guess.clone());
+        }
+        for (Guess guess:translatedGuesses){
+            queries.add(guess.getGuess());
+        }
+        queries=translator.getListTranslation(queries, language, false);
+        for (Guess guess:translatedGuesses){
+            guess.setGuess(queries.get(loopCounter));
+            loopCounter++;
+        }
+
+        return newTurn;
+    }
+    public void setTranslator(Translator newTranslator){translator=newTranslator;}
+
+
 }
