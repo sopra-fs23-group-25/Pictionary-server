@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 import java.time.Duration;
 
-public class Guess implements Serializable {
+public class Guess implements Serializable, Cloneable {
 
     private Long userId;
     private String username;
@@ -16,6 +16,15 @@ public class Guess implements Serializable {
         this.userId = userId;
         this.guess = guess;
         this.score = score;
+    }
+
+    @Override
+    public Guess clone() {
+        try {
+            return (Guess) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Unable to clone Guess object", e);
+        }
     }
 
     public Guess(){}
