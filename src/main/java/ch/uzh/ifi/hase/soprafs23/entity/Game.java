@@ -120,7 +120,7 @@ public class Game implements Serializable {
         }
     }
 
-    private Player findPlayerById(long userId) {
+    public Player findPlayerById(long userId) {
         for (Player player : players) {
             if (player.getUserId() == userId) {
                 return player;

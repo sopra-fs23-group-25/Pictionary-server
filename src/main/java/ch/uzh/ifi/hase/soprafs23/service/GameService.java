@@ -1,7 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -63,6 +65,9 @@ public class GameService {
             }
             //start new round: update number of rounds played, reset list for painter logic, set next painter
             else {
+                Player painter = game.findPlayerById(turn.getPainterId());
+                painter.setCurrentRole(PlayerRole.GUESSER);
+                game.setNotPainted(game.getPlayers());
                 game.setNrOfRoundsPlayed(game.getNrOfRoundsPlayed() + 1);
                 game.redistributeRoles();
             }
