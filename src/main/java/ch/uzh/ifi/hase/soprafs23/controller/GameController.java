@@ -33,7 +33,6 @@ public class GameController {
         gameService.integrateTurnResults(lobbyId);
     }
 
-
     @GetMapping("/lobbies/{lobbyId}/game")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -55,6 +54,5 @@ public class GameController {
         Lobby lobby = gameService.getLobbyByLobbyId(lobbyId);
 
         gameService.endGame(lobby);
-
     }
 }
