@@ -135,7 +135,7 @@ public class TurnService {
         List<Guess> translatedGuesses = new ArrayList<>();
         List<String> queries = new ArrayList<>();
         for (Guess guess : originalGuesses) {
-            translatedGuesses.add(guess.clone());
+            translatedGuesses.add(new Guess(guess));
         }
         for (Guess guess:translatedGuesses){
             queries.add(guess.getGuess());
