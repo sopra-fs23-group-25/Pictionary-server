@@ -57,6 +57,7 @@ public class TurnService {
         game.setTurn(newTurn);
 
         lobbyRepository.save(getLobbyByLobbyId(lobbyId));
+        lobbyRepository.flush();
 
         return newTurn;
     }

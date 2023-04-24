@@ -43,6 +43,7 @@ public class GameService {
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);
+        lobbyRepository.flush();
 
         return game;
     }
@@ -70,6 +71,7 @@ public class GameService {
         else {game.redistributeRoles();}
 
         lobbyRepository.save(getLobbyByLobbyId(lobbyId));
+        lobbyRepository.flush();
     }
 
 
