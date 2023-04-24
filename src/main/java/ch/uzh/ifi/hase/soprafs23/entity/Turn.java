@@ -7,6 +7,18 @@ import java.util.List;
 
 public class Turn implements Serializable {
 
+    public Turn(){
+
+    }
+
+    public Turn(long painterId, long timePerRound, int correctGuesses, List<Guess> guesses, String word){
+        this.painterId = painterId;
+        this.timePerRound = timePerRound;
+        this.correctGuesses = correctGuesses;
+        this.guesses = guesses;
+        this.word = word;
+    }
+
     private long painterId;
 
     private long timePerRound;
