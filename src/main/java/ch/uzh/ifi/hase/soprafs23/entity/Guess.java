@@ -18,13 +18,11 @@ public class Guess implements Serializable, Cloneable {
         this.score = score;
     }
 
-    @Override
-    public Guess clone() {
-        try {
-            return (Guess) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Unable to clone Guess object", e);
-        }
+    public Guess(Guess guess) {
+        this.userId = guess.userId;
+        this.username = guess.username;
+        this.guess = guess.guess;
+        this.score = guess.score;
     }
 
     public Guess(){}
