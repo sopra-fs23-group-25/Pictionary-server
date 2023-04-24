@@ -123,7 +123,7 @@ public class Translator {
                             Translator.this.wait();
                         }
                         catch (InterruptedException e) {
-                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
                         }
                     }
 
