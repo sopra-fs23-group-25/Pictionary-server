@@ -2,13 +2,14 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Turn implements Serializable {
 
     public Turn(){
-
+        this.guesses = new ArrayList<>();
     }
 
     public Turn(long painterId, long timePerRound, int correctGuesses, List<Guess> guesses, String word){
