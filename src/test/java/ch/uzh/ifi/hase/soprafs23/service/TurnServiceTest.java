@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -122,7 +123,7 @@ public class TurnServiceTest {
         guess.setUserId(1L);
 
         // Specify the behavior of the getSingleTranslation() method
-        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any()))
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
                 .thenReturn("mock translation");
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
@@ -142,7 +143,7 @@ public class TurnServiceTest {
         guess.setUserId(1L);
 
         // Specify the behavior of the getSingleTranslation() method
-        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any()))
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
                 .thenReturn("mock translation");
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
@@ -167,5 +168,20 @@ public class TurnServiceTest {
         turnService.addUsername(guess);
 
         assertEquals(user.getUsername(),guess.getUsername());
+    }
+
+    @Test
+    public void translateEntireTurn_success() throws InterruptedException {
+        testUser.setLanguage("de");
+        User testUser2 = new User(); testUser2.setUserId(2L); testUser2.setUsername("testUser2"); testUser2.setLanguage("en");
+        Guess testGuess1 = new Guess(1L,"Vogel", 0L);
+        Guess testGuess2 = new Guess(2L,"Duck", 0L);
+        testTurn.addGuess(testGuess1);
+        testTurn.addGuess(testGuess2);
+        when(userRepository.findByUserId(1L)).thenReturn(testUser);
+        when(userRepository.findByUserId(2L)).thenReturn(testUser2);
+        Mockito.when(translator.getListTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
+                .thenReturn(new ArrayList<>(Arrays.asList("Vogel", "Ente")));
+        turnService.translateTurn(testTurn, testUser.getUserId());
     }
 }
