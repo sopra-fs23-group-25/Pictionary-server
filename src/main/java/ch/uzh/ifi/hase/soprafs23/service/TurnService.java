@@ -121,7 +121,6 @@ public class TurnService {
         }
     }
 
-
     //used to prepare a guess for translation
     // translator need to know which way to translate, therefore a flag (playerToSystem) is set accordingly
     private String translateGuess(Guess guess, boolean playerToSystem) throws InterruptedException {
@@ -132,20 +131,32 @@ public class TurnService {
 
         return translator.getSingleTranslation(guessedWord, language, playerToSystem);
     }
+
+    // function to translate all guesses in a turn for one User
+    // should ensure that neither Guesses nor Turn objects are used as references
+    // instead it should copy each Turn and Guess it works with
+    // currently only supports "System To User" Translation
+    // return a copied and modified instance of original Turn
     protected Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
-        int loopCounter = 0;
-        Turn newTurn = new Turn(turn.getPainterId(), turn.getTimePerRound(), turn.getCorrectGuesses(), turn.getGuesses(), turn.getWord());
-        String language = userRepository.findByUserId(userId).getLanguage();
+
+        Turn newTurn = new Turn(turn);
+
         List<Guess> originalGuesses = new ArrayList<>(newTurn.getGuesses());
         List<Guess> translatedGuesses = new ArrayList<>();
         List<String> queries = new ArrayList<>();
+
+        String language = userRepository.findByUserId(userId).getLanguage();
+        int loopCounter = 0;
+
         for (Guess guess : originalGuesses) {
             translatedGuesses.add(new Guess(guess));
         }
         for (Guess guess:translatedGuesses){
             queries.add(guess.getGuess());
         }
+
         queries=translator.getListTranslation(queries, language, false);
+
         for (Guess guess:translatedGuesses){
             guess.setGuess(queries.get(loopCounter));
             loopCounter++;

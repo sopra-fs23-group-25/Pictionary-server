@@ -8,16 +8,18 @@ import java.util.List;
 
 public class Turn implements Serializable {
 
+    // ensures Turn gets initialized with an empty list instead of null
     public Turn(){
         this.guesses = new ArrayList<>();
     }
 
-    public Turn(long painterId, long timePerRound, int correctGuesses, List<Guess> guesses, String word){
-        this.painterId = painterId;
-        this.timePerRound = timePerRound;
-        this.correctGuesses = correctGuesses;
-        this.guesses = guesses;
-        this.word = word;
+    //  needed to copy a Turn object to prevent reference usage
+    public Turn(Turn turn){
+        this.painterId = turn.getPainterId();
+        this.timePerRound = turn.getTimePerRound();
+        this.correctGuesses = turn.getCorrectGuesses();
+        this.guesses = turn.getGuesses();
+        this.word = turn.getWord();
     }
 
     private long painterId;

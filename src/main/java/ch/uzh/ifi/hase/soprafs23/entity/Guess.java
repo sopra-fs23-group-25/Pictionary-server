@@ -19,10 +19,10 @@ public class Guess implements Serializable, Cloneable {
     }
 
     public Guess(Guess guess) {
-        this.userId = guess.userId;
-        this.username = guess.username;
-        this.guess = guess.guess;
-        this.score = guess.score;
+        this.userId = guess.getUserId();
+        this.username = guess.getUsername();
+        this.guess = guess.getGuess();
+        this.score = guess.getScore();
     }
 
     public Guess(){}
