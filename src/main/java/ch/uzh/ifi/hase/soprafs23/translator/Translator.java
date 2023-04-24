@@ -4,11 +4,10 @@ package ch.uzh.ifi.hase.soprafs23.translator;
 import com.google.cloud.translate.v3.*;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
 
 public class Translator {
+    private static final String SYSTEM_LANGUAGE = "en";
     static String projectId = "sopra-fs23-group-25-server";
     static LocationName parent = LocationName.of(projectId, "global");
     private static Translator instance = null;
@@ -40,11 +39,11 @@ public class Translator {
     }
 
 
-    public synchronized String getSingleTranslation(String word, String language) throws InterruptedException {
+    public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) throws InterruptedException {
         if(Objects.equals(language, "en")){
             return word;
         }
-        TranslationRequest currentRequest = new TranslationRequest(word, language);
+        TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
         addSingleRequest(currentRequest);
         while (currentRequest.translatedWord == null) {
             this.wait();
@@ -52,10 +51,11 @@ public class Translator {
         return currentRequest.translatedWord;
     }
 
-    public synchronized LinkedList<String> getListTranslation(LinkedList<String> wordList, String language) throws InterruptedException {
-        LinkedList<String> translatedWordList = new LinkedList<>();
+
+    public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) throws InterruptedException {
+        List<String> translatedWordList = new ArrayList<>();
         for (String word:wordList){
-            TranslationRequest currentRequest = new TranslationRequest(word, language);
+            TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
             addSingleRequest(currentRequest);
             while (currentRequest.translatedWord == null) {
                 this.wait();
@@ -82,10 +82,12 @@ public class Translator {
         public String translatedWord;
         private String word;
         private String language;
+        private boolean playerToSystem;
 
-        public TranslationRequest(String word, String language) {
+        public TranslationRequest(String word, String language, boolean playerToSystem) {
             this.word = word;
             this.language = language;
+            this.playerToSystem = playerToSystem;
             this.translatedWord = null;
         }
 
@@ -126,27 +128,37 @@ public class Translator {
                             Thread.currentThread().interrupt();
                         }
                     }
-
                     while (!requestQueue.isEmpty()) {
                         currentRequest = requestQueue.poll();
                         try {
-                            response = translateText(currentRequest.getLanguage(), currentRequest.getWord(), client);
+                            String currentRequestLanguage = currentRequest.getLanguage();
+                            if(currentRequest.playerToSystem){
+                                response = translateTextToServerLanguage(currentRequestLanguage, currentRequest.getWord(), client);
+                            }else{
+                                response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
+                            }
                             setTranslationText(currentRequest);
                             Translator.this.notifyAll();
                         }
                         catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-
                     }
                 }
             }
         }
-
-        private static TranslateTextResponse translateText(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
+        private static TranslateTextResponse translateTextToServerLanguage(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
 
             // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
-            TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode("en").addContents(word).build();
+            TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode(SYSTEM_LANGUAGE).addContents(word).build();
+
+            return client.translateText(request);
+        }
+
+        private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client) throws IOException {
+
+            // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
+            TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(SYSTEM_LANGUAGE).setTargetLanguageCode(targetLanguage).addContents(word).build();
 
             return client.translateText(request);
         }
