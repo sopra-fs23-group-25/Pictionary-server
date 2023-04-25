@@ -19,15 +19,12 @@ public class Turn implements Serializable {
     //  needed to copy a Turn object to prevent reference usage
     public Turn(Turn turn){
         this.painterId = turn.getPainterId();
-        this.timePerRound = turn.getTimePerRound();
         this.correctGuesses = turn.getCorrectGuesses();
         this.guesses = turn.getGuesses();
         this.word = turn.getWord();
     }
 
     private long painterId;
-
-    private long timePerRound;
 
     private int correctGuesses = 0;
 
@@ -60,14 +57,6 @@ public class Turn implements Serializable {
 
     public void setPainterId(long painterId) {
         this.painterId = painterId;
-    }
-
-    public long getTimePerRound() {
-        return timePerRound;
-    }
-
-    public void setTimePerRound(long timePerRound) {
-        this.timePerRound = timePerRound;
     }
 
     public void addGuess(Guess guess) {

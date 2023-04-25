@@ -9,7 +9,6 @@ public class GuessGetDTO {
     public String getGuess() {
         return guess;
     }
-
     public void setGuess(String guess) {
         this.guess = guess;
     }
@@ -17,13 +16,11 @@ public class GuessGetDTO {
     public Long getScore() {
         return score;
     }
-
     public void setScore(Long score) {
         this.score = score;
     }
 
     public String getUsername() {return this.username;}
-
     public void setUsername(String username) {this.username = username;}
 
 }

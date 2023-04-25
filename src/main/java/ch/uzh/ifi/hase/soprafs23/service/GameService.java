@@ -37,8 +37,6 @@ public class GameService {
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayers());
         game.setNotPainted(lobby.getPlayers());
-        game.setNrOfRoundsTotal(lobby.getNrOfRounds()); //if client can get the settings from lobby we don't need that in game
-        game.setTimePerRound(lobby.getTimePerRound()); //if client can get the settings from lobby we don't need that in game
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);

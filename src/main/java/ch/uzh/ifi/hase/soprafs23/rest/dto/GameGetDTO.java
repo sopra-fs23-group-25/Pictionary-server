@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
 
-import javax.persistence.*;
 import java.util.List;
 
 public class GameGetDTO {
@@ -20,9 +19,7 @@ public class GameGetDTO {
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+    public List<Player> getPlayers() {return players;}
     public void setPlayers(List<Player> players) {this.players = players;}
 
     public List<String> getWordsPainted() {return wordsPainted;}
