@@ -47,14 +47,12 @@ public class GameService {
         return game;
     }
 
-    public void integrateTurnResults(long lobbyId) {
+    public void integrateTurnResults(Game game) {
 
-        Game game = lobbyRepository.findByLobbyId(lobbyId).getGame();
         Turn turn = game.getTurn();
 
         game.updateWordsPainted(turn.getWord());
         updatePoints(game);
-        //game.updatePoints(turn);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {
             // check if this is the last turn of the last round
@@ -64,9 +62,9 @@ public class GameService {
             }
             //start new round: update number of rounds played, reset list for painter logic, set next painter
             else {
-                game.setNotPainted(game.getPlayers());
                 Player painter = game.findPlayerById(turn.getPainterId());
                 painter.setCurrentRole(PlayerRole.GUESSER);
+                game.setNotPainted(game.getPlayers());
                 game.setNrOfRoundsPlayed(game.getNrOfRoundsPlayed() + 1);
                 game.redistributeRoles();
             }
@@ -74,12 +72,11 @@ public class GameService {
         // this is not the last turn, just select next painter
         else {game.redistributeRoles();}
 
-        lobbyRepository.save(getLobbyByLobbyId(lobbyId));
+        lobbyRepository.save(getLobbyByLobbyId(game.getLobbyId())); // maybe not necessary then we can delete lobby id of game
         lobbyRepository.flush();
     }
 
     private void updatePoints(Game game){
-
         Turn turn = game.getTurn();
 
         for(Guess guess : turn.getGuesses()) {
@@ -101,10 +98,10 @@ public class GameService {
         return lobby;
     }
 
-    /*private Game getGameByLobbyId(Long lobbyId) {
+    public Game getGameByLobbyId(Long lobbyId) {
         Game game = getLobbyByLobbyId(lobbyId).getGame();
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
         return game;
-    }*/
+    }
 
 }

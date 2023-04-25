@@ -37,7 +37,7 @@ public class Game implements Serializable {
     private List<Player> notPainted;
 
     @ElementCollection
-    private List<String> wordsPainted;
+    private List<String> wordsPainted = new ArrayList<>();
 
     @Lob
     private Turn turn;

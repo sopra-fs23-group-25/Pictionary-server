@@ -1,7 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Player;
+import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +20,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,23 +46,14 @@ public class GameControllerTest {
         MockitoAnnotations.openMocks(this);
 
         testLobby.setLobbyId(1L);
-        testLobby.setLobbyName("testLobby");
-        testLobby.setNrOfRounds(2);
-        testLobby.setTimePerRound(60L);
-        testLobby.setRunning(false);
-        testLobby.setPlayers(new ArrayList<>());
-        testLobby.setMaxNrOfPlayers(0);
-
         testGame.setLobbyId(1L);
-
     }
 
+    // POST success - Lobby not found
     @Test
     public void startGame_returnsJSONArray() throws Exception {
         given(gameService.getLobbyByLobbyId(Mockito.anyLong())).willReturn(testLobby);
         given(gameService.newGame(testLobby)).willReturn(testGame);
-
-
 
         MockHttpServletRequestBuilder postRequest = post("/lobbies/{id}/game", 1)
                 .contentType(MediaType.APPLICATION_JSON); //?
@@ -65,17 +62,7 @@ public class GameControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @Test
-    public void startGame_lobbyNotFound_throws404() throws Exception {
-        given(gameService.getLobbyByLobbyId(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        MockHttpServletRequestBuilder postRequest = post("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON); //?
-
-        mockMvc.perform(postRequest)
-                .andExpect(status().isNotFound());
-
-    }
+    // GET: success - lobby not found - game not started
 
     @Test
     public void getGameOfLobby_returnsJSONArray() throws Exception {
@@ -91,7 +78,19 @@ public class GameControllerTest {
     }
 
     @Test
-    public void getGameOfLobby_gameHasNotStarted_throws409 () throws Exception {
+    public void startGame_lobbyNotFound_throws404() throws Exception {
+        given(gameService.getLobbyByLobbyId(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        MockHttpServletRequestBuilder postRequest = post("/lobbies/{id}/game", 1)
+                .contentType(MediaType.APPLICATION_JSON); //?
+
+        mockMvc.perform(postRequest)
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void getGameOfLobby_gameHasNotStarted_throws404 () throws Exception {
         given(gameService.getLobbyByLobbyId(Mockito.anyLong())).willReturn(testLobby);
         given(gameService.newGame(testLobby)).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -103,6 +102,21 @@ public class GameControllerTest {
 
     }
 
+    // PUT: success
+    @Test
+    public void putGame_success() throws Exception {
+        doNothing().when(gameService).integrateTurnResults(Mockito.any());
+        when(gameService.getGameByLobbyId(Mockito.anyLong())).thenReturn(testGame);
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game", 1)
+                .contentType(MediaType.APPLICATION_JSON); //?
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNoContent());
+
+    }
+
+    // DELETE: success
     @Test
     public void deleteGameOfLobby_returns204() throws Exception {
         testLobby.setGame(testGame);
