@@ -1,6 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,15 @@ public class Turn implements Serializable {
     }
 
     public void addGuess(Guess guess) {
-        this.guesses.add(guess);
+        for (Guess initializedGuess : guesses) {
+            if (initializedGuess.getUserId() == guess.getUserId()) {
+                if(initializedGuess.getGuess() != null) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT,
+                            "There is already a guess for this player!"); // insert username
+                }
+                initializedGuess.setGuess(guess.getGuess());
+                initializedGuess.setScore(guess.getScore());
+            }
+        }
     }
 }

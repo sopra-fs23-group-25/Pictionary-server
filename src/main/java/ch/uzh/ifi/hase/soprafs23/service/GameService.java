@@ -1,10 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.Turn;
+import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +47,12 @@ public class GameService {
         return game;
     }
 
-    public void integrateTurnResults(long lobbyId) {
+    public void integrateTurnResults(Game game) {
 
-        Game game = lobbyRepository.findByLobbyId(lobbyId).getGame();
         Turn turn = game.getTurn();
 
-        game.updatePoints(turn);
+        game.updateWordsPainted(turn.getWord());
+        updatePoints(game);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {
             // check if this is the last turn of the last round
@@ -75,10 +72,18 @@ public class GameService {
         // this is not the last turn, just select next painter
         else {game.redistributeRoles();}
 
-        lobbyRepository.save(getLobbyByLobbyId(lobbyId));
+        lobbyRepository.save(getLobbyByLobbyId(game.getLobbyId())); // maybe not necessary then we can delete lobby id of game
         lobbyRepository.flush();
     }
 
+    private void updatePoints(Game game){
+        Turn turn = game.getTurn();
+
+        for(Guess guess : turn.getGuesses()) {
+            Player player = game.findPlayerById(guess.getUserId());
+            player.setTotalScore(player.getTotalScore() + guess.getScore());
+        }
+    }
 
     public void endGame(Lobby lobby) {
         lobby.setGame(null);
@@ -93,11 +98,10 @@ public class GameService {
         return lobby;
     }
 
-    /*private Game getGameByLobbyId(Long lobbyId) {
+    public Game getGameByLobbyId(Long lobbyId) {
         Game game = getLobbyByLobbyId(lobbyId).getGame();
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
         return game;
-    }*/
-
+    }
 
 }

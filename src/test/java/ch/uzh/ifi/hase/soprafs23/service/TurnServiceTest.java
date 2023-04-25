@@ -15,10 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertNull;
 
 
 public class TurnServiceTest {
@@ -35,7 +37,6 @@ public class TurnServiceTest {
     Lobby testLobby = new Lobby();
     Game testGame = new Game();
     Turn testTurn = new Turn();
-
     User testUser = new User();
 
     @BeforeEach
@@ -73,6 +74,7 @@ public class TurnServiceTest {
 
     }
 
+    // START: success - lobby does not exist
     @Test
     public void initTurn_lobbyExists_success() {
         Player host = new Player();
@@ -96,6 +98,7 @@ public class TurnServiceTest {
         assertThrows(ResponseStatusException.class, () -> turnService.initTurn(testLobby.getLobbyId()));
     }
 
+    // GET: success - not found
     @Test
     public void getTurn_returnsTurn() {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
@@ -114,6 +117,7 @@ public class TurnServiceTest {
         assertThrows(ResponseStatusException.class, () -> turnService.getTurnByLobbyId(testLobby.getLobbyId()));
     }
 
+    // VERIFY GUESS: incorrect - correct
     @Test
     public void verifyGuess_incorrect_0points () throws InterruptedException {
         Guess guess = new Guess();
@@ -131,16 +135,17 @@ public class TurnServiceTest {
         turnService.verifyGuess(testTurn, guess);
 
         assertEquals(0, guess.getScore());
-
     }
 
     @Test
-    public void verifyGuess_incorrect_addsGuessToTurn () throws InterruptedException {
+    public void verifyGuess_correct_25points () throws InterruptedException {
         Guess guess = new Guess();
-        guess.setGuess("");
+        guess.setGuess("mock translation");
         guess.setUsername("testUser");
         guess.setScore(0);
         guess.setUserId(1L);
+
+        testTurn.setWord("mock translation");
 
         // Specify the behavior of the getSingleTranslation() method
         Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
@@ -150,12 +155,8 @@ public class TurnServiceTest {
 
         turnService.verifyGuess(testTurn, guess);
 
-        assertEquals(guess, testTurn.getGuesses().get(0));
-
+        assertEquals(25, guess.getScore());
     }
-
-    // missing: test for correct guess
-
 
     @Test
     public void getUsername_addsUsername() {
@@ -183,5 +184,73 @@ public class TurnServiceTest {
         Mockito.when(translator.getListTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
                 .thenReturn(new ArrayList<>(Arrays.asList("Vogel", "Ente")));
         turnService.translateTurn(testTurn, testUser.getUserId());
+    }
+
+    // DELETE turn: success
+    @Test
+    public void deleteTurn_success() {
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        turnService.deleteTurn(testLobby.getLobbyId());
+        assertNull(null, testGame.getTurn());
+    }
+
+    // Painter points: correct guess
+
+    /*@Test
+    public void updatePainterPoints() throws InterruptedException{
+        Guess guess = new Guess();
+        guess.setGuess(null);
+        guess.setUsername("testUser");
+        guess.setScore(0);
+        guess.setUserId(1L);
+
+        Guess guess2 = new Guess();
+        guess.setGuess("mock translation");
+        guess.setUsername("testUser");
+        guess.setScore(0);
+        guess.setUserId(1L);
+
+        List<Guess> guessList = new ArrayList<>();
+        guessList.add(guess);
+
+        testTurn.setPainterId(guess.getUserId());
+        testTurn.setGuesses(guessList);
+
+        testTurn.setWord("mock translation");
+
+        // Specify the behavior of the getSingleTranslation() method
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
+                .thenReturn("mock translation");
+
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        turnService.verifyGuess(testTurn, guess2);
+
+        assertEquals(30, guess.getScore());
+    }*/
+
+    @Test
+    public void player_guesses_twice() throws InterruptedException{
+        Guess guess = new Guess();
+        guess.setGuess("mock translation");
+        guess.setUsername("testUser");
+        guess.setScore(0);
+        guess.setUserId(1L);
+
+        List<Guess> guessList = new ArrayList<>();
+        guessList.add(guess);
+
+        testTurn.setPainterId(guess.getUserId());
+        testTurn.setGuesses(guessList);
+
+        testTurn.setWord("mock translation");
+
+        // Specify the behavior of the getSingleTranslation() method
+        Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
+                .thenReturn("mock translation");
+
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        assertThrows(ResponseStatusException.class, () -> turnService.verifyGuess(testTurn, guess));
     }
 }

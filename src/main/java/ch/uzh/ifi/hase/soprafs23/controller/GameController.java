@@ -27,10 +27,11 @@ public class GameController {
     }
 
     @PutMapping("/lobbies/{lobbyId}/game")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void endOfTurnUpdate (@PathVariable("lobbyId") long lobbyId) {
 
-        gameService.integrateTurnResults(lobbyId);
+        Game game = gameService.getGameByLobbyId(lobbyId);
+        gameService.integrateTurnResults(game);
     }
 
     @GetMapping("/lobbies/{lobbyId}/game")

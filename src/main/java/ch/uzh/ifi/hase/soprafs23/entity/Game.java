@@ -14,7 +14,7 @@ import java.util.List;
 public class Game implements Serializable {
 
     @Id
-    private Long lobbyId; //can delete
+    private Long lobbyId;
 
     @Column
     private int nrOfRoundsTotal;
@@ -37,7 +37,7 @@ public class Game implements Serializable {
     private List<Player> notPainted;
 
     @ElementCollection
-    private List<String> wordsPainted;
+    private List<String> wordsPainted = new ArrayList<>();
 
     @Lob
     private Turn turn;
@@ -68,7 +68,6 @@ public class Game implements Serializable {
         for (Player player : notPainted) {
             if (player.getCurrentRole() == PlayerRole.GUESSER) {
                 guessers.add(player);
-
             }
         }
         this.notPainted = guessers;}
@@ -113,13 +112,6 @@ public class Game implements Serializable {
     public boolean getGameOver () {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
-    public void updatePoints(Turn turn) {
-        for(Guess guess : turn.getGuesses()) {
-            Player player = findPlayerById(guess.getUserId());
-            player.setTotalScore(player.getTotalScore() + guess.getScore());
-        }
-    }
-
     public Player findPlayerById(long userId) {
         for (Player player : players) {
             if (player.getUserId() == userId) {
@@ -138,4 +130,21 @@ public class Game implements Serializable {
         nextPainter.setCurrentRole(PlayerRole.PAINTER);
     } // implement selection logic private maybe
 
+    public void updateWordsPainted(String word) {
+        wordsPainted.add(word);
+    }
+
+    public List<Guess> initGuesses() {
+        List <Guess> initGuesses = new ArrayList<>();
+
+        for(Player player : players) {
+            Guess playerGuess = new Guess();
+            playerGuess.setUserId(player.getUserId());
+            playerGuess.setScore(0);
+            playerGuess.setUsername(player.getUsername());
+            playerGuess.setGuess(null);
+            initGuesses.add(playerGuess);
+        }
+        return initGuesses;
+    }
 }

@@ -48,11 +48,8 @@ public class TurnService {
         newTurn.setTimePerRound(game.getTimePerRound());
         newTurn.setWord("duck");
         newTurn.setCorrectGuesses(0); // can use default value
-        newTurn.setGuesses(new ArrayList<>());
+        newTurn.setGuesses(game.initGuesses());
         newTurn.setPainterId(game.getPainter());
-
-        Guess painterResult = new Guess(game.getPainter(), null,0);
-        newTurn.addGuess(painterResult);
 
         game.setTurn(newTurn);
 
@@ -83,7 +80,6 @@ public class TurnService {
 
 
     public void deleteTurn(long lobbyId) {
-
         Game game = getGameByLobbyId(lobbyId);
         game.setTurn(null);
     }
@@ -124,7 +120,6 @@ public class TurnService {
     //used to prepare a guess for translation
     // translator need to know which way to translate, therefore a flag (playerToSystem) is set accordingly
     private String translateGuess(Guess guess, boolean playerToSystem) throws InterruptedException {
-
 
         String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
         String guessedWord = guess.getGuess();
@@ -167,6 +162,5 @@ public class TurnService {
 
     // used for testing
     protected void setTranslator(Translator newTranslator){translator=newTranslator;}
-
 
 }
