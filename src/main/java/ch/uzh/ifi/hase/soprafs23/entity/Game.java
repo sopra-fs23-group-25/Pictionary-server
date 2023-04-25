@@ -138,4 +138,8 @@ public class Game implements Serializable {
         nextPainter.setCurrentRole(PlayerRole.PAINTER);
     } // implement selection logic private maybe
 
+    public void updateWordsPainted(String word) {
+        wordsPainted.add(word);
+    }
+
 }

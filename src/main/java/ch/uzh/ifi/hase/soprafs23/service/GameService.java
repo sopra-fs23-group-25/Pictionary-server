@@ -55,6 +55,7 @@ public class GameService {
         Game game = lobbyRepository.findByLobbyId(lobbyId).getGame();
         Turn turn = game.getTurn();
 
+        game.updateWordsPainted(turn.getWord());
         game.updatePoints(turn);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {
@@ -65,9 +66,9 @@ public class GameService {
             }
             //start new round: update number of rounds played, reset list for painter logic, set next painter
             else {
+                game.setNotPainted(game.getPlayers());
                 Player painter = game.findPlayerById(turn.getPainterId());
                 painter.setCurrentRole(PlayerRole.GUESSER);
-                game.setNotPainted(game.getPlayers());
                 game.setNrOfRoundsPlayed(game.getNrOfRoundsPlayed() + 1);
                 game.redistributeRoles();
             }
@@ -78,7 +79,6 @@ public class GameService {
         lobbyRepository.save(getLobbyByLobbyId(lobbyId));
         lobbyRepository.flush();
     }
-
 
     public void endGame(Lobby lobby) {
         lobby.setGame(null);

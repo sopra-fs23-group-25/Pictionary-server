@@ -15,6 +15,8 @@ public class GameGetDTO {
 
     private int nrOfRoundsPlayed;
 
+    private boolean gameOver;
+
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
@@ -29,4 +31,6 @@ public class GameGetDTO {
     public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
     public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
 
+    public boolean isGameOver() {return gameOver;}
+    public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 }
