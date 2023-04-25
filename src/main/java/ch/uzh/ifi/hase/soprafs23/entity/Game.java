@@ -113,12 +113,12 @@ public class Game implements Serializable {
     public boolean getGameOver () {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
-    public void updatePoints(Turn turn) {
+    /*public void updatePoints(Turn turn) {
         for(Guess guess : turn.getGuesses()) {
             Player player = findPlayerById(guess.getUserId());
             player.setTotalScore(player.getTotalScore() + guess.getScore());
         }
-    }
+    }*/
 
     public Player findPlayerById(long userId) {
         for (Player player : players) {

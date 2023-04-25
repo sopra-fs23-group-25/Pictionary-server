@@ -1,10 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.Turn;
+import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +53,8 @@ public class GameService {
         Turn turn = game.getTurn();
 
         game.updateWordsPainted(turn.getWord());
-        game.updatePoints(turn);
+        updatePoints(game);
+        //game.updatePoints(turn);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {
             // check if this is the last turn of the last round
@@ -80,6 +78,16 @@ public class GameService {
         lobbyRepository.flush();
     }
 
+    private void updatePoints(Game game){
+
+        Turn turn = game.getTurn();
+
+        for(Guess guess : turn.getGuesses()) {
+            Player player = game.findPlayerById(guess.getUserId());
+            player.setTotalScore(player.getTotalScore() + guess.getScore());
+        }
+    }
+
     public void endGame(Lobby lobby) {
         lobby.setGame(null);
         lobby.setRunning(false);
@@ -98,6 +106,5 @@ public class GameService {
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
         return game;
     }*/
-
 
 }
