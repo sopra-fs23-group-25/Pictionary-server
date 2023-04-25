@@ -23,7 +23,6 @@ public class TurnController {
     @ResponseBody
     public TurnGetDTO runTurn(@PathVariable("lobbyId") long lobbyId) {
         Turn turn = turnService.initTurn(lobbyId);
-
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 
