@@ -35,7 +35,6 @@ public class TurnServiceTest {
     Lobby testLobby = new Lobby();
     Game testGame = new Game();
     Turn testTurn = new Turn();
-
     User testUser = new User();
 
     @BeforeEach

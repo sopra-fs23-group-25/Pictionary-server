@@ -48,11 +48,8 @@ public class TurnService {
         newTurn.setTimePerRound(game.getTimePerRound());
         newTurn.setWord("duck");
         newTurn.setCorrectGuesses(0); // can use default value
-        newTurn.setGuesses(new ArrayList<>());
+        newTurn.setGuesses(game.initGuesses());
         newTurn.setPainterId(game.getPainter());
-
-        Guess painterResult = new Guess(game.getPainter(), null,0);
-        newTurn.addGuess(painterResult);
 
         game.setTurn(newTurn);
 
@@ -167,6 +164,5 @@ public class TurnService {
 
     // used for testing
     protected void setTranslator(Translator newTranslator){translator=newTranslator;}
-
 
 }

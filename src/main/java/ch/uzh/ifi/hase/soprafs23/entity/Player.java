@@ -15,10 +15,10 @@ public class Player implements Serializable, Comparable<Player> {
     @Column
     private Long userId;
     @Column
-    String language;
+    private String language;
 
     @Column
-    String username;
+    private String username;
     @Column
     boolean isHost = false;
     @Column
