@@ -1,6 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-public class GuessPutDTO {
+public class GuessDTO {
 
     private Long userId;
     private String guess;
