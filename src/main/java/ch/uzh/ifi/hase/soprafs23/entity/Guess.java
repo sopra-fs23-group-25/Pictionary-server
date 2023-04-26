@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import java.time.Duration;
 
 public class Guess implements Serializable, Cloneable {
 
@@ -30,7 +28,6 @@ public class Guess implements Serializable, Cloneable {
     public long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -38,7 +35,6 @@ public class Guess implements Serializable, Cloneable {
     public String getGuess() {
         return guess;
     }
-
     public void setGuess(String guess) {
         this.guess = guess;
     }
@@ -46,7 +42,6 @@ public class Guess implements Serializable, Cloneable {
     public long getScore() {
         return score;
     }
-
     public void setScore(long score) {
         this.score = score;
     }
@@ -54,7 +49,6 @@ public class Guess implements Serializable, Cloneable {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }

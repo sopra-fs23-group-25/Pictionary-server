@@ -20,10 +20,7 @@ public class Game implements Serializable {
     private int nrOfRoundsTotal;
 
     @Column
-    private int nrOfRoundsPlayed = 0;
-
-    @Column
-    private long timePerRound;
+    private int currentRound = 1;
 
     @Column
     private boolean isRunning;
@@ -87,15 +84,8 @@ public class Game implements Serializable {
         this.nrOfRoundsTotal = nrOfRoundsTotal;
     }
 
-    public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
-    public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
-
-    public Long getTimePerRound() {
-        return timePerRound;
-    }
-    public void setTimePerRound(Long timePerRound) {
-        this.timePerRound = timePerRound;
-    }
+    public int getCurrentRound() {return currentRound;}
+    public void setCurrentRound(int nrOfRoundsPlayed) {this.currentRound = nrOfRoundsPlayed;}
 
     public Long getPainter() {
         for (Player player: players) {

@@ -90,10 +90,7 @@ public class LobbyService {
         // could be void
 
         return lobby;
-
     }
-
-
 
     public Lobby getSingleLobby(long id) {
         Lobby lobbyById = lobbyRepository.findByLobbyId(id);
@@ -111,7 +108,7 @@ public class LobbyService {
         return userById;
     }
 
-    void checkIfLobbyExists(Lobby lobbyToBeCreated) {
+    private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
 
         if (lobbyWithSameName != null) {

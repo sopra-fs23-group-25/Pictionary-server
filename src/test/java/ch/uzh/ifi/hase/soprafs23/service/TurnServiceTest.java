@@ -52,14 +52,11 @@ public class TurnServiceTest {
 
         testGame.setPlayers(new ArrayList<>());
         testGame.setLobbyId(1L);
-        testGame.setTimePerRound(1L);
-
 
         testTurn.setWord("testWord");
         testTurn.setGuesses(new ArrayList<>());
         testTurn.setPainterId(1L);
         testTurn.setCorrectGuesses(0);
-        testTurn.setTimePerRound(1L);
 
         testLobby.setGame(testGame);
         testGame.setTurn(testTurn);
@@ -88,7 +85,6 @@ public class TurnServiceTest {
         Turn turn = turnService.initTurn(testLobby.getLobbyId());
 
         assertEquals(testGame.getPainter(), turn.getPainterId());
-        assertEquals(testGame.getTimePerRound(), testTurn.getTimePerRound());
     }
 
     @Test

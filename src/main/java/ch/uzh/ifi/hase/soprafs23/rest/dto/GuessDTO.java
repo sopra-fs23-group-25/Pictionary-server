@@ -1,6 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-public class GuessPutDTO {
+public class GuessDTO {
 
     private Long userId;
     private String guess;
@@ -8,7 +8,6 @@ public class GuessPutDTO {
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -16,7 +15,6 @@ public class GuessPutDTO {
     public String getGuess() {
         return guess;
     }
-
     public void setGuess(String guess) {
         this.guess = guess;
     }

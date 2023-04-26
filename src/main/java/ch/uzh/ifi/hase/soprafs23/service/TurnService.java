@@ -45,7 +45,6 @@ public class TurnService {
         Game game = getGameByLobbyId(lobbyId);
 
         Turn newTurn = new Turn();
-        newTurn.setTimePerRound(game.getTimePerRound());
         newTurn.setWord("duck");
         newTurn.setCorrectGuesses(0); // can use default value
         newTurn.setGuesses(game.initGuesses());
@@ -60,10 +59,6 @@ public class TurnService {
     }
 
     public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
-
-        //implement error if user has already guessed
-
-        //update painter score
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {

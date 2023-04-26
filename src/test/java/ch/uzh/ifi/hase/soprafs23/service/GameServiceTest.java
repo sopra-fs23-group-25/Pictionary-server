@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 public class GameServiceTest {
@@ -157,7 +156,7 @@ public class GameServiceTest {
 
         testGame.setPlayers(playerList);
         testGame.setNotPainted(playerList);
-        testGame.setNrOfRoundsTotal(1);
+        testGame.setNrOfRoundsTotal(2);
 
         Turn testTurn = new Turn();
         testTurn.setGuesses(testGame.initGuesses());
@@ -170,7 +169,7 @@ public class GameServiceTest {
 
         gameService.integrateTurnResults(testGame);
 
-        assertEquals(1, testGame.getNrOfRoundsPlayed());
+        assertEquals(2, testGame.getCurrentRound());
     }
 
     @Test
@@ -203,4 +202,12 @@ public class GameServiceTest {
         assertFalse(testGame.isRunning());
     }
 
+    @Test
+    public void integrateResult_playerNotFound() {
+
+        Game game = new Game();
+        game.setPlayers(new ArrayList<>());
+
+        assertThrows(ResponseStatusException.class, () -> game.findPlayerById(2L));
+    }
 }

@@ -21,17 +21,13 @@ public class WebSocketService {
 
 
         private final Logger log = LoggerFactory.getLogger(ch.uzh.ifi.hase.soprafs23.service.WebSocketService.class);
-
         private final LobbyRepository lobbyRepository;
-        private final UserRepository userRepository;
 
         @Autowired
         public WebSocketService(
-                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
-                @Qualifier("userRepository") UserRepository userRepository)
+                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
         {
             this.lobbyRepository = lobbyRepository;
-            this.userRepository = userRepository;
         }
 
         public List<UserSocketGetDTO> getUsersInLobby(Long lobbyId) {
@@ -40,10 +36,10 @@ public class WebSocketService {
             for (Player player:lobby.getPlayers()){
                 UserSocketGetDTO currentPlayer = new UserSocketGetDTO();
                 currentPlayer.setUsername(player.getUsername());
+                currentPlayer.setUserId(player.getUserId());
                 listOfPlayers.add(currentPlayer);
             }
             return listOfPlayers;
 
         }
-
 }

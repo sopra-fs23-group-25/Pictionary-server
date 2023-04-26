@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
 
-import javax.persistence.*;
 import java.util.List;
 
 public class GameGetDTO {
@@ -13,23 +12,21 @@ public class GameGetDTO {
 
     private List<String> wordsPainted;
 
-    private int nrOfRoundsPlayed;
+    private int currentRound;
 
     private boolean gameOver;
 
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+    public List<Player> getPlayers() {return players;}
     public void setPlayers(List<Player> players) {this.players = players;}
 
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
 
-    public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
-    public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
+    public int getCurrentRound() {return currentRound;}
+    public void setCurrentRound(int currentRound) {this.currentRound = currentRound;}
 
     public boolean isGameOver() {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}

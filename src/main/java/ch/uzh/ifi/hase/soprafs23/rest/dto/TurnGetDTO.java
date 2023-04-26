@@ -7,8 +7,6 @@ import java.util.List;
 public class TurnGetDTO {
     private long painterId;
 
-    private long timePerRound;
-
     private List<Guess> guesses;
 
     private String word; // maybe
@@ -32,11 +30,4 @@ public class TurnGetDTO {
         this.painterId = painterId;
     }
 
-    public long getTimePerRound() {
-        return timePerRound;
-    }
-
-    public void setTimePerRound(long timePerRound) {
-        this.timePerRound = timePerRound;
-    }
 }

@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -37,8 +36,7 @@ public class GameService {
         game.setLobbyId(lobby.getLobbyId());
         game.setPlayers(lobby.getPlayers());
         game.setNotPainted(lobby.getPlayers());
-        game.setNrOfRoundsTotal(lobby.getNrOfRounds()); //if client can get the settings from lobby we don't need that in game
-        game.setTimePerRound(lobby.getTimePerRound()); //if client can get the settings from lobby we don't need that in game
+        game.setNrOfRoundsTotal(lobby.getNrOfRounds());
 
         lobby.setGame(game);
         lobbyRepository.save(lobby);
@@ -55,8 +53,9 @@ public class GameService {
         updatePoints(game);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {
+            game.setCurrentRound(game.getCurrentRound() + 1);
             // check if this is the last turn of the last round
-            if (game.getNrOfRoundsPlayed() == game.getNrOfRoundsTotal()) {
+            if (game.getCurrentRound() > game.getNrOfRoundsTotal()) {
                 game.setGameOver(true);
                 game.setRunning(false);
             }
@@ -65,7 +64,6 @@ public class GameService {
                 Player painter = game.findPlayerById(turn.getPainterId());
                 painter.setCurrentRole(PlayerRole.GUESSER);
                 game.setNotPainted(game.getPlayers());
-                game.setNrOfRoundsPlayed(game.getNrOfRoundsPlayed() + 1);
                 game.redistributeRoles();
             }
         }
