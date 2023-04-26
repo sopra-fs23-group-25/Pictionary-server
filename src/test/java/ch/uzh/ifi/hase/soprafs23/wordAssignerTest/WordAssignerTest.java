@@ -68,7 +68,7 @@ public class WordAssignerTest {
 
     @Test
     public void assignWord_allButOneTaken(){
-        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door", "", " "));
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door"));
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 

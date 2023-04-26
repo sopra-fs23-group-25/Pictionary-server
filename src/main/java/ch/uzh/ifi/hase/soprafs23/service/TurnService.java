@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.WordAssigner.WordAssigner;
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -22,6 +23,7 @@ public class TurnService {
     private final LobbyRepository lobbyRepository;
     private final UserRepository userRepository;
 
+    private WordAssigner wordAssigner;
     private Translator translator;
 
     {
@@ -38,6 +40,7 @@ public class TurnService {
             @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
             @Qualifier("userRepository") UserRepository userRepository) {
         this.lobbyRepository = lobbyRepository;
+        this.wordAssigner = new WordAssigner(lobbyRepository);
         this.userRepository = userRepository;}
 
     public Turn initTurn(Long lobbyId) {
@@ -45,7 +48,7 @@ public class TurnService {
         Game game = getGameByLobbyId(lobbyId);
 
         Turn newTurn = new Turn();
-        newTurn.setWord("duck");
+        newTurn.setWord(wordAssigner.getNewWord(lobbyId));
         newTurn.setCorrectGuesses(0); // can use default value
         newTurn.setGuesses(game.initGuesses());
         newTurn.setPainterId(game.getPainter());
