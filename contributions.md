@@ -60,9 +60,9 @@
 ||#87|guess validation and point calculation|
 |Pablo|#42| get points and role of each user at the beginning of a new turn|
 ||#44|ranking|
-|#45|display results and guesses at the end of each turn|
-|#47|display final painting, leader board and new painter|
-|#52|display results of game|
+||#45|display results and guesses at the end of each turn|
+||#47|display final painting, leader board and new painter|
+||#52|display results of game|
 |Nico|#48, #49|countdown timer|
 ||#49|host informs all players when timer is down and sends next game-state|
 ||#27|start game functionality|
