@@ -3,12 +3,10 @@ package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessPutDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -53,7 +51,7 @@ public class DTOMapperTest {
     @Test
     public void GuessPutDTO() {
 
-        GuessPutDTO guessPutDTO = new GuessPutDTO();
+        GuessDTO guessPutDTO = new GuessDTO();
         guessPutDTO.setGuess("testGuess");
         guessPutDTO.setUserId(1L);
 
