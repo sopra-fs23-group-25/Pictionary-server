@@ -12,7 +12,7 @@
 ||#27|implemented registration logic|
 ||#31, #33, #28|implemented login&logout logic|
 ||#51, #53|implemented udpate-user logic|
-|Nico|#3, #20|lobby-overview page|
+|Nico|#3, #20, #14|lobby-overview page|
 ||#21|routing between lobby-overview and lobby-settings|
 ||#22, #23, #24|lobby-setting page|
 |||refactoring of login&registration|
@@ -31,12 +31,13 @@
 ||#69|game endpoints|
 ||#27|creation and storing of game object|
 ||#67|start game logic (init)|
-|Nico|#33, #37, #34|drawing board component with drawing functionality and paint toolbar|
+|Nico|#33, #37, #34, #10|drawing board component with drawing functionality and paint toolbar|
 ||#40|gamepage inlcuding text-field for guesses|
 ||#9, #38|component to establish websocket connection|
 ||#13, #25|lobby joining and redirecting to game-page|
 ||#7, #9, #38|weboscket functionality sending/receiving messages|
 ||#12|component for player ranking (list)|
+||#8, #6|drawingboard eventlistener only for painter, not guesser|
 |Pepe|#51|pop-up window to display results of game|
 ||#52|play again button and functionality|
 ||#53|exit button and functionality|
@@ -62,11 +63,13 @@
 ||#45|display results and guesses at the end of each turn|
 ||#47|display final painting, leader board and new painter|
 ||#52|display results of game|
+||#55|implement guess model|
+||#46, #56|display assigned word|
 |Nico|#48, #49|countdown timer|
 ||#49|host informs all players when timer is down and sends next game-state|
 ||#27|start game functionality|
 ||#32, #31|render game page according to roles / game-state|
-||#40, #41|component and functionality to submit guess|
+||#40, #41, #54|component and functionality to submit guess|
 ||#12|display players who joined lobby over websockets|
 ||#50|display how many rounds are left|
 ||#36|implemented rendering of drawing board and toolbar|
