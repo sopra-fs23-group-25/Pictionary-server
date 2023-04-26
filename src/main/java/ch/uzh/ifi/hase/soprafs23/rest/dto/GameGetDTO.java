@@ -12,7 +12,7 @@ public class GameGetDTO {
 
     private List<String> wordsPainted;
 
-    private int nrOfRoundsPlayed;
+    private int currentRound;
 
     private boolean gameOver;
 
@@ -25,8 +25,8 @@ public class GameGetDTO {
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
 
-    public int getNrOfRoundsPlayed() {return nrOfRoundsPlayed;}
-    public void setNrOfRoundsPlayed(int nrOfRoundsPlayed) {this.nrOfRoundsPlayed = nrOfRoundsPlayed;}
+    public int getCurrentRound() {return currentRound;}
+    public void setCurrentRound(int currentRound) {this.currentRound = currentRound;}
 
     public boolean isGameOver() {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
