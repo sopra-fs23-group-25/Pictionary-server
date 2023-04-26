@@ -41,3 +41,35 @@
 ||#52|play again button and functionality|
 ||#53|exit button and functionality|
 ||#45|display end of turn results|
+
+
+## Week 3
+
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Leo|#88 #113 # 114| implemented and refactored Translator class, added Singleton Pattern and queue  |
+||#95| integrated Translator into TurnService and add function to translate entire turns|
+||#107 #108| Refactored Implementation of API to ensure only single connection is opened|
+|| App engine configuration, updated yml workflow/main.yml & app.yaml |
+|Joana|#105|reset game of a lobby - functionality and endpoint|
+||no Issue|turn class with controller and functionality|
+||no Issue|implement end turn logic|
+||#73|implement role distribution and storing in game|
+||#93|implement functionality to update the total score for each player|
+||#101|implement update how many rounds have been played and how many are left|
+||#87|guess validation and point calculation|
+|Pablo|#42| get points and role of each user at the beginning of a new turn|
+||#44|ranking|
+|#45|display results and guesses at the end of each turn|
+|#47|display final painting, leader board and new painter|
+|#52|display results of game|
+|Nico|#48, #49|countdown timer|
+||#49|host informs all players when timer is down and sends next game-state|
+||#27|start game functionality|
+||#32, #31|render game page according to roles / game-state|
+||#40, #41|component and functionality to submit guess|
+||#12|display players who joined lobby over websockets|
+||#50|display how many rounds are left|
+||#36|implemented rendering of drawing board and toolbar|
+
+
