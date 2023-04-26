@@ -44,7 +44,6 @@ public class WordAssignerTest {
 
         testGame.setPlayers(new ArrayList<>());
         testGame.setLobbyId(1L);
-        testGame.setTimePerRound(1L);
 
         testGame.setWordsPainted(Arrays.asList());
         testLobby.setGame(testGame);
@@ -69,7 +68,7 @@ public class WordAssignerTest {
 
     @Test
     public void assignWord_allButOneTaken(){
-        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree"));
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door", "", " "));
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
@@ -77,4 +76,5 @@ public class WordAssignerTest {
         assertEquals(word, "fish");
 
     }
+
 }

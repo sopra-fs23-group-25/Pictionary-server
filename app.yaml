@@ -4,6 +4,9 @@
 runtime: java
 env: flex
 
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS:$GOOGLE_APPLICATION_CREDENTIALS
+
 network:
   name: default
   session_affinity: true
