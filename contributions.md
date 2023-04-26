@@ -52,7 +52,6 @@
 ||#107 #108| Refactored Implementation of API to ensure only single connection is opened|
 ||| App engine configuration, updated yml workflow/main.yml & app.yaml |
 |Joana|#105|reset game of a lobby - functionality and endpoint|
-||no Issue|turn class with controller and functionality|
 ||#161|Turn Entity, Controller, Service|
 ||#73|implement role distribution and storing in game|
 ||#93|implement functionality to update the total score for each player|
