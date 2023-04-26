@@ -53,7 +53,7 @@
 ||| App engine configuration, updated yml workflow/main.yml & app.yaml |
 |Joana|#105|reset game of a lobby - functionality and endpoint|
 ||no Issue|turn class with controller and functionality|
-||no Issue|implement end turn logic|
+||#161|Turn Entity, Controller, Service|
 ||#73|implement role distribution and storing in game|
 ||#93|implement functionality to update the total score for each player|
 ||#101|implement update how many rounds have been played and how many are left|
