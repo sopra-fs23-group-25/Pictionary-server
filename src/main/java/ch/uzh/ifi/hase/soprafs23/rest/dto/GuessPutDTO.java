@@ -8,7 +8,6 @@ public class GuessPutDTO {
     public Long getUserId() {
         return userId;
     }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -16,7 +15,6 @@ public class GuessPutDTO {
     public String getGuess() {
         return guess;
     }
-
     public void setGuess(String guess) {
         this.guess = guess;
     }

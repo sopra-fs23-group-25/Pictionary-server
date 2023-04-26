@@ -22,7 +22,6 @@ public class LobbyGetDTO {
     public Long getLobbyId() {
         return lobbyId;
     }
-
     public void setLobbyId(Long lobbyId) {
         this.lobbyId = lobbyId;
     }
@@ -30,7 +29,6 @@ public class LobbyGetDTO {
     public String getLobbyName() {
         return lobbyName;
     }
-
     public void setLobbyName(String lobbyName) {
         this.lobbyName = lobbyName;
     }
@@ -38,7 +36,6 @@ public class LobbyGetDTO {
     public int getmaxNrOfPlayers() {
         return maxNrOfPlayers;
     }
-
     public void setmaxNrOfPlayers(int maxNrOfPlayers) {
         this.maxNrOfPlayers = maxNrOfPlayers;
     }
@@ -46,14 +43,13 @@ public class LobbyGetDTO {
     public int getNrOfRounds() {
         return nrOfRounds;
     }
-
     public void setNrOfRounds(int nrOfRounds) {
         this.nrOfRounds = nrOfRounds;
     }
+
     public Long getTimePerRound() {
         return timePerRound;
     }
-
     public void setTimePerRound(Long timePerRound) {
         this.timePerRound = timePerRound;
     }

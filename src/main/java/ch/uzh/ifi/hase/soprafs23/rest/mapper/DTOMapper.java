@@ -78,7 +78,6 @@ public interface DTOMapper {
     GameGetDTO convertEntityToGameGetDTO (Game game);
 
     @Mapping(source = "painterId", target = "painterId")
-    @Mapping(source = "timePerRound", target = "timePerRound")
     @Mapping(source = "word", target = "word")
     @Mapping(source = "guesses", target = "guesses")
     TurnGetDTO convertEntityToTurnGetDTO (Turn turn);

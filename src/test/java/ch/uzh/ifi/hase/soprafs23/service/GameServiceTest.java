@@ -203,4 +203,12 @@ public class GameServiceTest {
         assertFalse(testGame.isRunning());
     }
 
+    @Test
+    public void integrateResult_playerNotFound() {
+
+        Game game = new Game();
+        game.setPlayers(new ArrayList<>());
+
+        assertThrows(ResponseStatusException.class, () -> game.findPlayerById(2L));
+    }
 }

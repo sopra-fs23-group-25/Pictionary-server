@@ -40,6 +40,7 @@ public class WebSocketService {
             for (Player player:lobby.getPlayers()){
                 UserSocketGetDTO currentPlayer = new UserSocketGetDTO();
                 currentPlayer.setUsername(player.getUsername());
+                currentPlayer.setUserId(player.getUserId());
                 listOfPlayers.add(currentPlayer);
             }
             return listOfPlayers;

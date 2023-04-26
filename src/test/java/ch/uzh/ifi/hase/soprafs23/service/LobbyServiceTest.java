@@ -160,20 +160,16 @@ public class LobbyServiceTest {
         assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby,testUser));
     }
 
+    @Test
+    public void deleteLobby_success(){
+        lobbyService.deleteLobby(testLobby);
+        assertEquals(1L, testLobby.getLobbyId());
+    }
+
 
     /**
      * Helper Functions
      */
-
-    private String asJsonString(final Object object) {
-        try {
-            return new ObjectMapper().writeValueAsString(object);
-        }
-        catch (JsonProcessingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("The request body could not be created.%s", e.toString()));
-        }
-    }
 
 
 }

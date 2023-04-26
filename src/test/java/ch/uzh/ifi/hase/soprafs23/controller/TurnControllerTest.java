@@ -47,8 +47,6 @@ public class TurnControllerTest {
         testTurn.setGuesses(new ArrayList<>());
         testTurn.setPainterId(1L);
         testTurn.setCorrectGuesses(0);
-        testTurn.setTimePerRound(1L);
-
     }
 
     // POST: success (201) - noLobby (404)
@@ -63,8 +61,7 @@ public class TurnControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated()) // Code 201
                 .andExpect(jsonPath("$.word", is(testTurn.getWord())))
-                .andExpect(jsonPath("$.painterId").value(testTurn.getPainterId()))
-                .andExpect(jsonPath("$.timePerRound").value(testTurn.getTimePerRound()));
+                .andExpect(jsonPath("$.painterId").value(testTurn.getPainterId()));
     }
 
     @Test
