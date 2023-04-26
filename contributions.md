@@ -50,7 +50,7 @@
 |Leo|#88 #113 # 114| implemented and refactored Translator class, added Singleton Pattern and queue  |
 ||#95| integrated Translator into TurnService and add function to translate entire turns|
 ||#107 #108| Refactored Implementation of API to ensure only single connection is opened|
-|| App engine configuration, updated yml workflow/main.yml & app.yaml |
+||| App engine configuration, updated yml workflow/main.yml & app.yaml |
 |Joana|#105|reset game of a lobby - functionality and endpoint|
 ||no Issue|turn class with controller and functionality|
 ||no Issue|implement end turn logic|
