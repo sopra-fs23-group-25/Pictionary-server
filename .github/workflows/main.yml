@@ -25,20 +25,14 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: Replace environment variables in app.yaml
-        uses: 73h/gae-app-yaml-replace-env-variables@v0.3
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        with:
-          app_yaml_path: "app.yaml"
 
 
       - name: Test and analyze
+        run: ./gradlew test jacocoTestReport sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew test jacocoTestReport sonarqube
 
   deploy:
     name: Deploying to Google Cloud
