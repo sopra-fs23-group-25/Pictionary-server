@@ -44,7 +44,6 @@ public class WordAssignerTest {
 
         testGame.setPlayers(new ArrayList<>());
         testGame.setLobbyId(1L);
-        testGame.setTimePerRound(1L);
 
         testGame.setWordsPainted(Arrays.asList());
         testLobby.setGame(testGame);

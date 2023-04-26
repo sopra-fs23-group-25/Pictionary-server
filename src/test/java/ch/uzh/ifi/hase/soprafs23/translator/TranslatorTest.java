@@ -17,13 +17,44 @@ public class TranslatorTest {
     public TranslatorTest() throws IOException {
     }
 
-    /*@Test
+    @Test
     public void testTranslator_singleWordInput_UserToSystem() {
         String testString = "Er";
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
             assertEquals( testResult, "He");
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+
+    }
+
+    @Test
+    public void testTranslator_singleWordInput_UserToSystemAndBAck() {
+        String testString = "Baum";
+        String testLanguage = "de";
+        try {
+            String testResult = translator.getSingleTranslation(testString, testLanguage, true);
+            testResult = translator.getSingleTranslation(testString, testLanguage, false);
+            assertEquals( testResult, "Baum");
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+
+    }
+
+    @Test
+    public void testTranslator_singleWordInput_UserToSystem_backToUSerInDifferentLanguage() {
+        String testString = "Hund";
+        String testLanguage = "de";
+        String secondLanguage = "fr";
+        try {
+            String testResult = translator.getSingleTranslation(testString, testLanguage, true);
+            testResult = translator.getSingleTranslation(testResult, secondLanguage, false);
+            assertEquals( "Chien", testResult);
         }
         catch (Exception e) {
             System.err.println(e);
@@ -66,5 +97,5 @@ public class TranslatorTest {
         }
         catch (Exception e) {
         }
-    }*/
+    }
 }
