@@ -11,19 +11,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TranslatorTest {
-    Translator translator = Translator.getInstance();
+    /* Translator translator = Translator.getInstance();
 
 
     public TranslatorTest() throws IOException {
     }
-    /*
+
     @Test
     public void testTranslator_singleWordInput_UserToSystem() {
-        String testString = "Er";
+        String testString = "er";
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
-            assertEquals( testResult, "He");
+            assertEquals( testResult, "he");
         }
         catch (Exception e) {
             System.err.println(e);
@@ -33,11 +33,11 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_singleWordInput_UserToSystem_UserHasSystemLanguage() {
-        String testString = "Tree";
+        String testString = "tree";
         String testLanguage = "en";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
-            assertEquals( testResult, "Tree");
+            assertEquals( testResult, "tree");
         }
         catch (Exception e) {
             System.err.println(e);
@@ -47,7 +47,7 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_singleWordInput_UserToSystemAndBAck() {
-        String testString = "Baum";
+        String testString = "baum";
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
@@ -62,13 +62,13 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_singleWordInput_UserToSystem_backToUSerInDifferentLanguage() {
-        String testString = "Hund";
+        String testString = "hund";
         String testLanguage = "de";
         String secondLanguage = "fr";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
             testResult = translator.getSingleTranslation(testResult, secondLanguage, false);
-            assertEquals( "Chien", testResult);
+            assertEquals( "chien", testResult);
         }
         catch (Exception e) {
             System.err.println(e);
@@ -90,7 +90,7 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_singleWord_SystemToUser(){
-        String testString = "He";
+        String testString = "he";
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, false);
@@ -103,15 +103,13 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_multipleWords_SystemToUser() {
-        List<String> testList = new ArrayList<>(Arrays.asList("She", "you", "he"));
-        List<String> translatedTestList = new ArrayList<>( Arrays.asList("Sie", "Du", "Er"));
+        List<String> testList = new ArrayList<>(Arrays.asList("she", "you", "he"));
+        List<String> translatedTestList = new ArrayList<>( Arrays.asList("sie", "Du", "Er"));
         String testLanguage = "de";
         try {
             assertEquals(translatedTestList,translator.getListTranslation(testList, testLanguage, false));
         }
         catch (Exception e) {
         }
-    }
-
-     */
+    }*/
 }
