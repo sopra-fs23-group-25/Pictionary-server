@@ -3,7 +3,9 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 public class SessionGetDTO {
     private String token;
     private String username;
-    private long userId;
+    private Long userId;
+
+    private String language;
 
     public String getToken() {
         return token;
@@ -25,4 +27,7 @@ public class SessionGetDTO {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
+    public void setLanguage(String language) {this.language = language;}
+    public String getLanguage() {return language;}
 }

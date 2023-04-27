@@ -50,7 +50,6 @@ public class LobbyServiceTest {
         testUser.setUsername("testUser");
         testUser.setUserId(1L);
         testUser.setLanguage("en");
-        testUser.setLobbyId(null);
 
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
 
@@ -65,7 +64,6 @@ public class LobbyServiceTest {
 
         Lobby createdLobby = lobbyService.createLobby(testLobby);
         Mockito.verify(lobbyRepository, Mockito.times(1)).save(Mockito.any());
-
 
         assertEquals(testLobby.getLobbyName(), createdLobby.getLobbyName());
         assertEquals(testLobby.getNrOfRounds(), createdLobby.getNrOfRounds());
@@ -121,11 +119,6 @@ public class LobbyServiceTest {
         assertThrows(ResponseStatusException.class, () -> lobbyService.getSingleLobby(testLobby.getLobbyId()));
     }
 
-
-
-
-
-
     @Test
     public void joinLobby_success() {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
@@ -134,7 +127,6 @@ public class LobbyServiceTest {
         lobbyService.joinLobby(testLobby, testUser);
 
         assertEquals(testUser.convertToPlayer().getUserId(), testLobby.getPlayers().get(0).getUserId());
-
     }
 
     @Test
@@ -170,6 +162,4 @@ public class LobbyServiceTest {
     /**
      * Helper Functions
      */
-
-
 }
