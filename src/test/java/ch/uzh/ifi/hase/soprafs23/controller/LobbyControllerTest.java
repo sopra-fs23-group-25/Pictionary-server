@@ -124,7 +124,6 @@ public class LobbyControllerTest {
         testUser.setUsername("testUser");
         testUser.setUserId(1L);
         testUser.setLanguage("en");
-        testUser.setLobbyId(null);
 
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
         given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(testUser);
@@ -145,7 +144,6 @@ public class LobbyControllerTest {
         testUser.setUsername("testUser");
         testUser.setUserId(1L);
         testUser.setLanguage("en");
-        testUser.setLobbyId(null);
 
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willReturn(testLobby);
         given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(testUser);
@@ -174,12 +172,6 @@ public class LobbyControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-
-
-
-
-
-
     @Test
     public void getGameOfLobby_LobbyNotExists_throws404 () throws Exception {
         given(lobbyService.getSingleLobby(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -203,8 +195,6 @@ public class LobbyControllerTest {
                 .andExpect(status().isNotFound());
 
     }
-
-
 
     /**
      * Helper Functions

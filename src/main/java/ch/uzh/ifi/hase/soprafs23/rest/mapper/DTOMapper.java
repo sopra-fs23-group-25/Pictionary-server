@@ -30,7 +30,6 @@ public interface DTOMapper {
     // GET /users/{userId}
     @Mapping(source = "userId", target = "id") //where is target? why can i not change it to "userId"?
     @Mapping(source = "username", target = "username")
-    @Mapping(source = "lobbyId", target = "lobbyId")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "status", target = "status")
     UserGetDTO convertEntityToUserGetDTO(User user);
@@ -44,6 +43,7 @@ public interface DTOMapper {
     // POST /sessions
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
+    @Mapping(source = "language", target = "language")
     Session convertSessionPostDTOtoEntity(SessionPostDTO sessionPostDTO);
 
     @Mapping(source = "token", target = "token")

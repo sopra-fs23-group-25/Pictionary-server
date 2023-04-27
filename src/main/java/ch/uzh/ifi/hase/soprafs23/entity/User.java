@@ -44,9 +44,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String language;
 
-    @Column
-    private Long lobbyId;
-
     @Column(nullable = false, unique = true)
     private String token;
 
@@ -71,12 +68,7 @@ public class User implements Serializable {
     public String getLanguage() {return language;}
     public void setLanguage(String language) {this.language = language;}
 
-    public Long getLobbyId() {return lobbyId;}
-    public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
-
-    public String getToken() {
-        return token;
-    }
+    public String getToken() {return token;}
     public void setToken(String token) {
         this.token = token;
     }

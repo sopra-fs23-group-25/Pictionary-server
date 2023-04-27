@@ -4,6 +4,7 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 public class SessionPostDTO {
     private String username;
     private String password;
+    private String language;
 
     public String getUsername() {
         return username;
@@ -14,4 +15,7 @@ public class SessionPostDTO {
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
+
+    public void setLanguage(String language) {this.language = language;}
+    public String getLanguage() {return language;}
 }
