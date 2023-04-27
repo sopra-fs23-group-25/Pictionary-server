@@ -6,6 +6,8 @@ public class Session {
     private long userId;
     private String token;
 
+    private String language;
+
     public Session(String username, String password, long userId, String token) {
         this.username = username;
         this.password = password;
@@ -47,4 +49,7 @@ public class Session {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public void setLanguage(String language) {this.language = language;}
+    public String getLanguage() {return language;}
 }
