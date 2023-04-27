@@ -63,6 +63,8 @@ public class TurnService {
 
     public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
+        guess.setGuess(guess.getGuess().toLowerCase());
+
         String translatedGuess = translateGuess(guess, true); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
             guess.setGuess(translatedGuess);
