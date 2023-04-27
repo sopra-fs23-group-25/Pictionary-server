@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TranslatorTest {
-    /*Translator translator = Translator.getInstance();
+    /* Translator translator = Translator.getInstance();
 
 
     public TranslatorTest() throws IOException {
@@ -112,6 +112,4 @@ public class TranslatorTest {
         catch (Exception e) {
         }
     }*/
-
-
 }
