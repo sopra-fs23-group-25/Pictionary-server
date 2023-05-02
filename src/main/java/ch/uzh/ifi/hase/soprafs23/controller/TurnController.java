@@ -30,6 +30,7 @@ public class TurnController {
     @ResponseBody
     public void submitGuess(@PathVariable("lobbyId") long lobbyId, @RequestBody GuessDTO guessToAdd) {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
+
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         try {
             turnService.verifyGuess(turn, guess);
@@ -43,8 +44,15 @@ public class TurnController {
     @GetMapping("/lobbies/{lobbyId}/game/turn")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId) {
+    public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId, @RequestHeader("UserId") String userId) {
+        Long userIdL = Long.parseLong(userId);
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
+        try {
+            turnService.translateTurn(turn, userIdL);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 

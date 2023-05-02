@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.translator;
 // Imports the Google Cloud Translation library.
 
 import com.google.cloud.translate.v3.*;
+import net.bytebuddy.implementation.bytecode.Throw;
 
 import java.io.IOException;
 import java.util.*;
@@ -47,6 +48,9 @@ public class Translator {
         if (Objects.equals(language, "en")) {
             return word;
         }
+        if (Objects.equals(word, null)){
+            return "guess not submiited";
+        }
         TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
         solveSingleRequest(currentRequest);
 
@@ -59,9 +63,14 @@ public class Translator {
     public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) throws InterruptedException {
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
-            TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
-            solveSingleRequest(currentRequest);
-            translatedWordList.add(currentRequest.translatedWord);
+            if (word != null){
+                TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
+                solveSingleRequest(currentRequest);
+                translatedWordList.add(currentRequest.translatedWord);
+            }
+            else{
+                throw new RuntimeException();
+            }
 
         }
         return translatedWordList;

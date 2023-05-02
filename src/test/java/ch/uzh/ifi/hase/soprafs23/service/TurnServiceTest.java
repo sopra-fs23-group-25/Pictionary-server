@@ -109,6 +109,7 @@ public class TurnServiceTest {
         testGame.setTurn(null);
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         assertThrows(ResponseStatusException.class, () -> turnService.getTurnByLobbyId(testLobby.getLobbyId()));
     }
