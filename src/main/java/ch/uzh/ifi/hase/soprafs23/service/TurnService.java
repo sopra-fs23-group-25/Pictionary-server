@@ -163,6 +163,7 @@ public class TurnService {
             guess.setGuess(queries.get(loopCounter).toLowerCase());
             loopCounter++;
         }
+        newTurn.setGuesses(translatedGuesses);
 
         return newTurn;
     }

@@ -22,6 +22,7 @@ public class TurnController {
     @ResponseBody
     public TurnGetDTO runTurn(@PathVariable("lobbyId") long lobbyId) {
         Turn turn = turnService.initTurn(lobbyId);
+
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 
@@ -44,11 +45,11 @@ public class TurnController {
     @GetMapping("/lobbies/{lobbyId}/game/turn")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId, @RequestHeader("UserId") String userId) {
-        Long userIdL = Long.parseLong(userId);
+    public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId, @RequestHeader("UserId") long userId) {
+        //Long userIdL = Long.parseLong(userId);
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
         try {
-            turnService.translateTurn(turn, userIdL);
+            turn = turnService.translateTurn(turn, userId);
         }
         catch (InterruptedException e) {
             throw new RuntimeException(e);
