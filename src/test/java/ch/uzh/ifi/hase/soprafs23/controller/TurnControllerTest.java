@@ -1,8 +1,11 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
+import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +39,10 @@ public class TurnControllerTest {
     @MockBean
     private TurnService turnService;
 
+    @MockBean
+    private UserService userService;
+
+    User testUser = new User();
     Turn testTurn = new Turn();
 
     @BeforeEach
@@ -46,6 +53,12 @@ public class TurnControllerTest {
         testTurn.setGuesses(new ArrayList<>());
         testTurn.setPainterId(1L);
         testTurn.setCorrectGuesses(0);
+
+        testUser.setUserId(1L);
+        testUser.setUsername("testUsername");
+        testUser.setToken("dskjfkjsdabjkbasdkjlbf");
+        testUser.setStatus(UserStatus.OFFLINE);
+        testUser.setLanguage("de");
     }
 
     // POST: success (201) - noLobby (404)
@@ -146,10 +159,10 @@ public class TurnControllerTest {
     public void getTurn_returnsTurnGetDTO() throws Exception {
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willReturn(testTurn);
-
+        given(userService.userById(Mockito.anyLong())).willReturn(testUser);
 
         MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game/turn", 1)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("userId", 1);
 
         // then
         mockMvc.perform(getRequest)
@@ -160,9 +173,9 @@ public class TurnControllerTest {
     public void getResult_LobbyNotFound_responds404() throws Exception {
 
         given(turnService.getTurnByLobbyId(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        given(userService.userById(Mockito.anyLong())).willReturn(testUser);
         MockHttpServletRequestBuilder getRequest = get("/lobbies/{id}/game/turn", 1)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("userId", 1);
 
         // then
         mockMvc.perform(getRequest)
