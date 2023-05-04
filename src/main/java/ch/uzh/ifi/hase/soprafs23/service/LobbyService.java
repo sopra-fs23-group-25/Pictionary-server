@@ -84,7 +84,7 @@ public class LobbyService {
 
         if (lobby.isFull()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is full!");}
         if (lobby.isRunning()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is running!");}
-        if (userInLobby(lobby,user)) {throw new ResponseStatusException(HttpStatus.CONFLICT, "User is already in Lobby!");}
+        if (userInLobby(lobby,user.getUserId())) {throw new ResponseStatusException(HttpStatus.CONFLICT, "User is already in Lobby!");}
 
         lobby.addPlayer(user.convertToPlayer());
 
@@ -93,10 +93,10 @@ public class LobbyService {
         return lobby;
     }
 
-    private boolean userInLobby(Lobby lobby, User user) {
+    private boolean userInLobby(Lobby lobby, Long userId) {
         for (Player player : lobby.getPlayers()) {
 
-            if (player.getUserId().equals(user.getUserId())) {
+            if (player.getUserId().equals(userId)) {
                 return true;
             }
         }

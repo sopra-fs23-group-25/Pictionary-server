@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -52,7 +53,6 @@ public class LobbyServiceTest {
         testUser.setLanguage("en");
 
         when(lobbyRepository.save(Mockito.any())).thenReturn(testLobby);
-
     }
 
     @Test
@@ -150,6 +150,18 @@ public class LobbyServiceTest {
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby,testUser));
+    }
+
+    @Test
+    public void joinLobby_isAlreadyInLobby_returns409() {
+        testLobby.setMaxNrOfPlayers(3);
+
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        lobbyService.joinLobby(testLobby,testUser);
+
+        assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby, testUser));
     }
 
     @Test
