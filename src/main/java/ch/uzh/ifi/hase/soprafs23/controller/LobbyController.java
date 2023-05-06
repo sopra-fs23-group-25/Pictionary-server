@@ -82,6 +82,20 @@ public class LobbyController {
         }
     }
 
+    @PutMapping("/lobbies/{lobbyId}/leave")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void leaveLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
+        Lobby lobby = lobbyService.getSingleLobby(lobbyId);
+        if (lobby != null){
+            User user = lobbyService.getSingleUser(userToAdd.getUserId());
+            Lobby lobbyLeft = lobbyService.leaveLobby(lobby, user);
+            if (lobbyLeft == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be left!");
+            }
+        }
+    }
+
     // gets the game of a lobby specified by lobbyId
     //Using GET lobbies/{lobbyId}/game to retrieve the Game of a Lobby is also more intuitive and easier
     // to understand than GET games/{lobbyId}, since the former directly references the Lobby

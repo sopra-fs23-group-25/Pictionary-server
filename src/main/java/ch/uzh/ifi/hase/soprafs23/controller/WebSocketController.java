@@ -21,6 +21,7 @@ public class WebSocketController {
     @Autowired
     private WebSocketDisconnectListener webSocketEventListener;
 
+
     @Autowired
     private WebSocketConnectListener webSocketConnectListener;
 
@@ -39,20 +40,15 @@ public class WebSocketController {
     @MessageMapping("/lobbies/{lobbyId}/drawing-clear")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/drawing-clear")
     public MessageRelayDTO clearDrawing(@Payload MessageRelayDTO message) {
-        return message;
+    return message;
     }
 
-    @MessageMapping("/lobbies/{lobbyId}/user-join")
+    @MessageMapping("/lobbies/{lobbyId}/users")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/users")
     public List<UserSocketGetDTO> sendUserList(@Payload UserJoinGameDTO message, @DestinationVariable  Long lobbyId) {
         return websocketService.getUsersInLobby(lobbyId);
     }
 
-    @MessageMapping("/lobbies/{lobbyId}/user-leave")
-    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/users")
-    public UserJoinGameDTO sendUserListAfterUserLeft(@Payload UserJoinGameDTO message) {
-        return message;
-    }
 
     @MessageMapping("/lobbies/{lobbyId}/start-game")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/start-game")
@@ -65,4 +61,5 @@ public class WebSocketController {
     public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message){
         return message;
     }
+
 }

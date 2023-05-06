@@ -93,6 +93,11 @@ public class LobbyService {
         return lobby;
     }
 
+    public Lobby leaveLobby(Lobby lobby, User user){
+        lobby.removePlayer(user.convertToPlayer());
+        return lobby;
+    }
+
     private boolean userInLobby(Lobby lobby, Long userId) {
         for (Player player : lobby.getPlayers()) {
 
