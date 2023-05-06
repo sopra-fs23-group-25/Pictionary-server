@@ -141,7 +141,8 @@ public class TurnService {
         List<Guess> translatedGuesses = new ArrayList<>(0);
         List<String> queries = new ArrayList<>();
 
-        String language = userRepository.findByUserId(userId).getLanguage();
+        User user = userRepository.findByUserId(userId);
+        String language=user.getLanguage();
         String word = translator.getSingleTranslation(turn.getWord(), language, false);
         newTurn.setWord(word);
 
