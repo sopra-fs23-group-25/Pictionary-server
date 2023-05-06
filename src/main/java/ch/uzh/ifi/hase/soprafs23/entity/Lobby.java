@@ -37,7 +37,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private boolean isRunning = false;
 
-    @Column
+    @Column(unique = true)
     private Long hostId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

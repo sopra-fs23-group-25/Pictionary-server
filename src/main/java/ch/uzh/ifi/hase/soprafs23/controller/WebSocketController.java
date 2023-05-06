@@ -60,6 +60,12 @@ public class WebSocketController {
         return message;
     }
 
+    @MessageMapping("/lobbies/{lobbyId}/host-disconnected")
+    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/host-disconnected")
+    public MessageRelayDTO sendHostDisconnected(@Payload MessageRelayDTO message){
+        return message;
+    }
+
     @MessageMapping("/lobbies/{lobbyId}/game-state")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/game-state")
     public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message){
