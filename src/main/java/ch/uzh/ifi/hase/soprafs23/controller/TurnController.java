@@ -34,7 +34,7 @@ public class TurnController {
 
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         try {
-            turnService.verifyGuess(turn, guess);
+            turnService.submitGuess(turn, guess);
         }
         catch (InterruptedException e) {
             throw new HttpStatusCodeException(HttpStatus.INTERNAL_SERVER_ERROR, "Guess couldn't be submitted \n Exception: " + e.getMessage()) {
