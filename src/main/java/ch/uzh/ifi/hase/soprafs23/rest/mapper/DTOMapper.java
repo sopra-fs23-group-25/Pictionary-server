@@ -48,6 +48,7 @@ public interface DTOMapper {
     @Mapping(source = "token", target = "token")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "language", target = "language")
     SessionGetDTO convertEntityToSessionGetDTO(Session session);
 
     @Mapping(source = "lobbyId", target = "lobbyId")
