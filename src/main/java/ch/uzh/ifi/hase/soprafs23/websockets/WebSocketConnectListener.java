@@ -21,6 +21,7 @@ public class WebSocketConnectListener implements ApplicationListener<SessionConn
         String userId = accessor.getNativeHeader("userId").get(0); // get the value of userId header sent from the client-side
         String sessionId = accessor.getSessionId();
         userRepository.findByUserId(Long.parseLong(userId)).setSessionId(sessionId);
+        userRepository.flush();
         System.out.println(sessionId + " has connected " + "lobbyId (Header) "+ lobbyId + " userId (Header) "+ userId);
         // perform any necessary initialization or logging here
     }
