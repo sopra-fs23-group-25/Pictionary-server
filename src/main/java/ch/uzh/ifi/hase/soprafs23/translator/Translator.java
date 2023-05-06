@@ -61,6 +61,9 @@ public class Translator {
     // Adds a List of words to the Translation Queue one by one
     // waits till its solved, then returns them as a List
     public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) throws InterruptedException {
+        if (Objects.equals(language, "en")) {
+            return wordList;
+        }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
             if (word != null){
