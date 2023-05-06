@@ -32,6 +32,7 @@ public class SessionController {
         Session successfulSession = authService.login(session);
 
         userService.changeStatus(successfulSession.getUserId(), UserStatus.ONLINE);
+        successfulSession.setLanguage(userService.userById(successfulSession.getUserId()).getLanguage());
 
         return DTOMapper.INSTANCE.convertEntityToSessionGetDTO(successfulSession);
     }
