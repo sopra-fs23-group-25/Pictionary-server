@@ -35,11 +35,12 @@ public class WebSocketDisconnectListener implements ApplicationListener<SessionD
         if(lobbyLeft != null){
             MessageRelayDTO newMessage = new MessageRelayDTO();
             newMessage.setTask("Host Disconnected");
-            webSocketController.sendHostDisconnected(newMessage);
+            webSocketController.sendHostDisconnected(newMessage, lobbyLeft.getLobbyId());
             lobbyService.deleteLobby(lobbyLeft);
         }
 
         userLeaving.setSessionId(null);
+        userRepository.save(userLeaving);
         userRepository.flush();
         System.out.println(sessionId + " has closed connection");
         // perform any necessary cleanup or logging here
