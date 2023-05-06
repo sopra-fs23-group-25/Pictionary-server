@@ -9,8 +9,11 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.util.List;
 
 @Controller
@@ -19,8 +22,11 @@ public class WebSocketController {
     private final WebSocketService websocketService;
 
     @Autowired
-    private WebSocketDisconnectListener webSocketEventListener;
+    private SimpMessagingTemplate messagingTemplate;
 
+
+    @Autowired
+    private WebSocketDisconnectListener webSocketEventListener;
 
     @Autowired
     private WebSocketConnectListener webSocketConnectListener;
@@ -56,10 +62,24 @@ public class WebSocketController {
         return message;
     }
 
+    @MessageMapping("/lobbies/{lobbyId}/lobby-closed")
+    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/lobby-closed")
+    public MessageRelayDTO closeLobby(@Payload MessageRelayDTO message) {
+        return message;
+    }
+
+    @MessageMapping("/lobbies/{lobbyId}/host-disconnected")
+    //@SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/host-disconnected")
+    public MessageRelayDTO sendHostDisconnected(@Payload MessageRelayDTO message, Long lobbyId){
+        System.out.println("we sent message");
+        String destination = WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/host-disconnected";
+        messagingTemplate.convertAndSend(destination, message);
+        return message;
+    }
+
     @MessageMapping("/lobbies/{lobbyId}/game-state")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/game-state")
     public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message){
         return message;
     }
-
 }

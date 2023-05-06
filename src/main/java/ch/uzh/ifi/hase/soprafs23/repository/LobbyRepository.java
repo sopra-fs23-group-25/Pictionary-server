@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface LobbyRepository extends JpaRepository<Lobby, Long> {
     Lobby findByLobbyId(long lobbyId);
 
+    Lobby findByHostId(long hostId);
+
     Lobby findByLobbyName(String lobbyName);
 }
