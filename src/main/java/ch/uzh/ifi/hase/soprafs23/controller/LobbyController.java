@@ -106,6 +106,5 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLobby(@PathVariable("lobbyId") long lobbyId) {
        lobbyService.deleteLobby(lobbyService.getSingleLobby(lobbyId));
-
     }
 }
