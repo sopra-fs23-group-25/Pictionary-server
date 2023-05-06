@@ -31,6 +31,19 @@ public class Player implements Serializable, Comparable<Player> {
         return this.totalScore.compareTo(player.totalScore);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean res = super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Player other = (Player) obj;
+        if (other.getUsername() == getUsername()){
+            return true;
+        }
+        return res;
+    }
+
     public Long getUserId() { return userId; }
     public void setUserId(Long id) {
         this.userId = id;
