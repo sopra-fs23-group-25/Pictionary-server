@@ -41,7 +41,8 @@ public class TurnService {
             @Qualifier("userRepository") UserRepository userRepository) {
         this.lobbyRepository = lobbyRepository;
         this.wordAssigner = new WordAssigner(lobbyRepository);
-        this.userRepository = userRepository;}
+        this.userRepository = userRepository;
+    }
 
     public Turn initTurn(Long lobbyId) {
 
@@ -61,7 +62,7 @@ public class TurnService {
         return newTurn;
     }
 
-    public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
+    public void submitGuess(Turn turn, Guess guess) throws InterruptedException {
 
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
@@ -72,7 +73,9 @@ public class TurnService {
             guess.setScore(score);
             givePainterPoints(turn);
         }
-        else {guess.setScore(0);}
+        else {
+            guess.setScore(0);
+        }
 
         turn.addGuess(guess);// add guess to list
     }
@@ -90,22 +93,28 @@ public class TurnService {
         return guess;
     }
 
-    public Turn getTurnByLobbyId(Long lobbyId)  {
+    public Turn getTurnByLobbyId(Long lobbyId) {
         Turn turn = getGameByLobbyId(lobbyId).getTurn();
-        if (turn == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");}
+        if (turn == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");
+        }
 
         return turn;
     }
 
     private Lobby getLobbyByLobbyId(long lobbyId) {
         Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
-        if (lobby == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby not found!");}
+        if (lobby == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lobby not found!");
+        }
         return lobby;
     }
 
     private Game getGameByLobbyId(Long lobbyId) {
         Game game = getLobbyByLobbyId(lobbyId).getGame();
-        if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");}
+        if (game == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");
+        }
         return game;
     }
 
@@ -123,6 +132,7 @@ public class TurnService {
 
         String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
         String guessedWord = guess.getGuess().toLowerCase();
+        guessedWord = guessedWord.substring(0, 1).toUpperCase() + guessedWord.substring(1);
 
         return translator.getSingleTranslation(guessedWord, language, playerToSystem);
     }
@@ -142,26 +152,36 @@ public class TurnService {
         List<String> queries = new ArrayList<>();
 
         User user = userRepository.findByUserId(userId);
-        String language=user.getLanguage();
+        String language = user.getLanguage();
         String word = translator.getSingleTranslation(turn.getWord(), language, false);
         newTurn.setWord(word);
 
         int loopCounter = 0;
 
         for (Guess guess : originalGuesses) {
-            if(guess.getGuess()!= null){
+            if (guess.getGuess() != null) {
                 translatedGuesses.add(new Guess(guess));
-
             }
+            else {
+                Guess emptyGuess = new Guess(guess);
+                emptyGuess.setGuess("");
+                translatedGuesses.add(emptyGuess);
+            }
+
         }
-        for (Guess guess:translatedGuesses){
+        for (Guess guess : translatedGuesses) {
             queries.add(guess.getGuess());
         }
 
-        queries=translator.getListTranslation(queries, language, false);
+        queries = translator.getListTranslation(queries, language, false);
 
-        for (Guess guess:translatedGuesses){
-            guess.setGuess(queries.get(loopCounter).toLowerCase());
+        for (Guess guess : translatedGuesses) {
+            String guessedWord = queries.get(loopCounter);
+            if (guessedWord.length() > 0) {
+
+                guessedWord = guessedWord.substring(0, 1).toUpperCase() + guessedWord.substring(1);
+            }
+            guess.setGuess(guessedWord);
             loopCounter++;
         }
         newTurn.setGuesses(translatedGuesses);
@@ -170,6 +190,8 @@ public class TurnService {
     }
 
     // used for testing
-    protected void setTranslator(Translator newTranslator){translator=newTranslator;}
+    protected void setTranslator(Translator newTranslator) {
+        translator = newTranslator;
+    }
 
 }

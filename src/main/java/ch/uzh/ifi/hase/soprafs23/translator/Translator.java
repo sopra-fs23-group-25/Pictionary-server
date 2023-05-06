@@ -66,7 +66,10 @@ public class Translator {
         }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
-            if (word != null){
+            if(word == "") {
+                translatedWordList.add(word);
+            }
+            else if (word != null){
                 TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
                 solveSingleRequest(currentRequest);
                 translatedWordList.add(currentRequest.translatedWord);

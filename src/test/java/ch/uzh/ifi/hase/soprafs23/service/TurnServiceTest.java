@@ -129,7 +129,7 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        turnService.verifyGuess(testTurn, guess);
+        turnService.submitGuess(testTurn, guess);
 
         assertEquals(0, guess.getScore());
     }
@@ -150,7 +150,7 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        turnService.verifyGuess(testTurn, guess);
+        turnService.submitGuess(testTurn, guess);
 
         assertEquals(25, guess.getScore());
     }
@@ -248,6 +248,6 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        assertThrows(ResponseStatusException.class, () -> turnService.verifyGuess(testTurn, guess));
+        assertThrows(ResponseStatusException.class, () -> turnService.submitGuess(testTurn, guess));
     }
 }
