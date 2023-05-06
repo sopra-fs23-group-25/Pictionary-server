@@ -61,7 +61,7 @@ public class TranslatorTest {
     }
 
     @Test
-    public void testTranslator_singleWordInput_UserToSystem_backToUSerInDifferentLanguage() {
+    public void testTranslator_singleWordInput_UserToSystem_backToUserInDifferentLanguage() {
         String testString = "hund";
         String testLanguage = "de";
         String secondLanguage = "fr";

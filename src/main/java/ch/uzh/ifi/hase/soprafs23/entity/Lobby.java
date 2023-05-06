@@ -99,6 +99,10 @@ public class Lobby implements Serializable {
         players.add(player);
     }
 
+    public void removePlayer(Player player){
+        players.remove(player);
+    }
+
     public Game getGame() {
         return game;
     }

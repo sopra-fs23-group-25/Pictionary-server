@@ -63,7 +63,6 @@ public class TurnService {
 
     public void verifyGuess(Turn turn, Guess guess) throws InterruptedException {
 
-        guess.setGuess(guess.getGuess().toLowerCase());
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {
@@ -91,9 +90,10 @@ public class TurnService {
         return guess;
     }
 
-    public Turn getTurnByLobbyId(Long lobbyId) {
+    public Turn getTurnByLobbyId(Long lobbyId)  {
         Turn turn = getGameByLobbyId(lobbyId).getTurn();
         if (turn == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Turn found in this Lobby!");}
+
         return turn;
     }
 
@@ -122,7 +122,7 @@ public class TurnService {
     private String translateGuess(Guess guess, boolean playerToSystem) throws InterruptedException {
 
         String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
-        String guessedWord = guess.getGuess();
+        String guessedWord = guess.getGuess().toLowerCase();
 
         return translator.getSingleTranslation(guessedWord, language, playerToSystem);
     }
@@ -132,19 +132,26 @@ public class TurnService {
     // instead it should copy each Turn and Guess it works with
     // currently only supports "System To User" Translation
     // return a copied and modified instance of original Turn
-    protected Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
+    public Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
 
         Turn newTurn = new Turn(turn);
 
+
         List<Guess> originalGuesses = new ArrayList<>(newTurn.getGuesses());
-        List<Guess> translatedGuesses = new ArrayList<>();
+        List<Guess> translatedGuesses = new ArrayList<>(0);
         List<String> queries = new ArrayList<>();
 
         String language = userRepository.findByUserId(userId).getLanguage();
+        String word = translator.getSingleTranslation(turn.getWord(), language, false);
+        newTurn.setWord(word);
+
         int loopCounter = 0;
 
         for (Guess guess : originalGuesses) {
-            translatedGuesses.add(new Guess(guess));
+            if(guess.getGuess()!= null){
+                translatedGuesses.add(new Guess(guess));
+
+            }
         }
         for (Guess guess:translatedGuesses){
             queries.add(guess.getGuess());
@@ -153,9 +160,10 @@ public class TurnService {
         queries=translator.getListTranslation(queries, language, false);
 
         for (Guess guess:translatedGuesses){
-            guess.setGuess(queries.get(loopCounter));
+            guess.setGuess(queries.get(loopCounter).toLowerCase());
             loopCounter++;
         }
+        newTurn.setGuesses(translatedGuesses);
 
         return newTurn;
     }
