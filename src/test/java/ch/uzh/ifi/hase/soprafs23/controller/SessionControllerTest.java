@@ -66,7 +66,6 @@ public class SessionControllerTest {
         testUser.setUsername("testUser");
         testUser.setUserId(1L);
         testUser.setLanguage("en");
-
     }
 
     @Test
@@ -102,8 +101,6 @@ public class SessionControllerTest {
 
     }
     ///does not work for some reason still throws 404
-
-
 
     @Test
     public void loginUser_validCredentials_returnsSessionGetDTO() throws Exception {
