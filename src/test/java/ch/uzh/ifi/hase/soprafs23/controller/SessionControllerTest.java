@@ -66,6 +66,7 @@ public class SessionControllerTest {
         testUser.setUsername("testUser");
         testUser.setUserId(1L);
         testUser.setLanguage("en");
+
     }
 
     @Test
