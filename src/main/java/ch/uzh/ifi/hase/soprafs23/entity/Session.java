@@ -8,11 +8,12 @@ public class Session {
 
     private String language;
 
-    public Session(String username, String password, long userId, String token) {
+    public Session(String username, String password, long userId, String token, String language) {
         this.username = username;
         this.password = password;
         this.userId = userId;
         this.token = token;
+        this.language = language;
     }
 
     // Needed for mapper
