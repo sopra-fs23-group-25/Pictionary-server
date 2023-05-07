@@ -51,6 +51,5 @@ public class Session {
         this.token = token;
     }
 
-    public void setLanguage(String language) {this.language = language;}
     public String getLanguage() {return language;}
 }

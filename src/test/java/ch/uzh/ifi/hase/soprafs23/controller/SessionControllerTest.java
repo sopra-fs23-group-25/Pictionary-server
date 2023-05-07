@@ -103,8 +103,6 @@ public class SessionControllerTest {
     }
     ///does not work for some reason still throws 404
 
-
-
     @Test
     public void loginUser_validCredentials_returnsSessionGetDTO() throws Exception {
 
