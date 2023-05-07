@@ -118,7 +118,7 @@ public class TurnServiceTest {
     @Test
     public void verifyGuess_incorrect_0points () throws InterruptedException {
         Guess guess = new Guess();
-        guess.setGuess("");
+        guess.setGuess("wrongGuess");
         guess.setUsername("testUser");
         guess.setScore(0);
         guess.setUserId(1L);
