@@ -109,6 +109,7 @@ public class TurnServiceTest {
         testGame.setTurn(null);
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         assertThrows(ResponseStatusException.class, () -> turnService.getTurnByLobbyId(testLobby.getLobbyId()));
     }
@@ -117,7 +118,7 @@ public class TurnServiceTest {
     @Test
     public void verifyGuess_incorrect_0points () throws InterruptedException {
         Guess guess = new Guess();
-        guess.setGuess("");
+        guess.setGuess("wrongGuess");
         guess.setUsername("testUser");
         guess.setScore(0);
         guess.setUserId(1L);
@@ -128,7 +129,7 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        turnService.verifyGuess(testTurn, guess);
+        turnService.submitGuess(testTurn, guess);
 
         assertEquals(0, guess.getScore());
     }
@@ -149,7 +150,7 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        turnService.verifyGuess(testTurn, guess);
+        turnService.submitGuess(testTurn, guess);
 
         assertEquals(25, guess.getScore());
     }
@@ -247,6 +248,6 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        assertThrows(ResponseStatusException.class, () -> turnService.verifyGuess(testTurn, guess));
+        assertThrows(ResponseStatusException.class, () -> turnService.submitGuess(testTurn, guess));
     }
 }

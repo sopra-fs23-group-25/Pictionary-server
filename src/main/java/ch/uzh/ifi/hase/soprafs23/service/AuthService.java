@@ -70,7 +70,8 @@ public class AuthService {
                 user.getUsername(),
                 null,
                 user.getUserId(),
-                user.getToken()
+                user.getToken(),
+                user.getLanguage()
         );
     }
 

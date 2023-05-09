@@ -37,7 +37,7 @@ public class Lobby implements Serializable {
     @Column(nullable = false)
     private boolean isRunning = false;
 
-    @Column
+    @Column(unique = true)
     private Long hostId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -97,6 +97,10 @@ public class Lobby implements Serializable {
 
     public void addPlayer(Player player){
         players.add(player);
+    }
+
+    public void removePlayer(Player player){
+        players.remove(player);
     }
 
     public Game getGame() {

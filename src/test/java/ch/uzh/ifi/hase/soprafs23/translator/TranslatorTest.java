@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TranslatorTest {
-    /* Translator translator = Translator.getInstance();
+    Translator translator = Translator.getInstance();
 
 
     public TranslatorTest() throws IOException {
@@ -61,7 +61,7 @@ public class TranslatorTest {
     }
 
     @Test
-    public void testTranslator_singleWordInput_UserToSystem_backToUSerInDifferentLanguage() {
+    public void testTranslator_singleWordInput_UserToSystem_backToUserInDifferentLanguage() {
         String testString = "hund";
         String testLanguage = "de";
         String secondLanguage = "fr";
@@ -111,5 +111,5 @@ public class TranslatorTest {
         }
         catch (Exception e) {
         }
-    }*/
+    }
 }
