@@ -87,4 +87,8 @@
 ||#68, #69|multi-language translation for LobbyOverview, LobbySettings|
 |Pablo|#16 #17 #19| User settings, for username password and language without authentication|
 
-
+## Week 6
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Joana|#177|user can not join a lobby twice|
+||#176, #178|refactor login and session to allow the page to be displayed in the users language|
