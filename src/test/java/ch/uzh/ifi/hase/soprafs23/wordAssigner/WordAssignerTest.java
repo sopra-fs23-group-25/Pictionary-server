@@ -63,6 +63,7 @@ public class WordAssignerTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
         String word = wordAssigner.getNewWord(1L);
+        assertNotEquals(0, word.length());
 
     }
 
