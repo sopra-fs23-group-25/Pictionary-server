@@ -3,7 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 
 import java.io.Serializable;
 
-public class Guess implements Serializable, Cloneable {
+public class Guess implements Serializable {
 
     private Long userId;
     private String username;

@@ -40,7 +40,6 @@ public class TurnController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId, @RequestHeader("UserId") long userId) {
-        //Long userIdL = Long.parseLong(userId);
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
 
         turn = turnService.translateTurn(turn, userId);

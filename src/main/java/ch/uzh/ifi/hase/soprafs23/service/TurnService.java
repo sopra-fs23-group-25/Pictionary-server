@@ -26,14 +26,7 @@ public class TurnService {
     private WordAssigner wordAssigner;
     private Translator translator;
 
-    {
-        try {
-            translator = Translator.getInstance();
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     @Autowired
     public TurnService(
@@ -42,6 +35,14 @@ public class TurnService {
         this.lobbyRepository = lobbyRepository;
         this.wordAssigner = new WordAssigner(lobbyRepository);
         this.userRepository = userRepository;
+        {
+            try {
+                this.translator = Translator.getInstance();
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public Turn initTurn(Long lobbyId) {
@@ -63,7 +64,6 @@ public class TurnService {
     }
 
     public void submitGuess(Turn turn, Guess guess) {
-
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
         if (translatedGuess.equals(turn.getWord())) {

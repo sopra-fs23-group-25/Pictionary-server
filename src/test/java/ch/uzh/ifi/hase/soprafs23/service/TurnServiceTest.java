@@ -180,7 +180,8 @@ public class TurnServiceTest {
         when(userRepository.findByUserId(2L)).thenReturn(testUser2);
         Mockito.when(translator.getListTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
                 .thenReturn(new ArrayList<>(Arrays.asList("Vogel", "Ente")));
-        turnService.translateTurn(testTurn, testUser.getUserId());
+        Turn returnedTurn = turnService.translateTurn(testTurn, testUser.getUserId());
+        assertEquals(returnedTurn.getGuesses(), testTurn.getGuesses());
     }
 
     // DELETE turn: success
