@@ -66,8 +66,8 @@ public class TurnService {
     public void submitGuess(Turn turn, Guess guess) {
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
+        guess.setGuess(translatedGuess);
         if (translatedGuess.equals(turn.getWord())) {
-            guess.setGuess(translatedGuess);
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
             long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
             guess.setScore(score);

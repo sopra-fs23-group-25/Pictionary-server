@@ -31,7 +31,6 @@ public class TurnController {
     @ResponseBody
     public void submitGuess(@PathVariable("lobbyId") long lobbyId, @RequestBody GuessDTO guessToAdd) {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
-
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         turnService.submitGuess(turn, guess);
     }
