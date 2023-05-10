@@ -40,7 +40,7 @@ public class SessionControllerTest {
     Session testSession = new Session();
 
     SessionPostDTO sessionPostDTO = new SessionPostDTO();
-
+    User testUser = new User();
 
     String token = "testToken";
     @Autowired
@@ -62,6 +62,11 @@ public class SessionControllerTest {
 
         sessionPostDTO.setPassword(testSession.getPassword());
         sessionPostDTO.setUsername(testSession.getUsername());
+
+        testUser.setUsername("testUser");
+        testUser.setUserId(1L);
+        testUser.setLanguage("en");
+
     }
 
     @Test
@@ -98,15 +103,13 @@ public class SessionControllerTest {
     }
     ///does not work for some reason still throws 404
 
-
-
     @Test
     public void loginUser_validCredentials_returnsSessionGetDTO() throws Exception {
 
         given(authService.login(Mockito.any())).willReturn(testSession);
 
         Mockito.doNothing().when(userService).changeStatus(anyLong(), Mockito.any());
-
+        when(userService.userById(Mockito.anyLong())).thenReturn(testUser);
         MockHttpServletRequestBuilder postRequest = post("/sessions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(sessionPostDTO))

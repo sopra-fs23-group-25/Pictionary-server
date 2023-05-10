@@ -9,14 +9,21 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.util.List;
 
 @Controller
 public class WebSocketController {
 
     private final WebSocketService websocketService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
 
     @Autowired
     private WebSocketDisconnectListener webSocketEventListener;
@@ -39,24 +46,34 @@ public class WebSocketController {
     @MessageMapping("/lobbies/{lobbyId}/drawing-clear")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/drawing-clear")
     public MessageRelayDTO clearDrawing(@Payload MessageRelayDTO message) {
-        return message;
+    return message;
     }
 
-    @MessageMapping("/lobbies/{lobbyId}/user-join")
+    @MessageMapping("/lobbies/{lobbyId}/users")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/users")
     public List<UserSocketGetDTO> sendUserList(@Payload UserJoinGameDTO message, @DestinationVariable  Long lobbyId) {
         return websocketService.getUsersInLobby(lobbyId);
     }
 
-    @MessageMapping("/lobbies/{lobbyId}/user-leave")
-    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/users")
-    public UserJoinGameDTO sendUserListAfterUserLeft(@Payload UserJoinGameDTO message) {
-        return message;
-    }
 
     @MessageMapping("/lobbies/{lobbyId}/start-game")
     @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/start-game")
     public MessageRelayDTO startGame(@Payload MessageRelayDTO message) {
+        return message;
+    }
+
+    @MessageMapping("/lobbies/{lobbyId}/lobby-closed")
+    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/lobby-closed")
+    public MessageRelayDTO closeLobby(@Payload MessageRelayDTO message) {
+        return message;
+    }
+
+    @MessageMapping("/lobbies/{lobbyId}/host-disconnected")
+    //@SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/host-disconnected")
+    public MessageRelayDTO sendHostDisconnected(@Payload MessageRelayDTO message, Long lobbyId){
+        System.out.println("we sent message");
+        String destination = WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/host-disconnected";
+        messagingTemplate.convertAndSend(destination, message);
         return message;
     }
 

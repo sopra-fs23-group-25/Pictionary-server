@@ -26,7 +26,7 @@ public class WordAssigner {
 
     public String getNewWord(Long lobbyId) {
 
-        String assignedWord = "tree"; // needs to be any word which is spart of the word list
+        String assignedWord = "tree"; // needs to be any word which is part of the word list
 
         Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
         Game game = lobby.getGame();
@@ -34,14 +34,13 @@ public class WordAssigner {
 
         if (passedWords.size() == 0) {
             assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
-
         }
         else {
             while (passedWords.contains(assignedWord) & passedWords.size() < possibleWords.size()) {
                 assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
             }
         }
-
+        assignedWord = assignedWord.substring(0,1).toUpperCase()+assignedWord.substring(1);
         return assignedWord;
     }
 

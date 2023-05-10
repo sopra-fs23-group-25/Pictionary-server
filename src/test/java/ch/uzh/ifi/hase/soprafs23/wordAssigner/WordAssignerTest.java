@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs23.wordAssignerTest;
+package ch.uzh.ifi.hase.soprafs23.wordAssigner;
 
 import ch.uzh.ifi.hase.soprafs23.WordAssigner.WordAssigner;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
@@ -73,7 +73,7 @@ public class WordAssignerTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
         String word = wordAssigner.getNewWord(1L);
-        assertEquals(word, "fish");
+        assertEquals("Fish", word);
 
     }
 

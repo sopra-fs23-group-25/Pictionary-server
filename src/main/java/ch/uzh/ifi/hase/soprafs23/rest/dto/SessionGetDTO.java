@@ -4,7 +4,6 @@ public class SessionGetDTO {
     private String token;
     private String username;
     private Long userId;
-
     private String language;
 
     public String getToken() {

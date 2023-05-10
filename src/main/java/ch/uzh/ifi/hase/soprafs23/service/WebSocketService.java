@@ -23,11 +23,15 @@ public class WebSocketService {
         private final Logger log = LoggerFactory.getLogger(ch.uzh.ifi.hase.soprafs23.service.WebSocketService.class);
         private final LobbyRepository lobbyRepository;
 
+        private final UserRepository userRepository;
+
         @Autowired
         public WebSocketService(
-                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
+                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
+                @Qualifier("userRepository") UserRepository userRepository)
         {
             this.lobbyRepository = lobbyRepository;
+            this.userRepository = userRepository;
         }
 
         public List<UserSocketGetDTO> getUsersInLobby(Long lobbyId) {

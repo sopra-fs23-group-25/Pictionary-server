@@ -44,7 +44,7 @@
 ||#45|display end of turn results|
 
 
-## Week 3
+## Week 4
 
 |  Name|  Issue(s)| Description |
 |--|--|--|
@@ -74,4 +74,21 @@
 ||#50|display how many rounds are left|
 ||#36|implemented rendering of drawing board and toolbar|
 
+## Week 5
 
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Leo|#169| Fixed some bug of Translator |
+||#171| implemented translation of turns when client send get request|
+||#167| started fixing translator issues on Google App Engine|
+||#114| added lower case regime to minimize wrong translations and achieve higher reproducibility|
+|Joana||Joker for Contributions|
+|Nico|#28, #30|close lobby button and functionality|
+||#68, #69|multi-language translation for LobbyOverview, LobbySettings|
+|Pablo|#16 #17 #19| User settings, for username password and language without authentication|
+
+## Week 6
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Joana|#177|user can not join a lobby twice|
+||#176, #178|refactor login and session to allow the page to be displayed in the users language|

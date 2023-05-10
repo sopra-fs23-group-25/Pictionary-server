@@ -50,6 +50,17 @@ public class User implements Serializable {
     @Column(nullable = false)
     private UserStatus status;
 
+
+    @Column()
+    private String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
     public Long getUserId() { return userId; }
     public void setUserId(Long id) {
         this.userId = id;

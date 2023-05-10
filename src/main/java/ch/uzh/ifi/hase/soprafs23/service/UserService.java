@@ -61,7 +61,7 @@ public class UserService {
         if(userWithUpdateInfo.getPassword() != null) {
             userToUpdate.setPassword(userWithUpdateInfo.getPassword());
         }
-        if(userWithUpdateInfo.getLanguage() != null) {
+        if(userWithUpdateInfo.getLanguage() != null && userWithUpdateInfo.getLanguage() != "") {
             userToUpdate.setLanguage(userWithUpdateInfo.getLanguage());
         }
 
