@@ -36,7 +36,7 @@ public class WordAssigner {
             assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
         }
         else {
-            while (passedWords.contains(assignedWord) & passedWords.size() < possibleWords.size()) {
+            while (passedWords.contains(assignedWord) && passedWords.size() < possibleWords.size()) {
                 assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
             }
         }
