@@ -92,3 +92,12 @@
 |--|--|--|
 |Joana|#177|user can not join a lobby twice|
 ||#176, #178|refactor login and session to allow the page to be displayed in the users language|
+|Leo|#194|Fixed issues with english speaking users|
+||#195|Fixed issue with translating entire turns|
+||#182 #183| Handle a Host leaving a Lobby|
+||#47| handle a player leaving the Lobby|
+|Pablo|#18, #19|implement user settings authentification and functionality|
+||#51|update trophy and styling|
+|Nico|#73|leave lobby button and functionality for player (not host)|
+||#76|handle when host disconnects from websocket connection during game|
+||#78|show intermediate screen to players when host closes lobby or disconnects from websocket connection|
