@@ -1,8 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.translator;
 // Imports the Google Cloud Translation library.
 
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.google.cloud.translate.v3.*;
-import net.bytebuddy.implementation.bytecode.Throw;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
@@ -12,24 +14,18 @@ public class Translator {
     static String projectId = "sopra-fs23-group-25-server";
     static LocationName parent = LocationName.of(projectId, "global");
     private static Translator instance = null;
-    private static TranslationServiceClient client = null;
-    private static Queue<TranslationRequest> requestQueue = new LinkedList<>();
-    private TranslationRequest currentRequest;
+    private TranslationServiceClient client = null;
     private TranslateTextResponse response;
-    private Thread translationThread;
-
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     // Constructor setting up Connection to Google Cloud Translate
     private Translator() throws IOException {
-        String projectId = "sopra-fs23-group-25-server";
-        LocationName parent = LocationName.of(projectId, "global");
-
         // Initialize the TranslationServiceClient once when the Translator object is created
         try {
             client = TranslationServiceClient.create();
         }
         catch (Exception e) {
-            System.err.println(e);
+            log.error(e.toString());
         }
     }
 
@@ -102,14 +98,19 @@ public class Translator {
         }
     }
 
-    private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client) throws IOException {
+    private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client)  {
 
-        TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(SYSTEM_LANGUAGE).setTargetLanguageCode(targetLanguage).addContents(word).build();
+        TranslateTextRequest request = TranslateTextRequest.newBuilder()
+                .setParent(parent.toString())
+                .setMimeType("text/plain")
+                .setSourceLanguageCode(SYSTEM_LANGUAGE)
+                .setTargetLanguageCode(targetLanguage)
+                .addContents(word).build();
 
         return client.translateText(request);
     }
 
-    private static TranslateTextResponse translateTextToServerLanguage(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
+    private static TranslateTextResponse translateTextToServerLanguage(String sourceLanguage, String word, TranslationServiceClient client) {
 
         TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode(SYSTEM_LANGUAGE).addContents(word).build();
 
