@@ -8,6 +8,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 
+import java.util.Objects;
+
 
 @Component
 public class WebSocketConnectListener implements ApplicationListener<SessionConnectEvent> {
@@ -18,8 +20,8 @@ public class WebSocketConnectListener implements ApplicationListener<SessionConn
     @Override
     public void onApplicationEvent(SessionConnectEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
-        String lobbyId = accessor.getNativeHeader("lobbyId").get(0); // get the value of userId header sent from the client-side
-        String userId = accessor.getNativeHeader("userId").get(0); // get the value of userId header sent from the client-side
+        String lobbyId = Objects.requireNonNull(accessor.getNativeHeader("lobbyId")).get(0); // get the value of userId header sent from the client-side
+        String userId = Objects.requireNonNull(accessor.getNativeHeader("userId")).get(0); // get the value of userId header sent from the client-side
         String sessionId = accessor.getSessionId();
         User user = userRepository.findByUserId(Long.parseLong(userId));
         user.setSessionId(sessionId);

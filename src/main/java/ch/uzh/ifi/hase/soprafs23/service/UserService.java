@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,7 +62,7 @@ public class UserService {
         if(userWithUpdateInfo.getPassword() != null) {
             userToUpdate.setPassword(userWithUpdateInfo.getPassword());
         }
-        if(userWithUpdateInfo.getLanguage() != null && userWithUpdateInfo.getLanguage() != "") {
+        if(userWithUpdateInfo.getLanguage() != null && !Objects.equals(userWithUpdateInfo.getLanguage(), "")) {
             userToUpdate.setLanguage(userWithUpdateInfo.getLanguage());
         }
 

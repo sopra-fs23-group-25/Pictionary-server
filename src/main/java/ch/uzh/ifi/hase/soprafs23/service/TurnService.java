@@ -62,7 +62,7 @@ public class TurnService {
         return newTurn;
     }
 
-    public void submitGuess(Turn turn, Guess guess) throws InterruptedException {
+    public void submitGuess(Turn turn, Guess guess) {
 
 
         String translatedGuess = translateGuess(guess, true); // translate guess implement
@@ -128,7 +128,7 @@ public class TurnService {
 
     //used to prepare a guess for translation
     // translator need to know which way to translate, therefore a flag (playerToSystem) is set accordingly
-    private String translateGuess(Guess guess, boolean playerToSystem) throws InterruptedException {
+    private String translateGuess(Guess guess, boolean playerToSystem){
 
         String language = userRepository.findByUserId(guess.getUserId()).getLanguage();
         String guessedWord = guess.getGuess().toLowerCase();
@@ -142,7 +142,7 @@ public class TurnService {
     // instead it should copy each Turn and Guess it works with
     // currently only supports "System To User" Translation
     // return a copied and modified instance of original Turn
-    public Turn translateTurn(Turn turn, Long userId) throws InterruptedException {
+    public Turn translateTurn(Turn turn, Long userId)  {
 
         Turn newTurn = new Turn(turn);
 
