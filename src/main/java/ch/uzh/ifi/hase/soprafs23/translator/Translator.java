@@ -44,7 +44,7 @@ public class Translator {
     // Entry Point To Single Word Translation
     // Adds one word to the Translation Queue,
     // waits till its solved then returns it as a String
-    public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) throws InterruptedException {
+    public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
             return word;
         }
@@ -60,13 +60,13 @@ public class Translator {
     // Entry Point To List Translation
     // Adds a List of words to the Translation Queue one by one
     // waits till its solved, then returns them as a List
-    public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) throws InterruptedException {
+    public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem)  {
         if (Objects.equals(language, "en")) {
             return wordList;
         }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
-            if(word == "") {
+            if(Objects.equals(word, "")) {
                 translatedWordList.add(word);
             }
             else if (word != null){
@@ -96,7 +96,6 @@ public class Translator {
                 response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
             }
             setTranslationText(currentRequest);
-            Translator.this.notifyAll();
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -105,7 +104,6 @@ public class Translator {
 
     private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client) throws IOException {
 
-        // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
         TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(SYSTEM_LANGUAGE).setTargetLanguageCode(targetLanguage).addContents(word).build();
 
         return client.translateText(request);
@@ -113,7 +111,6 @@ public class Translator {
 
     private static TranslateTextResponse translateTextToServerLanguage(String sourceLanguage, String word, TranslationServiceClient client) throws IOException {
 
-        // Supported Mime Types: https://cloud.google.com/translate/docs/supported-formats
         TranslateTextRequest request = TranslateTextRequest.newBuilder().setParent(parent.toString()).setMimeType("text/plain").setSourceLanguageCode(sourceLanguage).setTargetLanguageCode(SYSTEM_LANGUAGE).addContents(word).build();
 
         return client.translateText(request);

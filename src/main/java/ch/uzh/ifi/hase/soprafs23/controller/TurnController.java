@@ -33,13 +33,7 @@ public class TurnController {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
 
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
-        try {
-            turnService.submitGuess(turn, guess);
-        }
-        catch (InterruptedException e) {
-            throw new HttpStatusCodeException(HttpStatus.INTERNAL_SERVER_ERROR, "Guess couldn't be submitted \n Exception: " + e.getMessage()) {
-            };
-        }
+        turnService.submitGuess(turn, guess);
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")
@@ -48,12 +42,8 @@ public class TurnController {
     public TurnGetDTO getResult(@PathVariable("lobbyId") long lobbyId, @RequestHeader("UserId") long userId) {
         //Long userIdL = Long.parseLong(userId);
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
-        try {
-            turn = turnService.translateTurn(turn, userId);
-        }
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
+        turn = turnService.translateTurn(turn, userId);
         return DTOMapper.INSTANCE.convertEntityToTurnGetDTO(turn);
     }
 

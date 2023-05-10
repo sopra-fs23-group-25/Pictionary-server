@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.Objects;
 
 @Entity
 public class Player implements Serializable, Comparable<Player> {
@@ -38,10 +39,15 @@ public class Player implements Serializable, Comparable<Player> {
         if (obj == null || getClass() != obj.getClass()) return false;
 
         Player other = (Player) obj;
-        if (other.getUsername() == getUsername()){
+        if (Objects.equals(other.getUsername(), getUsername()) && Objects.equals(other.getUserId(), getUserId())){
             return true;
         }
         return res;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(getUsername(), getUserId());
     }
 
     public Long getUserId() { return userId; }
