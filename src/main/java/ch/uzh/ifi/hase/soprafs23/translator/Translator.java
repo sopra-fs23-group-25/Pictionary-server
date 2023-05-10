@@ -44,7 +44,7 @@ public class Translator {
         if (Objects.equals(language, "en")) {
             return word;
         }
-        if (Objects.equals(word, null)){
+        if (Objects.equals(word, null)) {
             return "guess not submiited";
         }
         TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
@@ -56,21 +56,21 @@ public class Translator {
     // Entry Point To List Translation
     // Adds a List of words to the Translation Queue one by one
     // waits till its solved, then returns them as a List
-    public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem)  {
+    public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
             return wordList;
         }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
-            if(Objects.equals(word, "")) {
+            if (Objects.equals(word, "")) {
                 translatedWordList.add(word);
             }
-            else if (word != null){
+            else if (word != null) {
                 TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
                 solveSingleRequest(currentRequest);
                 translatedWordList.add(currentRequest.translatedWord);
             }
-            else{
+            else {
                 throw new RuntimeException();
             }
 
@@ -82,23 +82,20 @@ public class Translator {
     // Helper Classes and functions
 
 
-    private void solveSingleRequest(TranslationRequest currentRequest){
-        try {
-            String currentRequestLanguage = currentRequest.getLanguage();
-            if (currentRequest.playerToSystem) {
-                response = translateTextToServerLanguage(currentRequestLanguage, currentRequest.getWord(), client);
-            }
-            else {
-                response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
-            }
-            setTranslationText(currentRequest);
+    private void solveSingleRequest(TranslationRequest currentRequest) {
+
+        String currentRequestLanguage = currentRequest.getLanguage();
+        if (currentRequest.playerToSystem) {
+            response = translateTextToServerLanguage(currentRequestLanguage, currentRequest.getWord(), client);
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        else {
+            response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
         }
+        setTranslationText(currentRequest);
+
     }
 
-    private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client)  {
+    private static TranslateTextResponse translateTextToUserLanguage(String targetLanguage, String word, TranslationServiceClient client) {
 
         TranslateTextRequest request = TranslateTextRequest.newBuilder()
                 .setParent(parent.toString())
