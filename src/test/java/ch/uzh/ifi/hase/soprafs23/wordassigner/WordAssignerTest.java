@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.wordassigner;
 
-import ch.uzh.ifi.hase.soprafs23.WordAssigner.WordAssigner;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;

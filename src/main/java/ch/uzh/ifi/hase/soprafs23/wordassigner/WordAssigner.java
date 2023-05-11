@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs23.WordAssigner;
+package ch.uzh.ifi.hase.soprafs23.wordassigner;
 
 import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
