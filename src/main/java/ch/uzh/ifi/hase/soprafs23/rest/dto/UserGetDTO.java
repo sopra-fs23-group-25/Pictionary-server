@@ -8,7 +8,6 @@ public class UserGetDTO {
   private String username;
   private String language;
   private Long lobbyId;
-  private UserStatus status;
 
     public Long getId() { return userId; }
     public void setId(Long userId) {
@@ -27,11 +26,4 @@ public class UserGetDTO {
 
     public Long getLobbyId() {return lobbyId;}
     public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
-
-    public UserStatus getStatus() {
-        return status;
-    }
-    public void setStatus(UserStatus status) {
-        this.status = status;
-    }
 }
