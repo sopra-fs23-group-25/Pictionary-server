@@ -33,6 +33,12 @@ public class TurnController {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         turnService.submitGuess(turn, guess);
+
+        boolean allGuessed = turnService.everyPlayerGuessed(turn);
+        // used this to test with postman, throws exception as soon as last guess is submitted:
+        // if (allGuessed) {throw new RuntimeException("all Players guessed");}
+
+        // here To-Do: respond with websocket -> end turn
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")
@@ -51,5 +57,4 @@ public class TurnController {
     public void endTurn(@PathVariable("lobbyId") long lobbyId) {
         turnService.deleteTurn(lobbyId);
     }
-
 }

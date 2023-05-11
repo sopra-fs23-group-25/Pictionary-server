@@ -74,12 +74,16 @@ public class TurnService {
             givePainterPoints(turn);
         }
         else {
+            turn.setIncorrectGuesses(turn.getIncorrectGuesses() + 1);
             guess.setScore(0);
         }
 
         turn.addGuess(guess);// add guess to list
     }
 
+    public boolean everyPlayerGuessed(Turn turn) {
+        return (turn.getIncorrectGuesses() + turn.getCorrectGuesses() == turn.getGuesses().size() - 1);
+    }
 
     public void deleteTurn(long lobbyId) {
         Game game = getGameByLobbyId(lobbyId);
