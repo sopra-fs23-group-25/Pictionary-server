@@ -5,11 +5,10 @@ import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,25 +21,33 @@ public class WordAssigner {
     public WordAssigner(@Qualifier("lobbyRepository") LobbyRepository lobbyRepository) {
         this.lobbyRepository = lobbyRepository;
         random = new Random();
+        Collections.sort(possibleWords);
     }
 
     public String getNewWord(Long lobbyId) {
 
-        String assignedWord = "tree"; // needs to be any word which is part of the word list
-
         Lobby lobby = lobbyRepository.findByLobbyId(lobbyId);
         Game game = lobby.getGame();
-        List<String> passedWords = game.getWordsPainted();
+        List<String> passedWords = new ArrayList<>(game.getWordsPainted());
 
-        if (passedWords.size() == 0) {
-            assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
+        // reset painted word list
+        Collections.sort(passedWords);
+        if(passedWords.equals(possibleWords)){
+            passedWords = new ArrayList<>();
+            game.setWordsPainted(passedWords);
         }
-        else {
-            while (passedWords.contains(assignedWord) && passedWords.size() < possibleWords.size()) {
+        // assign new
+        String assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
+
+        // check if word has already been used
+        if (!passedWords.isEmpty()) {
+            while (passedWords.contains(assignedWord)) {
                 assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
             }
         }
-        assignedWord = assignedWord.substring(0,1).toUpperCase()+assignedWord.substring(1);
+        game.addWordPainted(assignedWord);
+
+        assignedWord = assignedWord.substring(0, 1).toUpperCase() + assignedWord.substring(1);
         return assignedWord;
     }
 

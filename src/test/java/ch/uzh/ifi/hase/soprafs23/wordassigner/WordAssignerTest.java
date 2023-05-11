@@ -1,20 +1,16 @@
-package ch.uzh.ifi.hase.soprafs23.wordAssigner;
+package ch.uzh.ifi.hase.soprafs23.wordassigner;
 
 import ch.uzh.ifi.hase.soprafs23.WordAssigner.WordAssigner;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
-import ch.uzh.ifi.hase.soprafs23.service.GameService;
-import ch.uzh.ifi.hase.soprafs23.translator.Translator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +41,7 @@ public class WordAssignerTest {
         testGame.setPlayers(new ArrayList<>());
         testGame.setLobbyId(1L);
 
-        testGame.setWordsPainted(Arrays.asList());
+        testGame.setWordsPainted(new ArrayList<>());
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
     }
@@ -75,6 +71,29 @@ public class WordAssignerTest {
 
         String word = wordAssigner.getNewWord(1L);
         assertEquals("Fish", word);
+
+    }
+
+    @Test
+    public void assignWord_allTaken(){
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door", "fish"));
+        testLobby.setGame(testGame);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+
+        String word = wordAssigner.getNewWord(1L);
+        assertEquals(1,testGame.getWordsPainted().size());
+
+    }
+
+    @Test
+    public void assignWord_ensureNoDuplicates(){
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree"));
+        testLobby.setGame(testGame);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+
+        String word1 = wordAssigner.getNewWord(1L);
+        String word2 = wordAssigner.getNewWord(1L);
+        assertNotEquals(word2,word1);
 
     }
 

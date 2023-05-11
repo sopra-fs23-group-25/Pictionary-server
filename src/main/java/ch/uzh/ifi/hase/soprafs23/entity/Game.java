@@ -72,6 +72,12 @@ public class Game implements Serializable {
     public List<String> getWordsPainted() {return wordsPainted;}
     public void setWordsPainted(List<String> wordsPainted) {this.wordsPainted = wordsPainted;}
 
+    public void addWordPainted(String newWord){
+        List<String> passedWords = new ArrayList<>(getWordsPainted());
+        passedWords.add(newWord);
+        setWordsPainted(passedWords);
+    }
+
     public Turn getTurn() {
         return turn;
     }
