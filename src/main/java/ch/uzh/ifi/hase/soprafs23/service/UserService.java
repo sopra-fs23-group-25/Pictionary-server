@@ -58,7 +58,7 @@ public class UserService {
 
         if (!userToUpdate.getUsername().equals(userWithUpdateInfo.getUsername())) { // check if the username has changed
             checkIfUsernameTaken(userWithUpdateInfo.getUsername()); // throws 409 if taken
-            if (isEmpty(userToUpdate.getUsername())) { // checks if username contains at least one character
+            if (isEmpty(userWithUpdateInfo.getUsername())) { // checks if username contains at least one character
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must contain a character!");
             }
             userToUpdate.setUsername(userWithUpdateInfo.getUsername());
@@ -112,5 +112,4 @@ public class UserService {
         user.setStatus(status);
         userRepository.save(user);
     }
-
 }
