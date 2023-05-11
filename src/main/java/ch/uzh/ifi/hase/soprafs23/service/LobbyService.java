@@ -54,9 +54,12 @@ public class LobbyService {
 
     public Lobby createLobby(Lobby newLobby) {
 
-        if (newLobby.getLobbyName() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no name provided");
+        String name = newLobby.getLobbyName();
+
+        if (name == null || name.trim().equals("")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby name must contain a character!");
         }
+
         User user = getSingleUser(newLobby.getHostId());
         Player host = user.convertToPlayer();
         host.makeHost();

@@ -43,7 +43,15 @@ public class UserService {
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.OFFLINE);
-        //newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+        if (isEmpty(newUser.getPassword())) { // checks if password contains at least one character
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must contain a character!");
+        }
+
+        if (isEmpty(newUser.getUsername())) { // checks if username contains at least one character
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must contain a character!");
+        }
+
         checkIfUsernameTaken(newUser.getUsername());
         // saves the given entity but data is only persisted in the database once
         // flush() is called
