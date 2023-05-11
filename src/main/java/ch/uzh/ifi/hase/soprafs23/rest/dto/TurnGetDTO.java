@@ -6,13 +6,10 @@ import java.util.List;
 
 public class TurnGetDTO {
     private long painterId;
-
     private List<Guess> guesses;
-
     private String word; // maybe
 
     public String getWord() {return word;}
-
     public void setWord(String word) {this.word = word;}
 
     public List<Guess> getGuesses() {
@@ -25,9 +22,7 @@ public class TurnGetDTO {
     public long getPainterId() {
         return painterId;
     }
-
     public void setPainterId(long painterId) {
         this.painterId = painterId;
     }
-
 }

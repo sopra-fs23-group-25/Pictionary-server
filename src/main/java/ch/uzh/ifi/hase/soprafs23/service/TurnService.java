@@ -82,7 +82,7 @@ public class TurnService {
     }
 
     public boolean everyPlayerGuessed(Turn turn) {
-        return (turn.getIncorrectGuesses() + turn.getCorrectGuesses() == turn.getGuesses().size());
+        return (turn.getIncorrectGuesses() + turn.getCorrectGuesses() == turn.getGuesses().size() - 1);
     }
 
     public void deleteTurn(long lobbyId) {
