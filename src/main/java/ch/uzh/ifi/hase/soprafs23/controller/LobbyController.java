@@ -38,6 +38,7 @@ public class LobbyController {
         if (createdLobby == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be created");
         }
+
         return DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(createdLobby);
 
     }
