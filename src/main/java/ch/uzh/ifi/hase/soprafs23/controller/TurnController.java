@@ -35,6 +35,9 @@ public class TurnController {
         turnService.submitGuess(turn, guess);
 
         boolean allGuessed = turnService.everyPlayerGuessed(turn);
+        // used this to test with postman, throws exception as soon as last guess is submitted:
+        // if (allGuessed) {throw new RuntimeException("all Players guessed");}
+
         // here To-Do: respond with websocket -> end turn
     }
 
