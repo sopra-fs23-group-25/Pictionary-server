@@ -55,19 +55,35 @@ public class UserService {
     }
 
     public void updateUser(User userWithUpdateInfo, User userToUpdate) {
-        if (!userToUpdate.getUsername().equals(userWithUpdateInfo.getUsername())) {
-            checkIfUsernameTaken(userWithUpdateInfo.getUsername());
+
+        if (!userToUpdate.getUsername().equals(userWithUpdateInfo.getUsername())) { // check if the username has changed
+            checkIfUsernameTaken(userWithUpdateInfo.getUsername()); // throws 409 if taken
+            if (isEmpty(userWithUpdateInfo.getUsername())) { // checks if username contains at least one character
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must contain a character!");
+            }
             userToUpdate.setUsername(userWithUpdateInfo.getUsername());
         }
-        if(userWithUpdateInfo.getPassword() != null) {
-            userToUpdate.setPassword(userWithUpdateInfo.getPassword());
-        }
-        if(userWithUpdateInfo.getLanguage() != null && !Objects.equals(userWithUpdateInfo.getLanguage(), "")) {
+
+        if(!userToUpdate.getLanguage().equals(userWithUpdateInfo.getLanguage())) { // check if language changed
+            if (isEmpty(userToUpdate.getLanguage())) { // checks if username contains at least one character
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must contain a character!");
+            }
             userToUpdate.setLanguage(userWithUpdateInfo.getLanguage());
+        }
+
+        if(!userWithUpdateInfo.getPassword().equals("")) {
+            if (isEmpty(userWithUpdateInfo.getPassword())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must contain a character!");
+            }
+            userToUpdate.setPassword(userWithUpdateInfo.getPassword());
         }
 
         userRepository.save(userToUpdate);
         userRepository.flush();
+    }
+
+    private boolean isEmpty(String s) { // returns true for strings "      " or "" or "   " etc.
+        return s == null || s.trim().equals("");
     }
 
     private void checkIfUsernameTaken(String username) {
@@ -96,5 +112,4 @@ public class UserService {
         user.setStatus(status);
         userRepository.save(user);
     }
-
 }

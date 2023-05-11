@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
-
 public class UserPutDTO {
 
     private String username;
@@ -24,5 +22,4 @@ public class UserPutDTO {
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
-
 }

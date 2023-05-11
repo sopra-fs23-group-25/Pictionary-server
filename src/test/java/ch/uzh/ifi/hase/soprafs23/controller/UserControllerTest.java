@@ -86,7 +86,6 @@ public class UserControllerTest {
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].username", is(testUser.getUsername())))
-                .andExpect(jsonPath("$[0].status", is(testUser.getStatus().toString())))
                 .andExpect(jsonPath("$[0].language", is(testUser.getLanguage())))
                 .andExpect(jsonPath("$[0].id", is(testUser.getUserId().intValue())));
         //Mockito.verify(authService).authUser(token);
@@ -116,10 +115,7 @@ public class UserControllerTest {
                 .andExpect(status().isCreated()) // Code 201
                 .andExpect(jsonPath("$.id", is(testUser.getUserId().intValue())))
                 .andExpect(jsonPath("$.username", is(testUser.getUsername())))
-                .andExpect(jsonPath("$.language", is(testUser.getLanguage())))
-
-                .andExpect(jsonPath("$.status", is(testUser.getStatus().toString())));
-
+                .andExpect(jsonPath("$.language", is(testUser.getLanguage())));
     }
 
     // /users POST status code 409
@@ -172,8 +168,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk()) // Code 200
                 .andExpect(jsonPath("$.id", is(testUser.getUserId().intValue())))
                 .andExpect(jsonPath("$.username", is(testUser.getUsername())))
-                .andExpect(jsonPath("$.language", is(testUser.getLanguage())))
-                .andExpect(jsonPath("$.status", is(testUser.getStatus().toString())));
+                .andExpect(jsonPath("$.language", is(testUser.getLanguage())));
     }
 
     // /users/{id} GET status code 404

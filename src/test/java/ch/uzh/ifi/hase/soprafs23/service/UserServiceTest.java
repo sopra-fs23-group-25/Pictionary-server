@@ -40,6 +40,7 @@ public class UserServiceTest {
         testUser.setToken(token);
         testUser.setStatus(UserStatus.OFFLINE);
         testUser.setLanguage("testLanguage");
+        testUser.setPassword("testPassword");
         //testUser.setLobbyId(null);
 
         // when -> any object is being save in the userRepository -> return the dummy
@@ -119,7 +120,7 @@ public class UserServiceTest {
     @Test
     public void updateUser_valid_changesUsername_pWord_language() throws Exception {
         User testUser2 = new User();
-        testUser2.setUsername("testUsername2");
+        testUser2.setUsername("username2");
         testUser2.setPassword("password2");
         testUser2.setLanguage("language2");
 
@@ -131,17 +132,18 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateUser_nullvalues_sameUsername() throws Exception {
+    public void updateUser_unchangedValues() throws Exception {
         User testUser2 = new User();
         testUser2.setUsername("testUsername");
-        testUser2.setPassword(null);
-        testUser2.setLanguage(null);
+        testUser2.setPassword("");
+        testUser2.setLanguage("testLanguage");
 
         userService.updateUser(testUser2, testUser);
 
         assertEquals(testUser2.getUsername(), testUser.getUsername());
         assertEquals("testUsername", testUser.getUsername());
         assertEquals("testLanguage", testUser.getLanguage());
+        assertEquals("testPassword", testUser.getPassword());
     }
 
     @Test

@@ -31,7 +31,6 @@ public interface DTOMapper {
     @Mapping(source = "userId", target = "id") //where is target? why can i not change it to "userId"?
     @Mapping(source = "username", target = "username")
     @Mapping(source = "language", target = "language")
-    @Mapping(source = "status", target = "status")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     // PUT /users/{userId}
