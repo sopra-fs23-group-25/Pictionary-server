@@ -28,6 +28,8 @@ public class Turn implements Serializable {
 
     private int correctGuesses = 0;
 
+    private int incorrectGuesses = 0;
+
     private List<Guess> guesses;
 
     private String word;
@@ -46,15 +48,20 @@ public class Turn implements Serializable {
     public int getCorrectGuesses() {
         return correctGuesses;
     }
-
     public void setCorrectGuesses(int correctGuesses) {
         this.correctGuesses = correctGuesses;
+    }
+
+    public int getIncorrectGuesses() {
+        return incorrectGuesses;
+    }
+    public void setIncorrectGuesses(int incorrectGuesses) {
+        this.incorrectGuesses = incorrectGuesses;
     }
 
     public long getPainterId() {
         return painterId;
     }
-
     public void setPainterId(long painterId) {
         this.painterId = painterId;
     }

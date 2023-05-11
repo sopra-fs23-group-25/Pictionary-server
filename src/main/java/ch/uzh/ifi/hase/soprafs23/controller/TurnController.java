@@ -33,6 +33,8 @@ public class TurnController {
         Turn turn = turnService.getTurnByLobbyId(lobbyId);
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         turnService.submitGuess(turn, guess);
+
+        boolean lastGuess = turnService.lastGuess(turn);
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")
