@@ -34,7 +34,8 @@ public class TurnController {
         Guess guess = turnService.addUsername(DTOMapper.INSTANCE.convertGuessPutDTOToEntity(guessToAdd));
         turnService.submitGuess(turn, guess);
 
-        boolean lastGuess = turnService.lastGuess(turn);
+        boolean allGuessed = turnService.everyPlayerGuessed(turn);
+        // here To-Do: respond with websocket -> end turn
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")
@@ -53,5 +54,4 @@ public class TurnController {
     public void endTurn(@PathVariable("lobbyId") long lobbyId) {
         turnService.deleteTurn(lobbyId);
     }
-
 }

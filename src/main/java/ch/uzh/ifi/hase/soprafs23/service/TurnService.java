@@ -81,7 +81,7 @@ public class TurnService {
         turn.addGuess(guess);// add guess to list
     }
 
-    public boolean lastGuess(Turn turn) {
+    public boolean everyPlayerGuessed(Turn turn) {
         return (turn.getIncorrectGuesses() + turn.getCorrectGuesses() == turn.getGuesses().size());
     }
 
