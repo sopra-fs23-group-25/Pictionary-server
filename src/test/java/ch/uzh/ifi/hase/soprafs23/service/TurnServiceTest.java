@@ -84,6 +84,9 @@ public class TurnServiceTest {
 
         Turn turn = turnService.initTurn(testLobby.getLobbyId());
 
+        String string = "String";
+
+        assertEquals(testTurn.getWord().getClass(), string.getClass()); // word is assigned to turn
         assertEquals(testGame.getPainter(), turn.getPainterId());
     }
 
@@ -192,24 +195,24 @@ public class TurnServiceTest {
         assertNull(null, testGame.getTurn());
     }
 
-    // Painter points: correct guess
+    // Validate Guess: correct, incorrect
 
-    /*@Test
-    public void updatePainterPoints() throws InterruptedException{
+    @Test
+    public void correctGuess() throws InterruptedException {
+        Guess initGuess = new Guess();
+        initGuess.setGuess(null);
+        initGuess.setUsername("testUser");
+        initGuess.setScore(0);
+        initGuess.setUserId(1L);
+
         Guess guess = new Guess();
-        guess.setGuess(null);
-        guess.setUsername("testUser");
-        guess.setScore(0);
-        guess.setUserId(1L);
-
-        Guess guess2 = new Guess();
         guess.setGuess("mock translation");
         guess.setUsername("testUser");
         guess.setScore(0);
         guess.setUserId(1L);
 
         List<Guess> guessList = new ArrayList<>();
-        guessList.add(guess);
+        guessList.add(initGuess);
 
         testTurn.setPainterId(guess.getUserId());
         testTurn.setGuesses(guessList);
@@ -222,10 +225,11 @@ public class TurnServiceTest {
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
-        turnService.verifyGuess(testTurn, guess2);
+        turnService.submitGuess(testTurn, guess);
 
-        assertEquals(30, guess.getScore());
-    }*/
+        assertEquals(25, guess.getScore());
+
+    }
 
     @Test
     public void player_guesses_twice() throws InterruptedException{

@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Game;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
-import ch.uzh.ifi.hase.soprafs23.entity.Turn;
+import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -201,6 +198,68 @@ public class GameServiceTest {
         assertTrue(testGame.getGameOver());
         assertFalse(testGame.isRunning());
     }
+
+    @Test
+    public void integrateResult_updatesPoints() {
+
+        Player testPainter = new Player();
+        testPainter.setUserId(1L);
+        testPainter.setUsername("testName");
+        testPainter.setTotalScore(0L);
+        testPainter.setCurrentRole(PlayerRole.PAINTER);
+
+        /*Player testGuesser = new Player();
+        testGuesser.setUserId(1L);
+        testGuesser.setUsername("testName");
+        testGuesser.setTotalScore(0L);
+        testGuesser.setCurrentRole(PlayerRole.GUESSER);*/
+
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(testPainter);
+
+        testGame.setPlayers(playerList);
+        testGame.setNotPainted(playerList);
+
+        Turn testTurn = new Turn();
+        testTurn.setGuesses(testGame.initGuesses());
+
+        Guess guess = testTurn.getGuesses().get(0);
+        guess.setScore(10);
+
+        testGame.setTurn(testTurn);
+
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+
+        gameService.integrateTurnResults(testGame);
+
+        assertEquals(10L, testGame.getPlayers().get(0).getTotalScore());
+    }
+
+    /*@Test
+    public void integrateResult_rolesRedistributed() {
+
+        Player testPlayer = new Player();
+        testPlayer.setUserId(1L);
+        testPlayer.setUsername("testName");
+        testPlayer.setCurrentRole(PlayerRole.PAINTER);
+
+        Player testPlayer2 = new Player();
+        testPlayer2.setUserId(2L);
+        testPlayer2.setUsername("testName2");
+        testPlayer.setCurrentRole(PlayerRole.GUESSER);
+
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(testPlayer);
+        playerList.add(testPlayer2);
+
+        testGame.setPlayers(playerList);
+        testGame.setNotPainted(playerList);
+
+       testGame.redistributeRoles();
+
+        assertEquals(PlayerRole.GUESSER, testPlayer.getCurrentRole());
+        assertEquals(PlayerRole.PAINTER, testPlayer2.getCurrentRole());
+    }*/
 
     @Test
     public void integrateResult_playerNotFound() {

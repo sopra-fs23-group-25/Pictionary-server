@@ -147,10 +147,26 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateUsername_invalid_throws409() throws Exception {
+    public void update_namePwordEmpty_throws409() throws Exception {
         User testUser2 = new User();
+        testUser2.setUsername("       ");
+        testUser2.setPassword("");
+        testUser2.setLanguage("       ");
+
+
         when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
         assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
+    }
+
+    @Test
+    public void createUser_name_password_space_throwsException() {
+        assertNull(userRepository.findByUsername("testUsername"));
+
+        testUser.setUsername("    ");
+        testUser.setLanguage("testLanguage");
+        testUser.setPassword("     ");
+
+        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
     }
 
     @Test

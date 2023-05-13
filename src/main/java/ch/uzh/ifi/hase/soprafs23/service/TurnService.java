@@ -39,10 +39,7 @@ public class TurnService {
         try {
             this.translator = Translator.getInstance();
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-
-        }
+        catch (IOException e) {throw new RuntimeException(e);}
     }
 
     public Turn initTurn(Long lobbyId) {
