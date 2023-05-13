@@ -1,21 +1,30 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Guess;
 import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GuessDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.TurnGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import ch.uzh.ifi.hase.soprafs23.service.TurnService;
+import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @RestController
 public class TurnController {
 
     private final TurnService turnService;
+    private final GameService gameService;
 
-    TurnController(TurnService turnService) {this.turnService = turnService;}
+    private final WebSocketController webSocketController;
+
+    TurnController(TurnService turnService, GameService gameService, WebSocketController webSocketController) {
+        this.turnService = turnService;
+        this.gameService = gameService;
+        this.webSocketController = webSocketController;
+    }
 
     @PostMapping("/lobbies/{lobbyId}/game/turn")
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,6 +44,26 @@ public class TurnController {
         turnService.submitGuess(turn, guess);
 
         boolean allGuessed = turnService.everyPlayerGuessed(turn);
+
+        if (allGuessed){
+            Game game = gameService.getGameByLobbyId(lobbyId);
+            gameService.integrateTurnResults(game);
+            MessageRelayDTO message = new MessageRelayDTO();
+            if(game.getGameOver()){
+                message.setTask("end last round");
+            } else{
+                message.setTask("end round");
+            }
+
+            try {
+                wait(1000L);
+            }
+            catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            webSocketController.sendGameState(message, lobbyId);
+        }
+
         // used this to test with postman, throws exception as soon as last guess is submitted:
         // if (allGuessed) {throw new RuntimeException("all Players guessed");}
 
