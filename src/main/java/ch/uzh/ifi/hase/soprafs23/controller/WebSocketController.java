@@ -73,8 +73,9 @@ public class WebSocketController {
     }
 
     @MessageMapping("/lobbies/{lobbyId}/game-state")
-    @SendTo(WEBSOCKET_PREFIX + "/lobbies/{lobbyId}/game-state")
-    public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message){
+    public MessageRelayDTO sendGameState(@Payload MessageRelayDTO message, @DestinationVariable Long lobbyId ){
+        String destination = WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/game-state";
+        messagingTemplate.convertAndSend(destination, message);
         return message;
     }
 }

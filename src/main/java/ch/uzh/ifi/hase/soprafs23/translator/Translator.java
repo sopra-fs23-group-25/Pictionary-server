@@ -16,7 +16,7 @@ public class Translator {
     private static Translator instance = null;
     private TranslationServiceClient client = null;
     private TranslateTextResponse response;
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(Translator.class);
 
     // Constructor setting up Connection to Google Cloud Translate
     private Translator() throws IOException {
