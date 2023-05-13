@@ -54,8 +54,14 @@ public class TurnController {
             } else{
                 message.setTask("end round");
             }
-            webSocketController.sendGameState(message, lobbyId);
 
+            try {
+                wait(1000L);
+            }
+            catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            webSocketController.sendGameState(message, lobbyId);
         }
 
         // used this to test with postman, throws exception as soon as last guess is submitted:

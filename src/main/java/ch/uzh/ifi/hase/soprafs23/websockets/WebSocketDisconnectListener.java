@@ -38,7 +38,6 @@ public class WebSocketDisconnectListener implements ApplicationListener<SessionD
             webSocketController.sendHostDisconnected(newMessage, lobbyLeft.getLobbyId());
             lobbyService.deleteLobby(lobbyLeft);
         }
-
         userLeaving.setSessionId(null);
         userRepository.save(userLeaving);
         userRepository.flush();
