@@ -18,8 +18,12 @@ public class TurnController {
     private final TurnService turnService;
     private final GameService gameService;
 
-    TurnController(TurnService turnService, GameService gameService) {this.turnService = turnService;
+    private final WebSocketController webSocketController;
+
+    TurnController(TurnService turnService, GameService gameService, WebSocketController webSocketController) {
+        this.turnService = turnService;
         this.gameService = gameService;
+        this.webSocketController = webSocketController;
     }
 
     @PostMapping("/lobbies/{lobbyId}/game/turn")
@@ -50,6 +54,8 @@ public class TurnController {
             } else{
                 message.setTask("end round");
             }
+            webSocketController.sendGameState(message, lobbyId);
+
         }
 
         // used this to test with postman, throws exception as soon as last guess is submitted:
