@@ -119,7 +119,8 @@ public class SessionControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated()) // Code 201
                 .andExpect(jsonPath("$.username", is(testSession.getUsername())))
-                .andExpect(jsonPath("$.token", is(testSession.getToken())));
+                .andExpect(jsonPath("$.token", is(testSession.getToken())))
+                .andExpect(jsonPath("$.language", is(testSession.getLanguage())));
     }
 
     @Test

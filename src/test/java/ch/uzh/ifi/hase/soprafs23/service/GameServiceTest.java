@@ -235,6 +235,32 @@ public class GameServiceTest {
         assertEquals(10L, testGame.getPlayers().get(0).getTotalScore());
     }
 
+    /*@Test
+    public void integrateResult_rolesRedistributed() {
+
+        Player testPlayer = new Player();
+        testPlayer.setUserId(1L);
+        testPlayer.setUsername("testName");
+        testPlayer.setCurrentRole(PlayerRole.PAINTER);
+
+        Player testPlayer2 = new Player();
+        testPlayer2.setUserId(2L);
+        testPlayer2.setUsername("testName2");
+        testPlayer.setCurrentRole(PlayerRole.GUESSER);
+
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(testPlayer);
+        playerList.add(testPlayer2);
+
+        testGame.setPlayers(playerList);
+        testGame.setNotPainted(playerList);
+
+       testGame.redistributeRoles();
+
+        assertEquals(PlayerRole.GUESSER, testPlayer.getCurrentRole());
+        assertEquals(PlayerRole.PAINTER, testPlayer2.getCurrentRole());
+    }*/
+
     @Test
     public void integrateResult_playerNotFound() {
 
