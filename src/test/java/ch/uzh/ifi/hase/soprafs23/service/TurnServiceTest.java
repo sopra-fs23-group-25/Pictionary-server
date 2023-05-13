@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertNull;
 
@@ -254,5 +253,22 @@ public class TurnServiceTest {
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         assertThrows(ResponseStatusException.class, () -> turnService.submitGuess(testTurn, guess));
+    }
+
+    @Test
+    public void lastGuess_returnsTrue() {
+
+        List<Guess> guessList = new ArrayList<>();
+        guessList.add(new Guess());
+        guessList.add(new Guess());
+        guessList.add(new Guess());
+
+        testTurn.setGuesses(guessList);
+
+        testTurn.setIncorrectGuesses(1);
+        testTurn.setCorrectGuesses(1);
+
+        assertTrue(turnService.everyPlayerGuessed(testTurn));
+
     }
 }
