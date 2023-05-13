@@ -100,6 +100,7 @@ public class AuthServiceTest {
         assertEquals(createdSession.getUserId(),testUser.getUserId());
         assertEquals(createdSession.getUsername(),testSession.getUsername());
         assertEquals(createdSession.getToken(),testUser.getToken());
+        assertEquals(createdSession.getLanguage(), testUser.getLanguage());
         assertNull(createdSession.getPassword());
     }
 
