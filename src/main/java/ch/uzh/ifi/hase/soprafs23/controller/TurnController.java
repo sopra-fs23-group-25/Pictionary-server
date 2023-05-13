@@ -54,13 +54,6 @@ public class TurnController {
             } else{
                 message.setTask("end round");
             }
-
-            try {
-                wait(1000L);
-            }
-            catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             webSocketController.sendGameState(message, lobbyId);
         }
 
