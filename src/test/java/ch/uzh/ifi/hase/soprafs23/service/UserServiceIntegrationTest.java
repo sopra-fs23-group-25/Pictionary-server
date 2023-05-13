@@ -77,4 +77,17 @@ public class UserServiceIntegrationTest {
     // check that an error is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser2));
   }
+
+    @Test
+    public void createUser_name_password_space_throwsException() {
+        assertNull(userRepository.findByUsername("testUsername"));
+
+        User testUser = new User();
+
+        testUser.setUsername("    ");
+        testUser.setLanguage("testLanguage");
+        testUser.setPassword("     ");
+
+        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+    }
 }

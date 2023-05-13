@@ -153,7 +153,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobby_isAlreadyInLobby_returns409() {
+    public void joinLobby_UserisAlreadyInLobby_returns409() {
         testLobby.setMaxNrOfPlayers(3);
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
