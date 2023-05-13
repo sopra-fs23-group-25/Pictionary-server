@@ -246,6 +246,26 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound()); // Code 404
     }
 
+    @Test
+    public void putUser_userNameEmpty_response400() throws Exception {
+        UserPutDTO userPutDTO = new UserPutDTO();
+        userPutDTO.setUsername("       ");
+
+        // this mocks the UserService
+        // userByID throws a ResponseStatusException for any Input (given: 1)
+        when(userService.userById(Mockito.any())).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+        // when
+        MockHttpServletRequestBuilder putRequest = put("/users/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPutDTO))
+                .header("Auth-Token", token);
+
+        // then
+        mockMvc.perform(putRequest)
+                .andExpect(status().isBadRequest()); // Code 404
+    }
+
 
 
 
