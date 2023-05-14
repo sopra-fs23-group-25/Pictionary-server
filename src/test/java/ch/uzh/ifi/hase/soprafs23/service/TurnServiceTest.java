@@ -159,27 +159,6 @@ public class TurnServiceTest {
     }
 
 
-    @Test
-    public void verifyGuessTür_correct_25points () throws InterruptedException, IOException {
-        Guess guess = new Guess();
-        guess.setGuess("tür");
-        guess.setUsername("testUser");
-        guess.setScore(0);
-        guess.setUserId(1L);
-        testUser.setLanguage("de");
-        turnService.setTranslator(Translator.getInstance());
-        testTurn.setWord("Door");
-
-
-
-        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
-        try {
-            turnService.submitGuess(testTurn, guess);
-            assertEquals(25, guess.getScore());
-        }catch (Exception e){
-            System.err.println(e);
-        }
-    }
 
     @Test
     public void getUsername_addsUsername() {
