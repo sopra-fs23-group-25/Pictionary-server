@@ -137,7 +137,11 @@ public class TurnService {
         String guessedWord = guess.getGuess().toLowerCase();
         guessedWord = guessedWord.substring(0, 1).toUpperCase() + guessedWord.substring(1);
 
-         try {guessedWord = translator.getSingleTranslation(guessedWord, language, playerToSystem);}
+         try {
+             if(guessedWord.length()>0){
+                guessedWord = translator.getSingleTranslation(guessedWord, language, playerToSystem);
+             }
+         }
          catch(Exception e){
              log.error(e.getMessage());
          }
@@ -171,7 +175,7 @@ public class TurnService {
             }
             else {
                 Guess emptyGuess = new Guess(guess);
-                emptyGuess.setGuess("");
+                emptyGuess.setGuess(" ");
                 translatedGuesses.add(emptyGuess);
             }
 
@@ -184,8 +188,7 @@ public class TurnService {
 
         for (Guess guess : translatedGuesses) {
             String guessedWord = queries.get(loopCounter);
-            if (guessedWord.length() > 0) {
-
+            if (guessedWord.length()>0) {
                 guessedWord = guessedWord.substring(0, 1).toUpperCase() + guessedWord.substring(1);
             }
             guess.setGuess(guessedWord);
