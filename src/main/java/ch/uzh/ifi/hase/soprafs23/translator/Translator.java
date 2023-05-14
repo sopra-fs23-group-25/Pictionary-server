@@ -59,10 +59,12 @@ public class Translator {
     // waits till its solved, then returns them as a List
     public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
+            List<String> newWordList = new ArrayList<>();
             for(String word:wordList){
                 word= word.substring(0, 1).toUpperCase() + word.substring(1);
+                newWordList.add(word);
             }
-            return wordList;
+            return newWordList;
         }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
@@ -75,7 +77,7 @@ public class Translator {
                 translatedWordList.add(currentRequest.translatedWord);
             }
             else {
-                throw new RuntimeException();
+                throw new RuntimeException("word was null");
             }
 
         }

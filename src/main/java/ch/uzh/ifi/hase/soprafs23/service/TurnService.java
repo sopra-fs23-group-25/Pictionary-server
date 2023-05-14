@@ -5,6 +5,8 @@ import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs23.translator.Translator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ public class TurnService {
     private WordAssigner wordAssigner;
     private Translator translator;
 
-
+    private final Logger log = LoggerFactory.getLogger(TurnService.class);
 
     @Autowired
     public TurnService(
@@ -137,7 +139,7 @@ public class TurnService {
 
          try {guessedWord = translator.getSingleTranslation(guessedWord, language, playerToSystem);}
          catch(Exception e){
-             System.err.println(e);
+             log.error(e.getMessage());
          }
          return guessedWord;
     }
