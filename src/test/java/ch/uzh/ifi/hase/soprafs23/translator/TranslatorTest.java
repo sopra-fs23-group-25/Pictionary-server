@@ -23,7 +23,7 @@ public class TranslatorTest {
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
-            assertEquals( testResult, "He");
+            assertEquals("He", testResult);
         }
         catch (Exception e) {
             System.err.println(e);
@@ -52,7 +52,7 @@ public class TranslatorTest {
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
             testResult = translator.getSingleTranslation(testString, testLanguage, false);
-            assertEquals( testResult, "Baum");
+            assertEquals("Baum", testResult);
         }
         catch (Exception e) {
             System.err.println(e);
@@ -94,7 +94,7 @@ public class TranslatorTest {
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, false);
-            assertEquals( testResult, "Er");
+            assertEquals("Er", testResult);
         }
         catch (Exception e) {
             System.err.println(e);

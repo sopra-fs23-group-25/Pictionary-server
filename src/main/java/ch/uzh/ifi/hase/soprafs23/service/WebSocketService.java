@@ -19,19 +19,14 @@ import java.util.List;
     @Transactional
 public class WebSocketService {
 
-
-        private final Logger log = LoggerFactory.getLogger(ch.uzh.ifi.hase.soprafs23.service.WebSocketService.class);
         private final LobbyRepository lobbyRepository;
 
-        private final UserRepository userRepository;
 
         @Autowired
         public WebSocketService(
-                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository,
-                @Qualifier("userRepository") UserRepository userRepository)
+                @Qualifier("lobbyRepository") LobbyRepository lobbyRepository)
         {
             this.lobbyRepository = lobbyRepository;
-            this.userRepository = userRepository;
         }
 
         public List<UserSocketGetDTO> getUsersInLobby(Long lobbyId) {
