@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -149,6 +150,27 @@ public class TurnServiceTest {
         // Specify the behavior of the getSingleTranslation() method
         Mockito.when(translator.getSingleTranslation(Mockito.any(), Mockito.any(), Mockito.anyBoolean()))
                 .thenReturn("mock translation");
+
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
+
+        turnService.submitGuess(testTurn, guess);
+
+        assertEquals(25, guess.getScore());
+    }
+
+
+    @Test
+    public void verifyGuessTür_correct_25points () throws InterruptedException, IOException {
+        Guess guess = new Guess();
+        guess.setGuess("tür");
+        guess.setUsername("testUser");
+        guess.setScore(0);
+        guess.setUserId(1L);
+        testUser.setLanguage("de");
+        turnService.setTranslator(Translator.getInstance());
+        testTurn.setWord("Door");
+
+
 
         when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 

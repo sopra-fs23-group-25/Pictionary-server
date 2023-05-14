@@ -42,6 +42,7 @@ public class Translator {
     // waits till its solved then returns it as a String
     public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
+            word= word.substring(0, 1).toUpperCase() + word.substring(1);
             return word;
         }
         if (Objects.equals(word, null)) {
@@ -58,6 +59,9 @@ public class Translator {
     // waits till its solved, then returns them as a List
     public synchronized List<String> getListTranslation(List<String> wordList, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
+            for(String word:wordList){
+                word= word.substring(0, 1).toUpperCase() + word.substring(1);
+            }
             return wordList;
         }
         List<String> translatedWordList = new ArrayList<>();
@@ -91,6 +95,7 @@ public class Translator {
         else {
             response = translateTextToUserLanguage(currentRequestLanguage, currentRequest.getWord(), client);
         }
+
         setTranslationText(currentRequest);
 
     }
@@ -115,9 +120,10 @@ public class Translator {
     }
 
 
-    private void setTranslationText(TranslationRequest request) {
+    public void setTranslationText(TranslationRequest request) {
         for (Translation translation : response.getTranslationsList()) {
             request.translatedWord = translation.getTranslatedText();
+            request.translatedWord = request.translatedWord.substring(0, 1).toUpperCase() + request.translatedWord.substring(1);
         }
     }
 
