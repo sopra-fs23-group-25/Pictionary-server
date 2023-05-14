@@ -29,6 +29,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -195,6 +196,94 @@ public class LobbyControllerTest {
                 .andExpect(status().isNotFound());
 
     }
+
+    ////////////////
+
+    @Test
+    public void leaveLobby_success() throws Exception {
+
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        when(lobbyService.getSingleLobby(Mockito.anyLong())).thenReturn(testLobby);
+        when(lobbyService.getSingleUser(Mockito.anyLong())).thenReturn(new User());
+        when(lobbyService.leaveLobby(Mockito.any(), Mockito.any())).thenReturn(testLobby);
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/leave", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void leaveLobby_noLobby404() throws Exception {
+
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        when(lobbyService.getSingleLobby(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/leave", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void leaveLobby_noUser404() throws Exception {
+
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        when(lobbyService.getSingleLobby(Mockito.anyLong())).thenReturn(testLobby);
+        when(lobbyService.getSingleUser(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/leave", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void leaveLobby_noSuccess_butFound_400() throws Exception {
+
+        LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
+        lobbyPutDTO.setUserId(1L);
+
+        when(lobbyService.getSingleLobby(Mockito.anyLong())).thenReturn(testLobby);
+        when(lobbyService.getSingleUser(Mockito.anyLong())).thenReturn(new User());
+        when(lobbyService.leaveLobby(Mockito.any(), Mockito.any())).thenReturn(null);
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/leave", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(lobbyPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isBadRequest());
+    }
+
+    /////////////
+
+    /*@Test
+    public void leaveLobby_noLobby404() throws Exception {
+        //for task 184 (already removed from excel)
+        //check first if leo commited to main: he did
+        given(lobbyService.getSingleLobby(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+        given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(new User());
+        given(lobbyService.leaveLobby(Mockito.any(), Mockito.any())).willReturn(null);
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game", 1)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+    }*/
 
     /**
      * Helper Functions
