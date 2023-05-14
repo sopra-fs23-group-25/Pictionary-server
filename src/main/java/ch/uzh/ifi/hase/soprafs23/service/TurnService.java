@@ -135,7 +135,11 @@ public class TurnService {
         String guessedWord = guess.getGuess().toLowerCase();
         guessedWord = guessedWord.substring(0, 1).toUpperCase() + guessedWord.substring(1);
 
-        return translator.getSingleTranslation(guessedWord, language, playerToSystem);
+         try {guessedWord = translator.getSingleTranslation(guessedWord, language, playerToSystem);}
+         catch(Exception e){
+             System.err.println(e);
+         }
+         return guessedWord;
     }
 
     // function to translate all guesses in a turn for one User

@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -156,6 +157,8 @@ public class TurnServiceTest {
 
         assertEquals(25, guess.getScore());
     }
+
+
 
     @Test
     public void getUsername_addsUsername() {

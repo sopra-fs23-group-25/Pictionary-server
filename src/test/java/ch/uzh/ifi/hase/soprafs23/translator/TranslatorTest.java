@@ -23,7 +23,7 @@ public class TranslatorTest {
         String testLanguage = "de";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
-            assertEquals( testResult, "he");
+            assertEquals( testResult, "He");
         }
         catch (Exception e) {
             System.err.println(e);
@@ -37,7 +37,7 @@ public class TranslatorTest {
         String testLanguage = "en";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
-            assertEquals( testResult, "tree");
+            assertEquals( "Tree",testResult );
         }
         catch (Exception e) {
             System.err.println(e);
@@ -62,13 +62,13 @@ public class TranslatorTest {
 
     @Test
     public void testTranslator_singleWordInput_UserToSystem_backToUserInDifferentLanguage() {
-        String testString = "hund";
+        String testString = "tür";
         String testLanguage = "de";
-        String secondLanguage = "fr";
+        String secondLanguage = "en";
         try {
             String testResult = translator.getSingleTranslation(testString, testLanguage, true);
             testResult = translator.getSingleTranslation(testResult, secondLanguage, false);
-            assertEquals( "chien", testResult);
+            assertEquals( "Door", testResult);
         }
         catch (Exception e) {
             System.err.println(e);
@@ -79,7 +79,7 @@ public class TranslatorTest {
     @Test
     public void testTranslator_multipleWords_UserToSystem() {
         List<String> testList = new ArrayList<>(Arrays.asList("Sie", "du", "er"));
-        List<String> translatedTestList = new ArrayList<>( Arrays.asList("She", "you", "he"));
+        List<String> translatedTestList = new ArrayList<>( Arrays.asList("She", "You", "He"));
         String testLanguage = "de";
         try {
             assertEquals(translator.getListTranslation(testList, testLanguage, true), translatedTestList);
@@ -104,7 +104,7 @@ public class TranslatorTest {
     @Test
     public void testTranslator_multipleWords_SystemToUser() {
         List<String> testList = new ArrayList<>(Arrays.asList("she", "you", "he"));
-        List<String> translatedTestList = new ArrayList<>( Arrays.asList("sie", "Du", "Er"));
+        List<String> translatedTestList = new ArrayList<>( Arrays.asList("Sie", "Du", "Er"));
         String testLanguage = "de";
         try {
             assertEquals(translatedTestList,translator.getListTranslation(testList, testLanguage, false));
