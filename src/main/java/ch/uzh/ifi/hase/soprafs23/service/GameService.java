@@ -49,7 +49,7 @@ public class GameService {
 
         Turn turn = game.getTurn();
 
-        game.updateWordsPainted(turn.getWord());
+        //game.updateWordsPainted(turn.getWord());
         updatePoints(game);
         //check if this is the last turn
         if (game.getNotPainted().size() == 0) {

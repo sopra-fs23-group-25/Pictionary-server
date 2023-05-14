@@ -127,7 +127,9 @@ public class Game implements Serializable {
     } // implement selection logic private maybe
 
     public void updateWordsPainted(String word) {
-        wordsPainted.add(word);
+        List<String> passedWords = new ArrayList<>(getWordsPainted());
+        passedWords.add(word);
+        setWordsPainted(passedWords);
     }
 
     public List<Guess> initGuesses() {

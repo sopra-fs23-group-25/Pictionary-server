@@ -45,7 +45,7 @@ public class WordAssigner {
                 assignedWord = possibleWords.get(random.nextInt(possibleWords.size()));
             }
         }
-        game.addWordPainted(assignedWord);
+        game.updateWordsPainted(assignedWord);
 
         assignedWord = assignedWord.substring(0, 1).toUpperCase() + assignedWord.substring(1);
         return assignedWord;
