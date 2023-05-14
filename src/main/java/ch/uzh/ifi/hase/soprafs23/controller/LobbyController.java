@@ -86,10 +86,10 @@ public class LobbyController {
     @PutMapping("/lobbies/{lobbyId}/leave")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void leaveLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToAdd){
+    public void leaveLobby(@PathVariable("lobbyId") long lobbyId, @RequestBody LobbyPutDTO userToLeave){
         Lobby lobby = lobbyService.getSingleLobby(lobbyId);
         if (lobby != null){
-            User user = lobbyService.getSingleUser(userToAdd.getUserId());
+            User user = lobbyService.getSingleUser(userToLeave.getUserId());
             Lobby lobbyLeft = lobbyService.leaveLobby(lobby, user);
             if (lobbyLeft == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be left!");

@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -162,6 +163,17 @@ public class LobbyServiceTest {
         lobbyService.joinLobby(testLobby,testUser);
 
         assertThrows(ResponseStatusException.class, () -> lobbyService.joinLobby(testLobby, testUser));
+    }
+
+    @Test
+    public void leaveLobby_success_returnsLobby() {
+
+        lobbyService.joinLobby(testLobby, testUser);
+
+        Lobby leftLobby = lobbyService.leaveLobby(testLobby, testUser);
+
+        assertEquals(leftLobby.getLobbyId(), testLobby.getLobbyId());
+        assertEquals(0, leftLobby.getPlayers().size());
     }
 
     @Test
