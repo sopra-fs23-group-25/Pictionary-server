@@ -109,6 +109,7 @@
 ||#|description|
 |Joana|#206|update turn controller and service to check if guess is last one such that turn can be ended early|
 ||#207, #208|modify update user in service and controller to check for unchanged values, empty strings, strings with only space|
+||#213|removed unnecessary code, minor refactors|
 ||#27, #59|addition to already closed tasks: lobby name, registration inputs must each contain at least one character|
 |Nico|#|description|
 ||#76|description|
