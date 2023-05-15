@@ -12,7 +12,6 @@
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
 - Saving and sharing of images painted during a turn.
-- ...
 
 ## Authors
 - [Joana Cieri](https://github.com/jo-ana-c)
