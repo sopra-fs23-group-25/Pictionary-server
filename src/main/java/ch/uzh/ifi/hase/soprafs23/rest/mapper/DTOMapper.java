@@ -21,25 +21,21 @@ public interface DTOMapper {
 
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-    // POST /users
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     @Mapping(source = "language", target = "language")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
-    // GET /users/{userId}
     @Mapping(source = "userId", target = "id")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "language", target = "language")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
-    // PUT /users/{userId}
     @Mapping(source = "username", target = "username")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "password", target = "password")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
-    // POST /sessions
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     Session convertSessionPostDTOtoEntity(SessionPostDTO sessionPostDTO);

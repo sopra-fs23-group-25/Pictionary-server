@@ -51,24 +51,20 @@ public class GameService {
 
         //game.updateWordsPainted(turn.getWord());
         updatePoints(game);
-        //check if this is the last turn
-        if (game.getNotPainted().size() == 0) {
+        if (game.getNotPainted().isEmpty()) { //check if this is the last turn
             game.setCurrentRound(game.getCurrentRound() + 1);
-            // check if this is the last turn of the last round
-            if (game.getCurrentRound() > game.getNrOfRoundsTotal()) {
+            if (game.getCurrentRound() > game.getNrOfRoundsTotal()) { // check if this is the last turn of the last round
                 game.setGameOver(true);
                 game.setRunning(false);
             }
-            //start new round: update number of rounds played, reset list for painter logic, set next painter
-            else {
+            else {  //start new round: update number of rounds played, reset list for painter logic, set next painter
                 Player painter = game.findPlayerById(turn.getPainterId());
                 painter.setCurrentRole(PlayerRole.GUESSER);
                 game.setNotPainted(game.getPlayers());
                 game.redistributeRoles();
             }
         }
-        // this is not the last turn, just select next painter
-        else {game.redistributeRoles();}
+        else {game.redistributeRoles();} // this is not the last turn, just select next painter
 
         lobbyRepository.save(getLobbyByLobbyId(game.getLobbyId())); // maybe not necessary then we can delete lobby id of game
         lobbyRepository.flush();

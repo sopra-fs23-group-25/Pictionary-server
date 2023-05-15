@@ -56,11 +56,6 @@ public class TurnController {
             }
             webSocketController.sendGameState(message, lobbyId);
         }
-
-        // used this to test with postman, throws exception as soon as last guess is submitted:
-        // if (allGuessed) {throw new RuntimeException("all Players guessed");}
-
-        // here To-Do: respond with websocket -> end turn
     }
 
     @GetMapping("/lobbies/{lobbyId}/game/turn")
