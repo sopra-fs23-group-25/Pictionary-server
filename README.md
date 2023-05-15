@@ -9,16 +9,16 @@
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
 - Server: https://sopra-fs23-group-25-server.oa.r.appspot.com/
 
->## Authors
->
->- [Joana Cieri] (https://github.com/jo-ana-c)
->- [Leo Engelberger](https://github.com/pcplusgit)
->- [Pablo Chacon Pino](https://github.com/LeoEngelberger)
->- [Nico Camillo Zala](https://github.com/nczala)
+## Authors
+
+- [Joana Cieri](https://github.com/jo-ana-c)
+- [Leo Engelberger](https://github.com/pcplusgit)
+- [Pablo Chacon Pino](https://github.com/LeoEngelberger)
+- [Nico Camillo Zala](https://github.com/nczala)
 
 >## Acknowledgement
-> The template for this project was provided by https://github.com/royru.
-> We would like to thank Dennys Huber for supervising our project and his advice throughout the semester.
+The template for this project was provided by [Roy Rutishauser](https://github.com/royru).
+We would like to thank [Dennys Huber](https://github.com/devnnys) for supervising our project and his advice throughout the semester.
 
 >#### Contact:
 >
