@@ -9,12 +9,16 @@
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
 - Server: https://sopra-fs23-group-25-server.oa.r.appspot.com/
 
->## Contributors
+>## Authors
 >
 >- https://github.com/nczala
 >- https://github.com/jo-ana-c
 >- https://github.com/pcplusgit
 >- https://github.com/LeoEngelberger
+
+>## Acknowledgement
+> The template for this project was provided by https://github.com/royru.
+> We would like to thank Dennys Huber for supervising our project and his advice throughout the semester.
 
 >#### Contact:
 >
