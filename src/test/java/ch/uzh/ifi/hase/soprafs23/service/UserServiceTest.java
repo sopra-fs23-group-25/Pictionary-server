@@ -27,9 +27,9 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private User testUser = new User();
+    private final User testUser = new User();
 
-    private String token = "testToken";
+    private final String token = "testToken";
 
     @BeforeEach
     public void setup() {
@@ -43,14 +43,14 @@ public class UserServiceTest {
         testUser.setPassword("testPassword");
         //testUser.setLobbyId(null);
 
-        // when -> any object is being save in the userRepository -> return the dummy
+        // when -> any object is being saved in the userRepository -> return the dummy
         // testUser
         when(userRepository.save(Mockito.any())).thenReturn(testUser);
     }
 
     @Test
     public void createUser_validInputs_success() {
-        // when -> any object is being save in the userRepository -> return the dummy
+        // when -> any object is being saved in the userRepository -> return the dummy
         // testUser
         User createdUser = userService.createUser(testUser);
 
@@ -78,7 +78,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser_duplicateInputs_throwsException() throws Exception {
+    public void createUser_duplicateInputs_throwsException() {
         // given -> a first user has already been created
         userService.createUser(testUser);
 
@@ -92,25 +92,25 @@ public class UserServiceTest {
     }
 
     @Test
-    public void userById_userNotExits() throws Exception {
+    public void userById_userNotExits() {
         assertThrows(ResponseStatusException.class, () -> userService.userById(1L));
     }
 
     @Test
-    public void userById_returnsUser() throws Exception {
+    public void userById_returnsUser() {
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(testUser));
 
         assertEquals(testUser, userService.userById(testUser.getUserId()));
     }
 
     @Test
-    public void changeStatus_idNotFound () throws Exception {
+    public void changeStatus_idNotFound () {
         when(userRepository.findById(Mockito.anyLong())).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
         assertThrows(ResponseStatusException.class, () -> userService.changeStatus(1L, UserStatus.ONLINE));
     }
 
     @Test
-    public void changeStatus_ () throws Exception {
+    public void changeStatus_ () {
         when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(testUser));
         userService.changeStatus(1L, UserStatus.ONLINE);
         assertEquals(testUser.getStatus(),UserStatus.ONLINE);
@@ -118,7 +118,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateUser_valid_changesUsername_pWord_language() throws Exception {
+    public void updateUser_valid_changesUsername_pWord_language() {
         User testUser2 = new User();
         testUser2.setUsername("username2");
         testUser2.setPassword("password2");
@@ -132,7 +132,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void updateUser_unchangedValues() throws Exception {
+    public void updateUser_unchangedValues() {
         User testUser2 = new User();
         testUser2.setUsername("testUsername");
         testUser2.setPassword("");
@@ -147,7 +147,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void update_namePwordEmpty_throws409() throws Exception {
+    public void update_namePasswordEmpty_throws409() {
         User testUser2 = new User();
         testUser2.setUsername("       ");
         testUser2.setPassword("");
@@ -170,7 +170,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAllUsers_returnsList() throws Exception {
+    public void getAllUsers_returnsList() {
         List<User> users = new ArrayList<>();
         users.add(testUser);
         when(userRepository.findAll()).thenReturn(users);

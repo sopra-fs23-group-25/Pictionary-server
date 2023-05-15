@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -119,7 +118,7 @@ public class TurnServiceTest {
 
     // VERIFY GUESS: incorrect - correct
     @Test
-    public void verifyGuess_incorrect_0points () throws InterruptedException {
+    public void verifyGuess_incorrect_0points () {
         Guess guess = new Guess();
         guess.setGuess("wrongGuess");
         guess.setUsername("testUser");
@@ -138,7 +137,7 @@ public class TurnServiceTest {
     }
 
     @Test
-    public void verifyGuess_correct_25points () throws InterruptedException {
+    public void verifyGuess_correct_25points () {
         Guess guess = new Guess();
         guess.setGuess("mock translation");
         guess.setUsername("testUser");
@@ -174,7 +173,7 @@ public class TurnServiceTest {
     }
 
     @Test
-    public void translateEntireTurn_success() throws InterruptedException {
+    public void translateEntireTurn_success() {
         testUser.setLanguage("de");
         User testUser2 = new User(); testUser2.setUserId(2L); testUser2.setUsername("testUser2"); testUser2.setLanguage("en");
         Guess testGuess1 = new Guess(1L,"Vogel", 0L);
@@ -200,7 +199,7 @@ public class TurnServiceTest {
     // Validate Guess: correct, incorrect
 
     @Test
-    public void correctGuess() throws InterruptedException {
+    public void correctGuess() {
         Guess initGuess = new Guess();
         initGuess.setGuess(null);
         initGuess.setUsername("testUser");
@@ -234,7 +233,7 @@ public class TurnServiceTest {
     }
 
     @Test
-    public void player_guesses_twice() throws InterruptedException{
+    public void player_guesses_twice() {
         Guess guess = new Guess();
         guess.setGuess("mock translation");
         guess.setUsername("testUser");

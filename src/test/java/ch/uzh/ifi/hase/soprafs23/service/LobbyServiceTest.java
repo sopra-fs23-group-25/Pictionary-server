@@ -1,14 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Player;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,7 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class LobbyServiceTest {
@@ -92,7 +89,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void getAllLobbies_returnsArrayList() throws Exception {
+    public void getAllLobbies_returnsArrayList() {
         List<Lobby> lobbies = new ArrayList<>();
         lobbies.add(testLobby);
 
@@ -102,20 +99,20 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void getAllLobbies_unsuccessful_throws400() throws Exception {
+    public void getAllLobbies_unsuccessful_throws400() {
         when(lobbyRepository.findAll()).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
 
         assertThrows(ResponseStatusException.class, () -> lobbyService.getLobbies());
     }
 
     @Test
-    public void getSingleLobby_returnsLobby() throws Exception {
+    public void getSingleLobby_returnsLobby() {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         assertEquals(testLobby, lobbyService.getSingleLobby(testLobby.getLobbyId()));
     }
 
     @Test
-    public void getSingleLobby_notFound_throws404() throws Exception {
+    public void getSingleLobby_notFound_throws404() {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> lobbyService.getSingleLobby(testLobby.getLobbyId()));
     }
@@ -154,7 +151,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobby_UserisAlreadyInLobby_returns409() {
+    public void joinLobby_UserIsAlreadyInLobby_returns409() {
         testLobby.setMaxNrOfPlayers(3);
 
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
@@ -181,9 +178,4 @@ public class LobbyServiceTest {
         lobbyService.deleteLobby(testLobby);
         assertEquals(1L, testLobby.getLobbyId());
     }
-
-
-    /**
-     * Helper Functions
-     */
 }
