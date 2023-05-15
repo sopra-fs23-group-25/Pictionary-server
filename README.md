@@ -11,10 +11,10 @@
 
 >## Authors
 >
->- https://github.com/nczala
->- https://github.com/jo-ana-c
->- https://github.com/pcplusgit
->- https://github.com/LeoEngelberger
+>- [Joana Cieri] (https://github.com/jo-ana-c)
+>- [Leo Engelberger](https://github.com/pcplusgit)
+>- [Pablo Chacon Pino](https://github.com/LeoEngelberger)
+>- [Nico Camillo Zala](https://github.com/nczala)
 
 >## Acknowledgement
 > The template for this project was provided by https://github.com/royru.
