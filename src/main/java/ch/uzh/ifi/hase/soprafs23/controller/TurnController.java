@@ -50,9 +50,9 @@ public class TurnController {
             gameService.integrateTurnResults(game);
             MessageRelayDTO message = new MessageRelayDTO();
             if(game.getGameOver()){
-                message.setTask("end last round");
+                message.setTask("all guessed end last round");
             } else{
-                message.setTask("end round");
+                message.setTask("all guessed end round");
             }
             webSocketController.sendGameState(message, lobbyId);
         }
