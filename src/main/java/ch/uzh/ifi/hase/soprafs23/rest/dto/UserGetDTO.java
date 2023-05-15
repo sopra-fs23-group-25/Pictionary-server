@@ -7,7 +7,6 @@ public class UserGetDTO {
   private Long userId;
   private String username;
   private String language;
-  private Long lobbyId;
 
     public Long getId() { return userId; }
     public void setId(Long userId) {
@@ -24,6 +23,4 @@ public class UserGetDTO {
     public String getLanguage() {return language;}
     public void setLanguage(String language) {this.language = language;}
 
-    public Long getLobbyId() {return lobbyId;}
-    public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 }
