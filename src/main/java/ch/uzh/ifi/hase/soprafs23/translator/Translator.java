@@ -1,13 +1,14 @@
 package ch.uzh.ifi.hase.soprafs23.translator;
 // Imports the Google Cloud Translation library.
 
-import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.google.cloud.translate.v3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Translator {
     private static final String SYSTEM_LANGUAGE = "en";
@@ -46,7 +47,7 @@ public class Translator {
             return word;
         }
         if (Objects.equals(word, null)) {
-            return "guess not submiited";
+            return "guess not submitted";
         }
         TranslationRequest currentRequest = new TranslationRequest(word, language, playerToSystem);
         solveSingleRequest(currentRequest);
@@ -148,9 +149,7 @@ public class Translator {
             return word;
         }
 
-        public void setWord(String word) {
-            this.word = word;
-        }
+        public void setWord(String word) {this.word = word;}
 
         public String getLanguage() {
             return language;

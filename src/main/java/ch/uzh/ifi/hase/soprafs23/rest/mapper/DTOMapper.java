@@ -28,7 +28,7 @@ public interface DTOMapper {
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     // GET /users/{userId}
-    @Mapping(source = "userId", target = "id") //where is target? why can i not change it to "userId"?
+    @Mapping(source = "userId", target = "id")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "language", target = "language")
     UserGetDTO convertEntityToUserGetDTO(User user);

@@ -20,6 +20,7 @@ public class Turn implements Serializable {
     public Turn(Turn turn){
         this.painterId = turn.getPainterId();
         this.correctGuesses = turn.getCorrectGuesses();
+        this.incorrectGuesses = turn.getIncorrectGuesses();
         this.guesses = turn.getGuesses();
         this.word = turn.getWord();
     }

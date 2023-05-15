@@ -28,8 +28,6 @@ public class AuthServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
-    @InjectMocks
     private AuthService authService;
 
     private User testUser = new User();
@@ -50,7 +48,7 @@ public class AuthServiceTest {
         testUser.setStatus(UserStatus.OFFLINE);
         testUser.setLanguage("l");
 
-        // when -> any object is being save in the userRepository -> return the dummy
+        // when -> any object is being saved in the userRepository -> return the dummy
         // testUser
         when(userRepository.save(Mockito.any())).thenReturn(testUser);
         when(userRepository.findById(Mockito.any())).thenReturn(Optional.ofNullable(testUser));

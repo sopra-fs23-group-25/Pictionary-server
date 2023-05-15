@@ -117,7 +117,7 @@ public class LobbyControllerTest {
     }
 
     @Test
-    public void givenCorrectInput_whenPutLobby_thenReturnSucess() throws Exception{
+    public void givenCorrectInput_whenPutLobby_thenReturnSuccess() throws Exception{
         LobbyPutDTO lobbyPutDTO = new LobbyPutDTO();
         lobbyPutDTO.setUserId(1L);
 
@@ -269,21 +269,6 @@ public class LobbyControllerTest {
     }
 
     /////////////
-
-    /*@Test
-    public void leaveLobby_noLobby404() throws Exception {
-        //for task 184 (already removed from excel)
-        //check first if leo commited to main: he did
-        given(lobbyService.getSingleLobby(Mockito.anyLong())).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-        given(lobbyService.getSingleUser(Mockito.anyLong())).willReturn(new User());
-        given(lobbyService.leaveLobby(Mockito.any(), Mockito.any())).willReturn(null);
-
-        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game", 1)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(putRequest)
-                .andExpect(status().isNotFound());
-    }*/
 
     /**
      * Helper Functions

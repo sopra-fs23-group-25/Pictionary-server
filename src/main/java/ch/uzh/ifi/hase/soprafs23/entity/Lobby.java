@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Table(name = "LOBBY")
 public class Lobby implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Lobby() {
@@ -41,7 +43,6 @@ public class Lobby implements Serializable {
     private Long hostId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_lobbyId")
     private Game game;
 
     public Long getLobbyId() {
@@ -121,7 +122,4 @@ public class Lobby implements Serializable {
     public void setHostId(Long hostId) {
         this.hostId = hostId;
     }
-
-    public int getCurrentNrOfPlayers() {return players.size();}
-
 }

@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -54,13 +53,11 @@ public class User implements Serializable {
     @Column()
     private String sessionId;
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
+    public String getSessionId() {return sessionId;}
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
+
     public Long getUserId() { return userId; }
     public void setUserId(Long id) {
         this.userId = id;

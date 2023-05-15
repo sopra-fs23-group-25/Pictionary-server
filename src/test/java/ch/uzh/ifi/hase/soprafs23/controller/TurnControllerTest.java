@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -145,22 +143,6 @@ public class TurnControllerTest {
         mockMvc.perform(putRequest)
                 .andExpect(status().isConflict()); // Code 409
     }
-
-    /*@Test
-    public void submitGuess_translatorInterrupt_responds500() throws Exception {
-        GuessGetDTO guessGetDTO = new GuessGetDTO();
-        guessGetDTO.setUsername("name");
-
-        doThrow(new InterruptedException()).when(turnService).verifyGuess(Mockito.any(), Mockito.any());
-
-        MockHttpServletRequestBuilder putRequest = put("/lobbies/{id}/game/turn", 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(guessGetDTO));
-
-        // then
-        mockMvc.perform(putRequest)
-                .andExpect(status().isInternalServerError()); // Code 500
-    }*/
 
     // GET: success - lobbyNotFound (404)
     @Test
