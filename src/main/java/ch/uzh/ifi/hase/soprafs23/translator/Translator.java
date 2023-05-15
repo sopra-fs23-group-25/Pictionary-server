@@ -71,7 +71,7 @@ public class Translator {
         }
         List<String> translatedWordList = new ArrayList<>();
         for (String word : wordList) {
-            if (Objects.equals(word, "")) {
+            if (Objects.equals(word, " ")) {
                 translatedWordList.add(word);
             }
             else if (word != null) {
