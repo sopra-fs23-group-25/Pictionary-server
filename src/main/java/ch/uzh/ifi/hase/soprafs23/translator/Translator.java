@@ -43,6 +43,7 @@ public class Translator {
     // waits till its solved then returns it as a String
     public synchronized String getSingleTranslation(String word, String language, boolean playerToSystem) {
         if (Objects.equals(language, "en")) {
+            word =word.toLowerCase();
             word= word.substring(0, 1).toUpperCase() + word.substring(1);
             return word;
         }
@@ -62,6 +63,7 @@ public class Translator {
         if (Objects.equals(language, "en")) {
             List<String> newWordList = new ArrayList<>();
             for(String word:wordList){
+                word = word.toLowerCase();
                 word= word.substring(0, 1).toUpperCase() + word.substring(1);
                 newWordList.add(word);
             }
