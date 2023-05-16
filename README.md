@@ -1,4 +1,4 @@
-# Pictionary <img src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a" width="100" height="100" />
+# <img src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a" width="100" height="100" /> Pictionary
 
 
 
