@@ -111,7 +111,14 @@
 ||#207, #208|modify update user in service and controller to check for unchanged values, empty strings, strings with only space|
 ||#213|removed unnecessary code, minor refactors|
 ||#27, #59|addition to already closed tasks: lobby name, registration inputs must each contain at least one character|
-|Nico|#|description|
-||#76|description|
+|Nico|#84, #85|time-out and functionality which checks if painter is inactive & ends turn earlier if it is the case|
+||#86|implemented intermediate component before turn-result that shows why turn finished (all-guessed/ painter-inactive/ time-up)|
+||#81|automatic refresh lobbies in overview|
+||#70|translation of whole Game Page|
+||#79|handle response for last guess|
+||#19|refactored&optimized User Settings|
+||#74|current round & current turn display|
+||#75|refactored drawing board (fit for 13" & 14" desktops)|
+||#80|refactored and clean-up game Page|
 |Pablo|#|description|
 ||#51|description|
