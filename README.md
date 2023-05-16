@@ -9,6 +9,9 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
 - Server: https://sopra-fs23-group-25-server.oa.r.appspot.com/
 
+## Technologies
+<img src="https://user-images.githubusercontent.com/91155454/170885686-bd14da8d-5070-49ac-b88d-baa2e20729bf.svg" width="16" height="16" /> [**Gradle**](https://gradle.org/)
+
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
 - Saving and sharing of images painted during a turn.
