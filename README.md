@@ -1,8 +1,7 @@
 # <img src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a" width="100" height="100" /> SoPra FS23 Group 25 - Pictionary Server
 
 ## Introduction
-We created a web-based version of Pictionary, a fun draw and guess game, where users play against each other in real-time.  The game can be played in a user's preferred language. We used Google Translate API to allow users with different chosen languages to play together.		
-	
+We created a web-based version of Pictionary, a fun draw and guess game, where users play against each other in real-time.  The game can be played in a user's preferred language. We used Google Translate API to allow users with different chosen languages to play together.			
 
 ### Hosted on:
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
@@ -28,9 +27,10 @@ The [`Controllers`](https://github.com/sopra-fs23-group-25/Pictionary-server/tre
 
 Something on how game / turnservice interact with websockets
 
-[`WebsocketService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/WebSocketService.java) : Leo.
+[`WebsocketService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/WebSocketService.java) : Leo todo.
 
 ## Launch and Deployment
+todo
 
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
@@ -50,6 +50,7 @@ The template for this project was provided by [Roy Rutishauser](https://github.c
 We would like to thank [Dennys Huber](https://github.com/devnnys) for supervising our project and for his advice throughout the semester.
 
 ## Licence
+todo
 
 
 
