@@ -12,7 +12,7 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 ## Technologies
 <img src="https://user-images.githubusercontent.com/91155454/170843203-151000ab-db93-4750-b4f4-ba4060a23d53.png" width="16" height="16" /> [**Java**](https://java.com/) : backend implementation.
 
-<img src="[https://user-images.githubusercontent.com/91155454/170843203-151000ab-db93-4750-b4f4-ba4060a23d53.png](https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/2356ee8f-cde9-4f57-88f6-6e0e875ecf44)" width="16" height="16" /> [**JavaScript**](https://javascript.com/) : frontend implementation.	
+<img src="https://user-images.githubusercontent.com/91155454/170843203-151000ab-db93-4750-b4f4-ba4060a23d53.png" width="16" height="16" /> [**JavaScript**](https://javascript.com/) : frontend implementation.	
 
 React
 
