@@ -1,4 +1,7 @@
-# <img src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a" width="100" height="100" /> SoPra FS23 Group 25 - Pictionary Server
+<p align="center">
+  <img width="111" height="111" src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a">
+</p>
+<h1 align="center">SoPra FS23 Group 25 - Pictionary Server</h1>
 
 ## Introduction
 We created a web-based version of Pictionary, a fun draw and guess game, where users play against each other in real-time.  The game can be played in a user's preferred language. We used Google Translate API to allow users with different chosen languages to play together.			
