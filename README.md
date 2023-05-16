@@ -24,6 +24,13 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 		
 <img src="https://github.com/get-icon/geticon/blob/master/icons/github-icon.svg" width="16" height="16" /> [**GitHub**](https://github.com/) : version control, tracability and planning.
 
+## High Level Components
+[`GameService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/GameService.java)
+[`TurnService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/TurnService.java)
+[`WebsocketService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/WebSocketService.java)
+
+## Launch and Deployment
+
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
 - Saving and sharing of images painted during a turn.
