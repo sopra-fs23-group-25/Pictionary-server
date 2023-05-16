@@ -49,8 +49,7 @@ todo
 Contact: leo.engelberger@gmail.com
 
 ## Acknowledgements
-The template for this project was provided by [Roy Rutishauser](https://github.com/royru).
-We would like to thank [Dennys Huber](https://github.com/devnnys) for supervising our project and for his advice throughout the semester.
+We would like to thank the SoPra FS23 teching team, especially our tutor [Dennys Huber](https://github.com/devnnys) for supervising our project and for his advice throughout the semester.
 
 ## Licence
 todo
