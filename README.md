@@ -1,17 +1,17 @@
 # multi-language Pictionary
 ### SoPra FS23 Group 25
 
-## Goal
-- Create a Version of Pictionary which allows its user to play the classic drawing game
-- Users should be able to play in their own native language
+## Introduction
+We created a version of Pictionary where each user can play in their own chosen language.
 
-## Hosted on:
+### Hosted on:
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
 - Server: https://sopra-fs23-group-25-server.oa.r.appspot.com/
 
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
 - Saving and sharing of images painted during a turn.
+- Add more languages to choose from.
 
 ## Authors
 - [Joana Cieri](https://github.com/jo-ana-c)
