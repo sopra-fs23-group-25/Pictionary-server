@@ -1,4 +1,4 @@
-# multi-language Pictionary
+# <img src="https://github.com/sopra-fs23-group-25/Pictionary-server/assets/99895243/1763c6dd-00e9-46a5-8dcc-82fb3385507a" width="21" height="21" /> [**PictionaryLogo**](https://java.com/](https://sopra-fs23-group-25-client.oa.r.appspot.com/register) Pictionary
 ### SoPra FS23 Group 25
 
 ## Introduction
