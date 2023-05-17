@@ -28,6 +28,5 @@ public class GameGetDTO {
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 
     public List<Image> getImages() {return images;}
-
     public void setImages(List<Image> images) {this.images = images;}
 }
