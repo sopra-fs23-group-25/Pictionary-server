@@ -42,7 +42,7 @@ public class GameController {
     public void addImage (@PathVariable("lobbyId") long lobbyId, ImageDTO imageDTO) {
 
         Game game = gameService.getGameByLobbyId(lobbyId);
-        game.addImage(imageDTO.getImageData());
+        gameService.addImage(game, imageDTO.getImageData());
     } // testen
 
     @GetMapping("/lobbies/{lobbyId}/game")

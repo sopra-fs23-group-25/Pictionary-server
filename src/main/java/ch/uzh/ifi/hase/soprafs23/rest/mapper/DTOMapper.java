@@ -6,6 +6,8 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 
+import java.awt.*;
+
 /**
  * DTOMapper
  * This class is responsible for generating classes that will automatically
