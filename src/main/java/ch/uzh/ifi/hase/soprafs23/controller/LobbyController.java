@@ -37,7 +37,7 @@ public class LobbyController {
         Lobby createdLobby = lobbyService.createLobby(newLobby);
 
         if (createdLobby == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be created");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby could not be created!");
         }
 
         return DTOMapper.INSTANCE.convertEntityToLobbiesGetDTO(createdLobby);
@@ -79,7 +79,7 @@ public class LobbyController {
 
             Lobby joinedLobby = lobbyService.joinLobby(lobby, user);
             if (joinedLobby == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be joined!");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby could not be joined!");
             }
         }
     }
@@ -93,7 +93,7 @@ public class LobbyController {
             User user = lobbyService.getSingleUser(userToLeave.getUserId());
             Lobby lobbyLeft = lobbyService.leaveLobby(lobby, user);
             if (lobbyLeft == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby couldn't be left!");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby could not be left!");
             }
         }
     }

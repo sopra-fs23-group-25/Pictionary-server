@@ -116,7 +116,7 @@ public class TurnService {
     private Game getGameByLobbyId(Long lobbyId) {
         Game game = getLobbyByLobbyId(lobbyId).getGame();
         if (game == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found in Lobby!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There was no game found in the lobby!");
         }
         return game;
     }

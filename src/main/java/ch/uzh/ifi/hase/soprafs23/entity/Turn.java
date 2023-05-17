@@ -72,7 +72,7 @@ public class Turn implements Serializable {
             if (initializedGuess.getUserId() == guess.getUserId()) {
                 if(initializedGuess.getGuess() != null) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT,
-                            "There is already a guess for this player!"); // insert username
+                            String.format("There is already a guess submitted by %s!", guess.getUsername())); // insert username
                 }
                 initializedGuess.setGuess(guess.getGuess());
                 initializedGuess.setScore(guess.getScore());
