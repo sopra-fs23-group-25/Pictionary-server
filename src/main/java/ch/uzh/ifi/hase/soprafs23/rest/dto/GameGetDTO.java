@@ -6,8 +6,6 @@ import java.util.List;
 
 public class GameGetDTO {
 
-    private Long lobbyId;
-
     private List<Player> players;
 
     private List<String> wordsPainted;
@@ -15,9 +13,6 @@ public class GameGetDTO {
     private int currentRound;
 
     private boolean gameOver;
-
-    public Long getLobbyId() {return lobbyId;}
-    public void setLobbyId(Long lobbyId) {this.lobbyId = lobbyId;}
 
     public List<Player> getPlayers() {return players;}
     public void setPlayers(List<Player> players) {this.players = players;}
