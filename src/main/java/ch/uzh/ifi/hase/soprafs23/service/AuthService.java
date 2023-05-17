@@ -25,7 +25,7 @@ public class AuthService {
         String token = userRepository
                 .findById(userId)
                 .map(User::getToken)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Invalid user id %s", userId)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user id!"));
 
         if (!token.equals(inputToken)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
@@ -49,7 +49,7 @@ public class AuthService {
         User userByUsername = userRepository.findByUsername(session.getUsername());
         if (userByUsername == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "No user with that username!");}
+                    String.format("User with username: %s not found!", session.getUsername()));}
 
         String inputPW = session.getPassword();
         String actualPW = userByUsername.getPassword();

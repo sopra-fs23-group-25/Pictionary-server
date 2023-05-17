@@ -78,7 +78,7 @@ public class Translator {
                 translatedWordList.add(currentRequest.translatedWord);
             }
             else {
-                throw new RuntimeException("word was null");
+                throw new RuntimeException("Word was null!");
             }
 
         }

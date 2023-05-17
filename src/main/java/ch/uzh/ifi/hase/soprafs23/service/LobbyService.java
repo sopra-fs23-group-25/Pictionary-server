@@ -44,7 +44,7 @@ public class LobbyService {
         try {
             return this.lobbyRepository.findAll();
         } catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no lobbies were retrieved from the DB");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No lobbies were retrieved from the DB!");
         }
     }
 
@@ -83,7 +83,7 @@ public class LobbyService {
 
         if (lobby.isFull()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is full!");}
         if (lobby.isRunning()) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lobby is running!");}
-        if (userInLobby(lobby,user.getUserId())) {throw new ResponseStatusException(HttpStatus.CONFLICT, "User is already in Lobby!");}
+        if (userInLobby(lobby,user.getUserId())) {throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("%s is already in Lobby!", user.getUsername()));}
 
         lobby.addPlayer(user.convertToPlayer());
 

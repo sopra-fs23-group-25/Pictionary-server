@@ -93,7 +93,7 @@ public class Game implements Serializable {
                 return player.getUserId(); // why is it null
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No painter found!");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Painter not found!");
     }
 
     public boolean isRunning() {return isRunning;}
