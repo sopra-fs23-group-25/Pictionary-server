@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs23.entity.*;
+import ch.uzh.ifi.hase.soprafs23.entity.Image;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -79,4 +80,11 @@ public interface DTOMapper {
     @Mapping(source = "word", target = "word")
     @Mapping(source = "guesses", target = "guesses")
     TurnGetDTO convertEntityToTurnGetDTO (Turn turn);
+
+    @Mapping(source = "imageData", target = "imageData")
+    ImageDTO convertEntityToImageDTO (ImageDTO imageDTO);
+
+    @Mapping(source = "imageData", target = "imageData")
+    Image convertImageDTOToEntity (ImageDTO imageDTO);
+
 }

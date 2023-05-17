@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
+import ch.uzh.ifi.hase.soprafs23.entity.Image;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.ImageDTO;
@@ -42,7 +43,8 @@ public class GameController {
     public void addImage (@PathVariable("lobbyId") long lobbyId, ImageDTO imageDTO) {
 
         Game game = gameService.getGameByLobbyId(lobbyId);
-        gameService.addImage(game, imageDTO.getImageData());
+        Image image = DTOMapper.INSTANCE.convertImageDTOToEntity(imageDTO);
+        gameService.addImage(game, image);
     } // testen
 
     @GetMapping("/lobbies/{lobbyId}/game")
