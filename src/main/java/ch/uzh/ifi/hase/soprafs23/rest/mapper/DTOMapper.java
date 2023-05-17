@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.*;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
 
 /**
  * DTOMapper
@@ -66,6 +67,7 @@ public interface DTOMapper {
     Guess convertGuessPutDTOToEntity(GuessDTO newGuess);
 
     @Mapping(source="players", target="players")
+    @Mapping(source="images", target="images")
     @Mapping(source="wordsPainted", target="wordsPainted")
     @Mapping(source="currentRound", target="currentRound")
     @Mapping(source = "gameOver", target = "gameOver")

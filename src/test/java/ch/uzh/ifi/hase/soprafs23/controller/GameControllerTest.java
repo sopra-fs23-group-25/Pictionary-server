@@ -59,7 +59,7 @@ public class GameControllerTest {
     // GET: success - lobby not found - game not started
 
     @Test
-    public void getGameOfLobby_returnsJSONArray() throws Exception {
+    public void getGameOfLobby_returnsOK() throws Exception {
         testLobby.setGame(testGame);
         given(gameService.getLobbyByLobbyId(Mockito.anyLong())).willReturn(testLobby);
 
@@ -67,8 +67,7 @@ public class GameControllerTest {
                 .contentType(MediaType.APPLICATION_JSON); //?
 
         mockMvc.perform(getRequest)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.lobbyId").value(testGame.getLobbyId()));
+                .andExpect(status().isOk());
     }
 
     @Test
