@@ -34,10 +34,10 @@ public class LobbyPostDTO {
         this.nrOfRounds = nrOfRounds;
     }
 
-    public int getmaxNrOfPlayers() {
+    public int getMaxNrOfPlayers() {
         return maxNrOfPlayers;
     }
-    public void setmaxNrOfPlayers(int maxNrOfPlayers) {
+    public void setMaxNrOfPlayers(int maxNrOfPlayers) {
         this.maxNrOfPlayers = maxNrOfPlayers;
     }
 

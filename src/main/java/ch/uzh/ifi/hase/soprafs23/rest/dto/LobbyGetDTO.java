@@ -33,12 +33,8 @@ public class LobbyGetDTO {
         this.lobbyName = lobbyName;
     }
 
-    public int getmaxNrOfPlayers() {
-        return maxNrOfPlayers;
-    }
-    public void setmaxNrOfPlayers(int maxNrOfPlayers) {
-        this.maxNrOfPlayers = maxNrOfPlayers;
-    }
+    public int getMaxNrOfPlayers() {return maxNrOfPlayers;}
+    public void setMaxNrOfPlayers(int maxNrOfPlayers) {this.maxNrOfPlayers = maxNrOfPlayers;}
 
     public int getNrOfRounds() {
         return nrOfRounds;

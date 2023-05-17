@@ -65,7 +65,6 @@ public interface DTOMapper {
     @Mapping(source="guess", target="guess")
     Guess convertGuessPutDTOToEntity(GuessDTO newGuess);
 
-    @Mapping(source="lobbyId", target="lobbyId")
     @Mapping(source="players", target="players")
     @Mapping(source="wordsPainted", target="wordsPainted")
     @Mapping(source="currentRound", target="currentRound")
