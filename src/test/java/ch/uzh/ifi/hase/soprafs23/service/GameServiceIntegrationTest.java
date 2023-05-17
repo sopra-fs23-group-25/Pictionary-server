@@ -34,9 +34,6 @@ public class GameServiceIntegrationTest {
     private LobbyService lobbyService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private LobbyRepository lobbyRepository;
 
     @Autowired
