@@ -98,4 +98,10 @@ public class GameService {
         return game;
     }
 
+    public void addImage(Game game, String image) {
+        game.addImage(image);
+        lobbyRepository.save(getLobbyByLobbyId(game.getLobbyId()));
+        lobbyRepository.flush();
+    }
+
 }
