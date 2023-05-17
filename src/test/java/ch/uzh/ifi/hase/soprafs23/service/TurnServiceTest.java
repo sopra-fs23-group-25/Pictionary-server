@@ -86,7 +86,7 @@ public class TurnServiceTest {
         String string = "String";
 
         assertEquals(testTurn.getWord().getClass(), string.getClass()); // word is assigned to turn
-        assertEquals(testGame.getPainter(), turn.getPainterId());
+        assertEquals(testGame.getPainterId(), turn.getPainterId());
     }
 
     @Test

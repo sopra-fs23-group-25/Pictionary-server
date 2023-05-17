@@ -10,10 +10,8 @@ import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 
@@ -81,7 +79,7 @@ public class TurnServiceIntegrationTest {
         Turn turn = turnService.initTurn(lobby.getLobbyId());
 
         assertNotNull(turn.getWord());
-        assertEquals(initGame.getPainter(), turn.getPainterId());
+        assertEquals(initGame.getPainterId(), turn.getPainterId());
         assertEquals(initGame.getPlayers().get(0).getUserId(), turn.getGuesses().get(0).getUserId());
         assertEquals(initGame.getPlayers().size(), turn.getGuesses().size());
         assertEquals(0, turn.getCorrectGuesses());

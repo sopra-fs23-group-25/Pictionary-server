@@ -1,20 +1,16 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-import ch.uzh.ifi.hase.soprafs23.constant.PlayerRole;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-import ch.uzh.ifi.hase.soprafs23.entity.Turn;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 
@@ -77,7 +73,7 @@ public class GameServiceIntegrationTest {
         Game initGame = gameService.newGame(createdLobby);
 
         assertEquals(createdLobby.getLobbyId(), initGame.getLobbyId());
-        assertEquals(createdLobby.getHostId(), initGame.getPainter());
+        assertEquals(createdLobby.getHostId(), initGame.getPainterId());
         assertEquals(createdLobby.getPlayers().get(0), initGame.getPlayers().get(0));
     }
 }
