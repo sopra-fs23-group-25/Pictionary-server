@@ -14,7 +14,6 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class GameService {
-
     private final LobbyRepository lobbyRepository;
 
     @Autowired
