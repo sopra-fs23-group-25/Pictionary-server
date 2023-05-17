@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
-
 import ch.uzh.ifi.hase.soprafs23.entity.Player;
-
 import java.util.List;
 
 public class GameGetDTO {
@@ -14,6 +12,8 @@ public class GameGetDTO {
 
     private boolean gameOver;
 
+    private List<String> images;
+
     public List<Player> getPlayers() {return players;}
     public void setPlayers(List<Player> players) {this.players = players;}
 
@@ -25,4 +25,8 @@ public class GameGetDTO {
 
     public boolean isGameOver() {return gameOver;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
+
+    public List<String> getImages() {return images;}
+
+    public void setImages(List<String> images) {this.images = images;}
 }

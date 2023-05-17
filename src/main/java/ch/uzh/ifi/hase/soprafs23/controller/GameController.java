@@ -3,11 +3,14 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.GameGetDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.ImageDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 public class GameController {
@@ -33,6 +36,14 @@ public class GameController {
         Game game = gameService.getGameByLobbyId(lobbyId);
         gameService.integrateTurnResults(game);
     }
+
+    @PutMapping("/lobbies/{lobbyId}/game/images")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addImage (@PathVariable("lobbyId") long lobbyId, ImageDTO imageDTO) {
+
+        Game game = gameService.getGameByLobbyId(lobbyId);
+        game.addImage(imageDTO.getImageData());
+    } // testen
 
     @GetMapping("/lobbies/{lobbyId}/game")
     @ResponseStatus(HttpStatus.OK)
