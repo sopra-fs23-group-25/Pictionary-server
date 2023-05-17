@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class Game implements Serializable {
     private boolean isRunning;
 
     @Column boolean gameOver;
+
+    @OneToMany (cascade = CascadeType.PERSIST)
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
@@ -139,4 +143,7 @@ public class Game implements Serializable {
         }
         return initGuesses;
     }
+
+    public void addImage (Image imageData) {images.add(imageData);}
+    public List<Image> getImages () {return images;}
 }

@@ -1,9 +1,13 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs23.entity.*;
+import ch.uzh.ifi.hase.soprafs23.entity.Image;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+
+import java.awt.*;
 
 /**
  * DTOMapper
@@ -66,6 +70,7 @@ public interface DTOMapper {
     Guess convertGuessPutDTOToEntity(GuessDTO newGuess);
 
     @Mapping(source="players", target="players")
+    @Mapping(source="images", target="images")
     @Mapping(source="wordsPainted", target="wordsPainted")
     @Mapping(source="currentRound", target="currentRound")
     @Mapping(source = "gameOver", target = "gameOver")
@@ -75,4 +80,11 @@ public interface DTOMapper {
     @Mapping(source = "word", target = "word")
     @Mapping(source = "guesses", target = "guesses")
     TurnGetDTO convertEntityToTurnGetDTO (Turn turn);
+
+    @Mapping(source = "imageData", target = "imageData")
+    ImageDTO convertEntityToImageDTO (ImageDTO imageDTO);
+
+    @Mapping(source = "imageData", target = "imageData")
+    Image convertImageDTOToEntity (ImageDTO imageDTO);
+
 }
