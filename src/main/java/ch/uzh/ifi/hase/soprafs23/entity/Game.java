@@ -28,7 +28,7 @@ public class Game implements Serializable {
     @Column boolean gameOver;
 
     @OneToMany (cascade = CascadeType.PERSIST)
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany (cascade = CascadeType.PERSIST)
     private List<Player> players;
