@@ -87,7 +87,7 @@ public class Game implements Serializable {
     public int getCurrentRound() {return currentRound;}
     public void setCurrentRound(int nrOfRoundsPlayed) {this.currentRound = nrOfRoundsPlayed;}
 
-    public Long getPainter() {
+    public Long getPainterId() {
         for (Player player: players) {
             if (player.getCurrentRole() == PlayerRole.PAINTER) {
                 return player.getUserId(); // why is it null

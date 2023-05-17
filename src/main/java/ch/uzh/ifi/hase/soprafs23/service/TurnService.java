@@ -52,7 +52,7 @@ public class TurnService {
         newTurn.setWord(wordAssigner.getNewWord(lobbyId));
         newTurn.setCorrectGuesses(0); // can use default value
         newTurn.setGuesses(game.initGuesses());
-        newTurn.setPainterId(game.getPainter());
+        newTurn.setPainterId(game.getPainterId());
 
         game.setTurn(newTurn);
 
