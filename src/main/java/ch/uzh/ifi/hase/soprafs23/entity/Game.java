@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 

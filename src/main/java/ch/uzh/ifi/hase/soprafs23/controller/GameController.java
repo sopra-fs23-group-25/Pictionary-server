@@ -43,6 +43,7 @@ public class GameController {
     public void addImage (@PathVariable("lobbyId") long lobbyId,@RequestBody ImageDTO imageDTO) {
 
         Game game = gameService.getGameByLobbyId(lobbyId);
+        int test = imageDTO.getImageData().length();
         Image image = DTOMapper.INSTANCE.convertImageDTOToEntity(imageDTO);
         gameService.addImage(game, image);
     } // testen
