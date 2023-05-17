@@ -52,7 +52,7 @@ Contact: leo.engelberger@gmail.com
 We would like to thank the SoPra FS23 teching team, especially our tutor [Dennys Huber](https://github.com/devnnys) for supervising our project and for his advice throughout the semester.
 
 ## Licence
-todo
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 
 
