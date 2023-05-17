@@ -40,7 +40,7 @@ public class GameController {
 
     @PutMapping("/lobbies/{lobbyId}/game/images")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addImage (@PathVariable("lobbyId") long lobbyId, ImageDTO imageDTO) {
+    public void addImage (@PathVariable("lobbyId") long lobbyId,@RequestBody ImageDTO imageDTO) {
 
         Game game = gameService.getGameByLobbyId(lobbyId);
         Image image = DTOMapper.INSTANCE.convertImageDTOToEntity(imageDTO);
