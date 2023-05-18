@@ -84,6 +84,7 @@ public class LobbyServiceTest {
     public void createLobby_conflictingName_throws409() {
 
         when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(testLobby);
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(testUser);
 
         assertThrows(ResponseStatusException.class, () -> lobbyService.createLobby(testLobby));
     }
