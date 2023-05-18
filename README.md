@@ -25,6 +25,8 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 The [`Controllers`](https://github.com/sopra-fs23-group-25/Pictionary-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) handle and process the REST calls from the client and pass them onto the [`Services`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service.java). A major part of the application is handled by the [`GameService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/GameService.java) and [`TurnService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/TurnService.java). The GameService keeps track of all players and their overall ranking. It also handles the role rotation making sure each player is assigned the role of painter exactly once per round. Finally, it also controls the number of turns and rounds. The TurnService generates the word that is painted and handles the translation and evaluation of each guess.
 
 Something on how game / turnservice interact with websockets
+This Repo uses WebSockets to stream data used by all clients. To achive this all Players in a Lobby 
+
 
 [`WebsocketService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/WebSocketService.java) : Leo todo.
 
