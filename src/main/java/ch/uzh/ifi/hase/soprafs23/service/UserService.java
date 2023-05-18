@@ -72,8 +72,8 @@ public class UserService {
         }
 
         if(!userToUpdate.getLanguage().equals(userWithUpdateInfo.getLanguage())) { // check if language changed
-            if (isEmpty(userToUpdate.getLanguage())) { // checks if username contains at least one character
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must contain a character!");
+            if (isEmpty(userToUpdate.getLanguage())) { // check if language empty
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language cannot be empty!");
             }
             userToUpdate.setLanguage(userWithUpdateInfo.getLanguage());
         }

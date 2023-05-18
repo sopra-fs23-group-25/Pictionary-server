@@ -147,24 +147,56 @@ public class UserServiceTest {
     }
 
     @Test
-    public void update_namePasswordEmpty_throws409() {
+    public void update_passwordEmpty_throws409() {
         User testUser2 = new User();
-        testUser2.setUsername("       ");
-        testUser2.setPassword("");
-        testUser2.setLanguage("       ");
+        testUser2.setUsername("name");
+        testUser2.setPassword("  ");
+        testUser2.setLanguage("l");
 
-
-        when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
     }
 
     @Test
-    public void createUser_name_password_space_throwsException() {
+    public void update_nameEmpty_throws409() {
+        User testUser2 = new User();
+        testUser2.setUsername("    ");
+        testUser2.setPassword("");
+        testUser2.setLanguage("pWord");
+
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
+    }
+
+    @Test
+    public void update_languageEmpty_throws409() {
+        User testUser2 = new User();
+        testUser2.setUsername("    ");
+        testUser2.setPassword("");
+        testUser2.setLanguage("pWord");
+
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
+    }
+
+    @Test
+    public void createUser_password_empty_throwsException() {
         assertNull(userRepository.findByUsername("testUsername"));
 
-        testUser.setUsername("    ");
+        testUser.setUsername("name");
         testUser.setLanguage("testLanguage");
         testUser.setPassword("     ");
+
+        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+    }
+
+    @Test
+    public void createUser_name_empty_throwsException() {
+        assertNull(userRepository.findByUsername("testUsername"));
+
+        testUser.setUsername("     ");
+        testUser.setLanguage("testLanguage");
+        testUser.setPassword("pword");
 
         assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
     }
