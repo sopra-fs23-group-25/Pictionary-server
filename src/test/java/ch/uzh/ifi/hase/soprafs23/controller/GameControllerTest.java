@@ -1,8 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
+import ch.uzh.ifi.hase.soprafs23.entity.Image;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.ImageDTO;
 import ch.uzh.ifi.hase.soprafs23.service.GameService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -121,5 +125,36 @@ public class GameControllerTest {
         mockMvc.perform(deleteRequest)
                 .andExpect(status().isNoContent());
 
+    }
+
+    //////////////////ImageTests
+    // PUT: success
+    @Test
+    void addImage_shouldReturnNoContent() throws Exception {
+
+        ImageDTO imageDTO = new ImageDTO();
+        imageDTO.setImageData("123");
+
+        when(gameService.getGameByLobbyId(Mockito.anyLong())).thenReturn(testGame);
+        doNothing().when(gameService).addImage(Mockito.any(), Mockito.any());
+
+        MockHttpServletRequestBuilder putRequest = put("/lobbies/{lobbyId}/game/images", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(imageDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNoContent());
+
+
+    }
+
+    private String asJsonString(final Object object) {
+        try {
+            return new ObjectMapper().writeValueAsString(object);
+        }
+        catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("The request body could not be created.%s", e.toString()));
+        }
     }
 }

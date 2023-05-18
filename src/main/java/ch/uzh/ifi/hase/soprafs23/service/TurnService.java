@@ -157,7 +157,6 @@ public class TurnService {
 
         Turn newTurn = new Turn(turn);
 
-
         List<Guess> originalGuesses = new ArrayList<>(newTurn.getGuesses());
         List<Guess> translatedGuesses = new ArrayList<>(0);
         List<String> queries = new ArrayList<>();

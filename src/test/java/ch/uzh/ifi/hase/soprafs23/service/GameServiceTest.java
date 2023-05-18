@@ -46,7 +46,7 @@ public class GameServiceTest {
 
     // start Game: success - already started (409)
     @Test
-    public void startGame_success_changesGameAndLobby() throws Exception {
+    public void startGame_success_changesGameAndLobby() {
 
         List<Player> players = new ArrayList<>();
         Player testPlayer = new Player();
@@ -237,4 +237,18 @@ public class GameServiceTest {
 
         assertThrows(ResponseStatusException.class, () -> game.findPlayerById(2L));
     }
+
+    @Test
+    public void addImage_works() {
+       Image image = new Image();
+       image.setImageData("123");
+
+       when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+
+       gameService.addImage(testGame,image);
+
+       assertEquals(testGame.getImages().get(0), image);
+       assertEquals(1,testGame.getImages().size());
+    }
+
 }
