@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.websockets;
 import ch.uzh.ifi.hase.soprafs23.controller.WebSocketController;
 
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
+import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -45,9 +46,9 @@ public class WebSocketControllerTest {
 
     @Test
     void sendPictureChanges() throws Exception{
-        CompletableFuture<String> resultKeeper = new CompletableFuture<>();
+        CompletableFuture<DrawingMessageDTO> resultKeeper = new CompletableFuture<>();
         int lobbyId = 1;
-        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/1/drawing-all",
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/"+lobbyId+"/drawing-all",
                 new WsTestUtil.ImageStreamingFrameHandlerGameSettings(resultKeeper::complete));
 
         Thread.sleep(1000);
@@ -63,7 +64,31 @@ public class WebSocketControllerTest {
 
         Thread.sleep(1000);
 
-        webSocketController.sendToAll(drawingMessageDTO);
-        assertThat(resultKeeper.get(2, SECONDS)).isEqualTo(drawingMessageDTO.toString());
+        stompSession.send("/app/lobbies/" + lobbyId + "/drawing-all", drawingMessageDTO);
+
+        DrawingMessageDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+        assertThat(receivedMessage.getColor()).isEqualTo(drawingMessageDTO.getColor());
+    }
+
+    @Test
+    void sendGameState() throws Exception{
+        CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
+        int lobbyId = 1;
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/game-state",
+                new WsTestUtil.GameStateFrameHandlerGameSettings(resultKeeper::complete));
+
+        Thread.sleep(1000);
+
+        MessageRelayDTO messageRelayDTO = new MessageRelayDTO();
+        messageRelayDTO.setTask("test");
+
+        Thread.sleep(1000);
+
+        stompSession.send("/app/lobbies/" + lobbyId + "/game-state", messageRelayDTO);
+
+        MessageRelayDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+        assertThat(receivedMessage.getTask()).isEqualTo(messageRelayDTO.getTask());
     }
 }

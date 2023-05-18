@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.websockets;
 
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
+import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -46,9 +47,9 @@ public class WsTestUtil {
 
     public static class ImageStreamingFrameHandlerGameSettings implements StompFrameHandler {
 
-        private final Consumer<String> frameHandler;
+        private final Consumer<DrawingMessageDTO> frameHandler;
 
-        public ImageStreamingFrameHandlerGameSettings(Consumer<String> frameHandler) {
+        public ImageStreamingFrameHandlerGameSettings(Consumer<DrawingMessageDTO> frameHandler) {
             this.frameHandler = frameHandler;
         }
 
@@ -61,7 +62,27 @@ public class WsTestUtil {
         public void handleFrame(StompHeaders headers, Object payload) {
             DrawingMessageDTO obj = (DrawingMessageDTO) payload;
             log.info("received message: {} with headers: {}", obj, headers);
-            frameHandler.accept(payload.toString());
+            frameHandler.accept(obj);
+        }
+    }
+    public static class GameStateFrameHandlerGameSettings implements StompFrameHandler {
+
+        private final Consumer<MessageRelayDTO> frameHandler;
+
+        public GameStateFrameHandlerGameSettings(Consumer<MessageRelayDTO> frameHandler) {
+            this.frameHandler = frameHandler;
+        }
+
+        @Override
+        public Type getPayloadType(StompHeaders headers) {
+            return MessageRelayDTO.class;
+        }
+
+        @Override
+        public void handleFrame(StompHeaders headers, Object payload) {
+            MessageRelayDTO obj = (MessageRelayDTO) payload;
+            log.info("received message: {} with headers: {}", obj, headers);
+            frameHandler.accept(obj);
         }
     }
 }
