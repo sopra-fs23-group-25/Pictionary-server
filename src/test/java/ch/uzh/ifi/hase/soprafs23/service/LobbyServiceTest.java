@@ -179,4 +179,11 @@ public class LobbyServiceTest {
         lobbyService.deleteLobby(testLobby);
         assertEquals(1L, testLobby.getLobbyId());
     }
+
+    @Test
+    public void getUser_notFound(){
+        when(userRepository.findByUserId(Mockito.anyLong())).thenReturn(null);
+        assertThrows(ResponseStatusException.class, () -> lobbyService.getSingleUser(testUser.getUserId()));
+
+    }
 }

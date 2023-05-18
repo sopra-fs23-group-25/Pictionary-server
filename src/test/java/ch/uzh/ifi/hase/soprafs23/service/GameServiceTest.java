@@ -46,7 +46,7 @@ public class GameServiceTest {
 
     // start Game: success - already started (409)
     @Test
-    public void startGame_success_changesGameAndLobby() throws Exception {
+    public void startGame_success_changesGameAndLobby() {
 
         List<Player> players = new ArrayList<>();
         Player testPlayer = new Player();
@@ -240,7 +240,6 @@ public class GameServiceTest {
 
     @Test
     public void addImage_works() {
-
        Image image = new Image();
        image.setImageData("123");
 

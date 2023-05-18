@@ -32,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(SessionController.class)
 public class SessionControllerTest {
 
-
     Session testSession = new Session();
 
     SessionPostDTO sessionPostDTO = new SessionPostDTO();
