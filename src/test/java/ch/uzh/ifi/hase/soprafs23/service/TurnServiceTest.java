@@ -157,8 +157,6 @@ public class TurnServiceTest {
         assertEquals(25, guess.getScore());
     }
 
-
-
     @Test
     public void getUsername_addsUsername() {
         User user = new User();
@@ -194,6 +192,12 @@ public class TurnServiceTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
         turnService.deleteTurn(testLobby.getLobbyId());
         assertNull(null, testGame.getTurn());
+    }
+    @Test
+    public void deleteTurn_noSuccess() {
+        testLobby.setGame(null);
+        when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
+        assertThrows(ResponseStatusException.class, () -> turnService.deleteTurn(testLobby.getLobbyId()));
     }
 
     // Validate Guess: correct, incorrect

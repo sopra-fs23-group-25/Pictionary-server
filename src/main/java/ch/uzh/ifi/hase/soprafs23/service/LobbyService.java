@@ -99,10 +99,7 @@ public class LobbyService {
 
     private boolean userInLobby(Lobby lobby, Long userId) {
         for (Player player : lobby.getPlayers()) {
-
-            if (player.getUserId().equals(userId)) {
-                return true;
-            }
+            if (player.getUserId().equals(userId)) {return true;}
         }
         return false;
     }
@@ -125,10 +122,7 @@ public class LobbyService {
 
     private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
-
-        if (lobbyWithSameName != null) {
-            throw new RuntimeException("name");
-        }
+        if (lobbyWithSameName != null) {throw new RuntimeException("name");}
     }
 
     public void deleteLobby(Lobby lobby) {

@@ -2,13 +2,10 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Game;
 import ch.uzh.ifi.hase.soprafs23.entity.Lobby;
-
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPostDTO;
-
 import ch.uzh.ifi.hase.soprafs23.rest.dto.LobbyPutDTO;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -267,12 +264,6 @@ public class LobbyControllerTest {
         mockMvc.perform(putRequest)
                 .andExpect(status().isBadRequest());
     }
-
-    /////////////
-
-    /**
-     * Helper Functions
-     */
 
     private String asJsonString(final Object object) {
         try {

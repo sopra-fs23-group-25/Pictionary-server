@@ -14,7 +14,6 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class GameService {
-
     private final LobbyRepository lobbyRepository;
 
     @Autowired
@@ -96,6 +95,12 @@ public class GameService {
         Game game = getLobbyByLobbyId(lobbyId).getGame();
         if (game == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There was no game found in the lobby!");}
         return game;
+    }
+
+    public void addImage(Game game, Image image) {
+        game.addImage(image);
+        lobbyRepository.save(getLobbyByLobbyId(game.getLobbyId()));
+        lobbyRepository.flush();
     }
 
 }
