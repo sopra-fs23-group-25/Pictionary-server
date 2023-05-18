@@ -132,6 +132,7 @@
 ||#|description|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
 ||#217|write 3 integration tests|
+||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
 |Nico|#|description|
 ||#|description|
 |Pablo|#|Joker Contributions|
