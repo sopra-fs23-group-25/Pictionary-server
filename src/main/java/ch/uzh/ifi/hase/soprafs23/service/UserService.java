@@ -72,7 +72,7 @@ public class UserService {
         }
 
         if(!userToUpdate.getLanguage().equals(userWithUpdateInfo.getLanguage())) { // check if language changed
-            if (isEmpty(userToUpdate.getLanguage())) { // check if language empty
+            if (isEmpty(userWithUpdateInfo.getLanguage())) { // check if language empty
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Language cannot be empty!");
             }
             userToUpdate.setLanguage(userWithUpdateInfo.getLanguage());

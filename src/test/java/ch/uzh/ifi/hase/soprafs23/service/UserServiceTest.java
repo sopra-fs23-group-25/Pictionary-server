@@ -161,8 +161,8 @@ public class UserServiceTest {
     public void update_nameEmpty_throws409() {
         User testUser2 = new User();
         testUser2.setUsername("    ");
-        testUser2.setPassword("");
-        testUser2.setLanguage("pWord");
+        testUser2.setPassword("pWord");
+        testUser2.setLanguage("l");
 
         when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
@@ -171,9 +171,9 @@ public class UserServiceTest {
     @Test
     public void update_languageEmpty_throws409() {
         User testUser2 = new User();
-        testUser2.setUsername("    ");
-        testUser2.setPassword("");
-        testUser2.setLanguage("pWord");
+        testUser2.setUsername("name");
+        testUser2.setPassword("pWord");
+        testUser2.setLanguage("   ");
 
         when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
         assertThrows(ResponseStatusException.class, () -> userService.updateUser(testUser2, testUser));
