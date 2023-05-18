@@ -129,10 +129,11 @@
 |  Name|  Issue(s)| Description |
 |--|--|--|
 |Leo|#|description|
-||#|description|
+||#243|handle longs strings for images|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
 ||#217|write 3 integration tests|
 ||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
+||#242 #242|rieviing and storing of drawings in game|
 |Nico|#|description|
 ||#|description|
 |Pablo|#|Joker Contributions|
