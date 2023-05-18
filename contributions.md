@@ -131,7 +131,7 @@
 |Leo|#|description|
 ||#|description|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
-||#|description|
+||#217|write 3 integration tests|
 |Nico|#|description|
 ||#|description|
 |Pablo|#|Joker Contributions|
