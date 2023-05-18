@@ -2,17 +2,21 @@ package ch.uzh.ifi.hase.soprafs23.websockets;
 
 import ch.uzh.ifi.hase.soprafs23.controller.WebSocketController;
 
+import ch.uzh.ifi.hase.soprafs23.repository.LobbyRepository;
+import ch.uzh.ifi.hase.soprafs23.service.WebSocketService;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
+
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -26,6 +30,11 @@ public class WebSocketControllerTest {
 
     @Autowired
     private WebSocketController webSocketController;
+
+    @Mock
+    private LobbyRepository lobbyRepository;
+    @Mock
+    private WebSocketService webSocketService;
     private WebSocketStompClient stompClient;
     private StompSession stompSession;
     private final WsTestUtil wsTestUtil = new WsTestUtil();
@@ -39,6 +48,12 @@ public class WebSocketControllerTest {
         stompClient = wsTestUtil.createWebSocketClient();
         stompSession = stompClient.connect(wsUrl, new WsTestUtil.MyStompSessionHandler()).get();
     }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        stompSession.disconnect();
+        stompClient.stop();
+    }
     @Test
     void connectsToSocket() throws Exception {
         assertThat(stompSession.isConnected()).isTrue();
@@ -49,7 +64,7 @@ public class WebSocketControllerTest {
         CompletableFuture<DrawingMessageDTO> resultKeeper = new CompletableFuture<>();
         int lobbyId = 1;
         stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/"+lobbyId+"/drawing-all",
-                new WsTestUtil.ImageStreamingFrameHandlerGameSettings(resultKeeper::complete));
+                new WsTestUtil.ImageStreamingFrameHandler(resultKeeper::complete));
 
         Thread.sleep(1000);
 
@@ -76,7 +91,7 @@ public class WebSocketControllerTest {
         CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
         int lobbyId = 1;
         stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/game-state",
-                new WsTestUtil.GameStateFrameHandlerGameSettings(resultKeeper::complete));
+                new WsTestUtil.MessageRelayFrameHandler(resultKeeper::complete));
 
         Thread.sleep(1000);
 
@@ -91,4 +106,88 @@ public class WebSocketControllerTest {
         assertThat(receivedMessage).isNotNull();
         assertThat(receivedMessage.getTask()).isEqualTo(messageRelayDTO.getTask());
     }
+
+    @Test
+    void hostDisconnected() throws Exception{
+        CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
+        long lobbyId = 1;
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/host-disconnected",
+                new WsTestUtil.MessageRelayFrameHandler(resultKeeper::complete));
+
+        Thread.sleep(1000);
+
+        MessageRelayDTO messageRelayDTO = new MessageRelayDTO();
+        messageRelayDTO.setTask("test");
+
+        Thread.sleep(1000);
+
+        webSocketController.sendHostDisconnected(messageRelayDTO, lobbyId);
+
+        MessageRelayDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+    }
+
+    @Test
+    void closeLobby() throws Exception{
+        CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
+        int lobbyId = 1;
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/lobby-closed",
+                new WsTestUtil.MessageRelayFrameHandler(resultKeeper::complete));
+
+        Thread.sleep(1000);
+
+        MessageRelayDTO messageRelayDTO = new MessageRelayDTO();
+        messageRelayDTO.setTask("test");
+
+        Thread.sleep(1000);
+
+        stompSession.send("/app/lobbies/" + lobbyId + "/lobby-closed", messageRelayDTO);
+
+        MessageRelayDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+        assertThat(receivedMessage.getTask()).isEqualTo(messageRelayDTO.getTask());
+    }
+
+    @Test
+    void startGameInLobby() throws Exception{
+        CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
+        int lobbyId = 1;
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/start-game",
+                new WsTestUtil.MessageRelayFrameHandler(resultKeeper::complete));
+
+        Thread.sleep(1000);
+
+        MessageRelayDTO messageRelayDTO = new MessageRelayDTO();
+        messageRelayDTO.setTask("test");
+
+        Thread.sleep(1000);
+
+        stompSession.send("/app/lobbies/" + lobbyId + "/start-game", messageRelayDTO);
+
+        MessageRelayDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+        assertThat(receivedMessage.getTask()).isEqualTo(messageRelayDTO.getTask());
+    }
+
+    @Test
+    void clearDrawing() throws Exception{
+        CompletableFuture<MessageRelayDTO> resultKeeper = new CompletableFuture<>();
+        int lobbyId = 1;
+        stompSession.subscribe(WEBSOCKET_PREFIX + "/lobbies/" + lobbyId + "/drawing-clear",
+                new WsTestUtil.MessageRelayFrameHandler(resultKeeper::complete));
+
+        Thread.sleep(1000);
+
+        MessageRelayDTO messageRelayDTO = new MessageRelayDTO();
+        messageRelayDTO.setTask("test");
+
+        Thread.sleep(1000);
+
+        stompSession.send("/app/lobbies/" + lobbyId + "/drawing-clear", messageRelayDTO);
+
+        MessageRelayDTO receivedMessage = resultKeeper.get(2, SECONDS);
+        assertThat(receivedMessage).isNotNull();
+        assertThat(receivedMessage.getTask()).isEqualTo(messageRelayDTO.getTask());
+    }
+
 }

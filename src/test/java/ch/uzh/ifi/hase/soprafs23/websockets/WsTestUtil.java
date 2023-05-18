@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static org.springframework.asm.Type.getType;
+
 public class WsTestUtil {
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -45,11 +47,11 @@ public class WsTestUtil {
         }
     }
 
-    public static class ImageStreamingFrameHandlerGameSettings implements StompFrameHandler {
+    public static class ImageStreamingFrameHandler implements StompFrameHandler {
 
         private final Consumer<DrawingMessageDTO> frameHandler;
 
-        public ImageStreamingFrameHandlerGameSettings(Consumer<DrawingMessageDTO> frameHandler) {
+        public ImageStreamingFrameHandler(Consumer<DrawingMessageDTO> frameHandler) {
             this.frameHandler = frameHandler;
         }
 
@@ -65,11 +67,11 @@ public class WsTestUtil {
             frameHandler.accept(obj);
         }
     }
-    public static class GameStateFrameHandlerGameSettings implements StompFrameHandler {
+    public static class MessageRelayFrameHandler implements StompFrameHandler {
 
         private final Consumer<MessageRelayDTO> frameHandler;
 
-        public GameStateFrameHandlerGameSettings(Consumer<MessageRelayDTO> frameHandler) {
+        public MessageRelayFrameHandler(Consumer<MessageRelayDTO> frameHandler) {
             this.frameHandler = frameHandler;
         }
 
@@ -85,4 +87,6 @@ public class WsTestUtil {
             frameHandler.accept(obj);
         }
     }
+
+
 }
