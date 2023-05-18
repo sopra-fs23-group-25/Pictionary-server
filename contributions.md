@@ -124,3 +124,14 @@
 ||#80|refactored and clean-up game Page|
 |Pablo|#|description|
 ||#51|description|
+
+## Week 8
+|  Name|  Issue(s)| Description |
+|--|--|--|
+|Leo|#|description|
+||#|description|
+|Joana|#70|Finish translation of all pages german, translation of all pages french|
+||#|description|
+|Nico|#|description|
+||#|description|
+|Pablo|#|Joker Contributions|
