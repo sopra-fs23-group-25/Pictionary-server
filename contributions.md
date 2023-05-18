@@ -132,7 +132,7 @@
 ||#213|final refactors, cleanups|
 ||#243|handle longs strings for images|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
-||#213|final refactors|
+||#213|final refactors, cleanups|
 ||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
 ||#217|write 3 integration tests|
 ||#241 #242|recieving and storing of drawings in game|
