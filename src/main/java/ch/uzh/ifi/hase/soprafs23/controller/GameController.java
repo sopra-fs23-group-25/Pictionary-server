@@ -46,7 +46,7 @@ public class GameController {
         int test = imageDTO.getImageData().length();
         Image image = DTOMapper.INSTANCE.convertImageDTOToEntity(imageDTO);
         gameService.addImage(game, image);
-    } // testen
+    }
 
     @GetMapping("/lobbies/{lobbyId}/game")
     @ResponseStatus(HttpStatus.OK)
