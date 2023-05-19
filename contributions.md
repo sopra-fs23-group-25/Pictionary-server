@@ -129,8 +129,9 @@
 |  Name|  Issue(s)| Description |
 |--|--|--|
 |Leo|#|description|
+||#243|enable storing large strings to accommodate Images|
+||#215|Test WebSocketController & TestSocketService|
 ||#213|final refactors, cleanups|
-||#243|handle long strings for images|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
 ||#213|final refactors, cleanups|
 ||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
