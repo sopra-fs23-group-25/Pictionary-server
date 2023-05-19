@@ -4,7 +4,7 @@
 <h1 align="center">SoPra FS23 Group 25 - Pictionary Server</h1>
 
 ## Introduction
-We created a web-based version of Pictionary, a fun draw and guess game, where users play against each other in real-time.  The game can be played in a user's preferred language. We used Google Translate API to allow users with different chosen languages to play together.			
+We created a web-based version of Pictionary, a fun draw and guess game, where users can play against each other in real-time.  The game can be played in a user's preferred language. We used Google Translate API to allow users with different chosen languages to play together.			
 
 ### Hosted on:
 - Client: https://sopra-fs23-group-25-client.oa.r.appspot.com/
@@ -27,8 +27,8 @@ The [`Controllers`](https://github.com/sopra-fs23-group-25/Pictionary-server/tre
 This Repo uses WebSockets to stream data used between clients. Once A User joins a Lobby  they connect to various different WebSocketEndpoints. These Endpoints are implemented in the [`WebsocketController`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/WebSocketController.java)
 Most of these Endpoints are simply a way to relay messages from the dedicated Host (the player who started the lobby) to all its players. Only in a few Cases the WebSockets interact with other Classes. Most important among these, is the Interaction with [`WebsocketService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/WebSocketService.java) to access the lobbyRepository and retrieve all data in the corresponding game. This is used to check which players are in a lobby or who has disconnected.
 
-To Translate A Users guess we created a [`Translator`](https://github.com/sopra-fs23-group-25/Pictionary-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/translator) class which uses the GoogleTranslate API to translate individual Strings. The Translator Class encapsulates this API and provides Helper-methods to simplify the Translation Workflow.
-
+To Translate a Users guess we created a [`Translator`](https://github.com/sopra-fs23-group-25/Pictionary-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/translator) class which uses the GoogleTranslate API to translate individual Strings. The Translator Class encapsulates this API and provides Helper-methods to simplify the Translation Workflow.
+All [`Guesses`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/entity/Guess.java) that get submitted are translated to English before they are stored in the [`Game Entity`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/entity/Game.java).
 ## Roadmap
 - Image recognition that allows a user to play against a CPU.
 - Saving and sharing of images painted during a turn.
