@@ -2,9 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.websockets;
 
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.UserJoinGameDTO;
-import ch.uzh.ifi.hase.soprafs23.websockets.dto.UserSocketGetDTO;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -50,11 +47,11 @@ public class WsTestUtil {
         }
     }
 
-    public static class ImageStreamingFrameHandlerGameSettings implements StompFrameHandler {
+    public static class ImageStreamingFrameHandler implements StompFrameHandler {
 
         private final Consumer<DrawingMessageDTO> frameHandler;
 
-        public ImageStreamingFrameHandlerGameSettings(Consumer<DrawingMessageDTO> frameHandler) {
+        public ImageStreamingFrameHandler(Consumer<DrawingMessageDTO> frameHandler) {
             this.frameHandler = frameHandler;
         }
 
@@ -70,11 +67,11 @@ public class WsTestUtil {
             frameHandler.accept(obj);
         }
     }
-    public static class MessageRelayFrameHandlerGameSettings implements StompFrameHandler {
+    public static class MessageRelayFrameHandler implements StompFrameHandler {
 
         private final Consumer<MessageRelayDTO> frameHandler;
 
-        public MessageRelayFrameHandlerGameSettings(Consumer<MessageRelayDTO> frameHandler) {
+        public MessageRelayFrameHandler(Consumer<MessageRelayDTO> frameHandler) {
             this.frameHandler = frameHandler;
         }
 
@@ -91,26 +88,5 @@ public class WsTestUtil {
         }
     }
 
-    public static class GetUserFrameHandlerGameSettings implements StompFrameHandler {
-
-        private final Consumer<List<UserSocketGetDTO>> frameHandler;
-
-        public GetUserFrameHandlerGameSettings(Consumer<List<UserSocketGetDTO>> frameHandler) {
-            this.frameHandler = frameHandler;
-        }
-
-        @Override
-        public Type getPayloadType(StompHeaders headers) {
-            return ArrayList.class;
-
-        }
-
-        @Override
-        public void handleFrame(StompHeaders headers, Object payload) {
-            List<UserSocketGetDTO> obj = (List<UserSocketGetDTO>) payload;
-            log.info("received message: {} with headers: {}", obj, headers);
-            frameHandler.accept(obj);
-        }
-    }
 
 }
