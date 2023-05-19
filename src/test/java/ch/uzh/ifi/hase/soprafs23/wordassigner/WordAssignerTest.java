@@ -100,5 +100,4 @@ public class WordAssignerTest {
         String word2 = wordAssigner.getNewWord(1L);
         assertNotEquals(word2,word1);
     }
-
 }
