@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.websockets;
 
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
+
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -13,14 +14,11 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static org.springframework.asm.Type.getType;
 
 public class WsTestUtil {
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
