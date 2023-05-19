@@ -64,7 +64,9 @@ public class WordAssignerTest {
 
     @Test
     public void assignWord_allButOneTaken(){
-        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door"));
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "music", "snail", "mountain",
+                "moon", "tree", "rainbow", "pizza", "flower", "zoo", "king", "sun", "rocket", "lamp", "clock", "rain",
+                "milk", "carrot", "spoon", "nose", "snowman", "cheese"));
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
@@ -75,7 +77,9 @@ public class WordAssignerTest {
 
     @Test
     public void assignWord_allTaken(){
-        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree", "door", "fish"));
+        testGame.setWordsPainted(Arrays.asList( "fish", "dog", "duck", "music", "snail", "mountain",
+                "moon", "tree", "rainbow", "pizza", "flower", "zoo", "king", "sun", "rocket", "lamp", "clock", "rain",
+                "milk", "carrot", "spoon", "nose", "snowman", "cheese"));
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
@@ -86,14 +90,15 @@ public class WordAssignerTest {
 
     @Test
     public void assignWord_ensureNoDuplicates(){
-        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "house", "tree"));
+        testGame.setWordsPainted(Arrays.asList( "dog", "duck", "music", "snail", "mountain",
+                "moon", "tree", "rainbow", "pizza", "flower", "zoo", "king", "sun", "rocket", "lamp", "clock", "rain",
+                "milk", "carrot", "spoon", "nose", "snowman", "cheese"));
         testLobby.setGame(testGame);
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
 
         String word1 = wordAssigner.getNewWord(1L);
         String word2 = wordAssigner.getNewWord(1L);
         assertNotEquals(word2,word1);
-
     }
 
 }
