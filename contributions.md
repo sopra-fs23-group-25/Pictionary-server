@@ -122,8 +122,9 @@
 ||#74|current round & current turn display|
 ||#75|refactored drawing board (fit for 13" & 14" desktops)|
 ||#80|refactored and clean-up game Page|
-|Pablo|#82|display answers in red/green|
-||#18|authentication for profile editing|
+|Pablo|#71|display answers in red/green|
+||#17|authentication for profile editing|
+||#71|Game access and game guarding|
 
 ## Week 8
 |  Name|  Issue(s)| Description |
