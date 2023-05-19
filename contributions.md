@@ -122,15 +122,15 @@
 ||#74|current round & current turn display|
 ||#75|refactored drawing board (fit for 13" & 14" desktops)|
 ||#80|refactored and clean-up game Page|
-|Pablo|#|description|
-||#51|description|
+|Pablo|#82|display answers in red/green|
+||#18|authentication for profile editing|
 
 ## Week 8
 |  Name|  Issue(s)| Description |
 |--|--|--|
 |Leo|#|description|
 ||#213|final refactors, cleanups|
-||#243|handle longs strings for images|
+||#243|handle long strings for images|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
 ||#213|final refactors, cleanups|
 ||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
