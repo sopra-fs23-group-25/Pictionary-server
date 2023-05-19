@@ -122,7 +122,7 @@
 ||#74|current round & current turn display|
 ||#75|refactored drawing board (fit for 13" & 14" desktops)|
 ||#80|refactored and clean-up game Page|
-|Pablo|#71|display answers in red/green|
+|Pablo|#47|display answers in red/green|
 ||#17|authentication for profile editing|
 ||#71|Game access and game guarding|
 
