@@ -108,7 +108,7 @@
 |Leo|#179|fixed mistakes in word assignment logic, and ensured reset once all words used|
 ||#205|React with websocket to a rest call once all players hav eguessed and send corresponding GameState|
 ||#201|fixed sonarcloud flagged bugs|
-||#196| improved Translator consistency|
+||#196|improved Translator consistency|
 |Joana|#206|update turn controller and service to check if guess is last one such that turn can be ended early|
 ||#207, #208|modify update user in service and controller to check for unchanged values, empty strings, strings with only space|
 ||#213|removed unnecessary code, minor refactors|
@@ -136,6 +136,7 @@
 ||#212|finished up tests and reached a line coverage of 83% (without websocket tests)|
 ||#217|write 3 integration tests|
 ||#241 #242|recieving and storing of drawings in game|
+||#246 #242|check and add new words to play|
 |Nico|#|description|
 ||#|description|
 |Pablo|#|Joker Contributions|
