@@ -6,18 +6,24 @@ import ch.uzh.ifi.hase.soprafs23.websockets.dto.DrawingMessageDTO;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.MessageRelayDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class WebSocketControllerTest {
@@ -27,6 +33,7 @@ public class WebSocketControllerTest {
 
     @Autowired
     private WebSocketController webSocketController;
+
     private WebSocketStompClient stompClient;
     private StompSession stompSession;
     private final WsTestUtil wsTestUtil = new WsTestUtil();

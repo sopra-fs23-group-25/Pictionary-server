@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.service.WebSocketService;
-import ch.uzh.ifi.hase.soprafs23.websockets.WebSocketConnectListener;
-import ch.uzh.ifi.hase.soprafs23.websockets.WebSocketDisconnectListener;
 import ch.uzh.ifi.hase.soprafs23.websockets.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -20,13 +18,6 @@ public class WebSocketController {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
-
-
-    @Autowired
-    private WebSocketDisconnectListener webSocketEventListener;
-
-    @Autowired
-    private WebSocketConnectListener webSocketConnectListener;
 
     private final String WEBSOCKET_PREFIX = "/topic";
 
