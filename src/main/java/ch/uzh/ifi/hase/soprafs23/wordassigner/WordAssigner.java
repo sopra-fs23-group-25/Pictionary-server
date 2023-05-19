@@ -14,7 +14,9 @@ import java.util.*;
 @Transactional
 public class WordAssigner {
     private final LobbyRepository lobbyRepository;
-    private final List<String> possibleWords = Arrays.asList("fish", "dog", "duck", "house", "tree", "door");
+    private final List<String> possibleWords = Arrays.asList("fish", "dog", "duck", "music", "snail", "mountain",
+            "moon", "tree", "rainbow", "pizza", "flower", "zoo", "king", "sun", "rocket", "lamp", "clock", "rain",
+            "milk", "carrot", "spoon", "nose", "snowman", "cheese", "snowflake", "bus", "candle");
     private final Random random;
 
     @Autowired
