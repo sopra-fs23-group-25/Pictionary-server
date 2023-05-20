@@ -129,8 +129,7 @@
 ## Week 8
 |  Name|  Issue(s)| Description |
 |--|--|--|
-|Leo|#|description|
-||#243|enable storing large strings to accommodate Images|
+|Leo|#243|enable storing large strings to accommodate Images|
 ||#215|Test WebSocketController & TestSocketService|
 ||#213|final refactors, cleanups|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
