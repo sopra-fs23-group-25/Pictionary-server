@@ -56,6 +56,7 @@ public interface DTOMapper {
     @Mapping(source = "maxNrOfPlayers", target = "maxNrOfPlayers")
     @Mapping(source = "timePerRound", target = "timePerRound")
     @Mapping(source = "players", target = "players")
+    @Mapping(source= "running", target = "running")
     LobbyGetDTO convertEntityToLobbiesGetDTO(Lobby lobby);
 
     @Mapping(source = "lobbyName", target = "lobbyName")

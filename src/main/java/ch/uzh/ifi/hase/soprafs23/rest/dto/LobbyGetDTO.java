@@ -19,6 +19,8 @@ public class LobbyGetDTO {
 
     private Long timePerRound;
 
+    private boolean isRunning;
+
     public Long getLobbyId() {
         return lobbyId;
     }
@@ -54,4 +56,12 @@ public class LobbyGetDTO {
         return players;
     }
     public void setPlayers(List<Player> players) {this.players = players;}
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
 }
