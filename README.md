@@ -35,14 +35,6 @@ All [`Guesses`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/ma
 - Add more languages to choose from.
 - Add synonym-recognition to Translator to increase consistency of Translations.
 
-## Authors
-- [Joana Cieri](https://github.com/jo-ana-c)
-- [Leo Engelberger](https://github.com/LeoEngelberger)
-- [Pablo Chacon Pino](https://github.com/pcplusgit)
-- [Nico Camillo Zala](https://github.com/nczala)
-
-Contact: leo.engelberger@gmail.com
-
 ## Launch and Deployment
 Download your IDE of choice (e.g., [IntelliJ](https://www.jetbrains.com/idea/download/), [Visual Studio Code](https://code.visualstudio.com/), or [Eclipse](http://www.eclipse.org/downloads/)). Make sure Java 17 is installed on your system (for Windows, please make sure your `JAVA_HOME` environment variable is set to the correct version of Java).
 >Hint: this Project has originally been built with IntelliJ using openJDK17
@@ -63,7 +55,6 @@ The following extensions can help you get started more easily:
 -   `vscjava.vscode-java-pack`
 
 **Note:** You'll need to build the project first with Gradle, just click on the `build` command in the _Gradle Tasks_ extension. Then check the _Spring Boot Dashboard_ extension if it already shows `soprafs23` and hit the play button to start the server. If it doesn't show up, restart VS Code and check again. 
-
 
 ## Building with Gradle
 You can use the local Gradle Wrapper to build the application.
@@ -98,14 +89,17 @@ The Easiest way to do so is Get a ssh key and adding it to the System variables.
 **Example of System Variable:**
 > GOOGLE_APPLICATION_CREDENTIALS=C:\.ssh\Keys\GoogleTranslateServiceKey.json
 
+## Authors
+- [Joana Cieri](https://github.com/jo-ana-c)
+- [Leo Engelberger](https://github.com/LeoEngelberger)
+- [Pablo Chacon Pino](https://github.com/pcplusgit)
+- [Nico Camillo Zala](https://github.com/nczala)
 
+Contact: leo.engelberger@gmail.com
 
 ## Acknowledgements
 We would like to thank the SoPra FS23 teaching team, especially our tutor [Dennys Huber](https://github.com/devnnys) for supervising our project and for his advice throughout the semester.
 
 ## Licence
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
-
-
-
 
