@@ -127,7 +127,7 @@ public class LobbyService {
     private void checkIfHostHasOtherLobby(Lobby lobby) {
         Lobby lobbyWithSameHost = lobbyRepository.findByHostId(lobby.getHostId());
         if (lobbyWithSameHost != null) {
-            throw new RuntimeException("host");
+            throw new RuntimeException("host ID");
         }
     }
 
