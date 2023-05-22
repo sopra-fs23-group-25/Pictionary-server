@@ -90,6 +90,15 @@ public class LobbyServiceTest {
     }
 
     @Test
+    public void createLobby_conflictingHost_throws409() {
+
+        when(lobbyRepository.findByLobbyName(Mockito.any())).thenReturn(testLobby);
+        when(lobbyRepository.findByHostId(Mockito.anyLong())).thenReturn(testLobby);
+
+        assertThrows(ResponseStatusException.class, () -> lobbyService.createLobby(testLobby));
+    }
+
+    @Test
     public void getAllLobbies_returnsArrayList() {
         List<Lobby> lobbies = new ArrayList<>();
         lobbies.add(testLobby);
