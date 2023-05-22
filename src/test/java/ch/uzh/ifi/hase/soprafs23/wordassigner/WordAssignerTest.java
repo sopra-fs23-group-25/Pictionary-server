@@ -24,7 +24,9 @@ public class WordAssignerTest {
     private WordAssigner wordAssigner;
     Lobby testLobby = new Lobby();
     Game testGame = new Game();
-    private final List<String> possibleWords = Arrays.asList("fish", "dog", "duck", "house", "tree");
+    private final List<String> possibleWords = Arrays.asList("fish", "dog", "duck", "music", "snail", "mountain",
+            "moon", "tree", "rainbow", "pizza", "flower", "zoo", "king", "sun", "rocket", "lamp", "clock", "rain",
+            "milk", "carrot", "spoon", "nose", "snowman", "cheese", "snowflake", "bus", "candle");
 
     @BeforeEach
     public void setup() {
@@ -45,8 +47,6 @@ public class WordAssignerTest {
         when(lobbyRepository.findByLobbyId(Mockito.anyLong())).thenReturn(testLobby);
     }
 
-
-
     public WordAssignerTest(){
 
     }
@@ -59,7 +59,6 @@ public class WordAssignerTest {
 
         String word = wordAssigner.getNewWord(1L);
         assertNotEquals(0, word.length());
-
     }
 
     @Test
@@ -72,7 +71,6 @@ public class WordAssignerTest {
 
         String word = wordAssigner.getNewWord(1L);
         assertEquals("Fish", word);
-
     }
 
     @Test
@@ -85,7 +83,6 @@ public class WordAssignerTest {
 
         String word = wordAssigner.getNewWord(1L);
         assertEquals(1,testGame.getWordsPainted().size());
-
     }
 
     @Test

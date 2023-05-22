@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TranslatorTest {
     Translator translator = Translator.getInstance();
 
-
     public TranslatorTest() throws IOException {
     }
 

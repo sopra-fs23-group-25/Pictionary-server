@@ -47,6 +47,4 @@ public class LobbyPostDTO {
     public void setHostId(Long hostId) {
         this.hostId = hostId;
     }
-
-
 }

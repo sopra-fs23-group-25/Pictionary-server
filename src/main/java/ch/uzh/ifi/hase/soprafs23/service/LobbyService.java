@@ -65,6 +65,7 @@ public class LobbyService {
 
         try {
             checkIfLobbyExists(newLobby);
+            checkIfHostHasOtherLobby(newLobby);
 
             lobbyRepository.save(newLobby);
             lobbyRepository.flush();
@@ -86,8 +87,6 @@ public class LobbyService {
         if (userInLobby(lobby,user.getUserId())) {throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("%s is already in Lobby!", user.getUsername()));}
 
         lobby.addPlayer(user.convertToPlayer());
-
-        // could be void?
 
         return lobby;
     }
@@ -123,6 +122,13 @@ public class LobbyService {
     private void checkIfLobbyExists(Lobby lobbyToBeCreated) {
         Lobby lobbyWithSameName = lobbyRepository.findByLobbyName(lobbyToBeCreated.getLobbyName());
         if (lobbyWithSameName != null) {throw new RuntimeException("name");}
+    }
+
+    private void checkIfHostHasOtherLobby(Lobby lobby) {
+        Lobby lobbyWithSameHost = lobbyRepository.findByHostId(lobby.getHostId());
+        if (lobbyWithSameHost != null) {
+            throw new RuntimeException("host");
+        }
     }
 
     public void deleteLobby(Lobby lobby) {
