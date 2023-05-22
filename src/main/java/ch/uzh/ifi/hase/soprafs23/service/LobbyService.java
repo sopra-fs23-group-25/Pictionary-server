@@ -88,8 +88,6 @@ public class LobbyService {
 
         lobby.addPlayer(user.convertToPlayer());
 
-        // could be void?
-
         return lobby;
     }
 
