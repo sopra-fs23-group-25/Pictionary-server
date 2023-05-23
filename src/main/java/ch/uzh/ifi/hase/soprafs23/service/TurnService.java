@@ -68,7 +68,7 @@ public class TurnService {
         guess.setGuess(translatedGuess);
         if (translatedGuess.equals(turn.getWord())) {
             turn.setCorrectGuesses(turn.getCorrectGuesses() + 1); // update number pf correct guesses
-            long score = 5L * (6L - turn.getCorrectGuesses()); // calculate score
+            long score = 5L * (5L - turn.getCorrectGuesses()); // calculate score
             guess.setScore(score);
             givePainterPoints(turn);
         }

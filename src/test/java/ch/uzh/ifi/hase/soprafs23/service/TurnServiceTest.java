@@ -154,7 +154,7 @@ public class TurnServiceTest {
 
         turnService.submitGuess(testTurn, guess);
 
-        assertEquals(25, guess.getScore());
+        assertEquals(20, guess.getScore());
     }
 
     @Test
@@ -232,8 +232,7 @@ public class TurnServiceTest {
 
         turnService.submitGuess(testTurn, guess);
 
-        assertEquals(25, guess.getScore());
-
+        assertEquals(20, guess.getScore());
     }
 
     @Test
