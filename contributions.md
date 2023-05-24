@@ -130,7 +130,7 @@
 |  Name|  Issue(s)| Description |
 |--|--|--|
 |Leo|#243|enable storing large strings to accommodate Images|
-||#215|Test WebSocketController & TestSocketService|
+||#215|Test WebSocketController & WebSocketService|
 ||#213|final refactors, cleanups|
 |Joana|#70|Finish translation of all pages german, translation of all pages french|
 ||#213|final refactors, cleanups|
