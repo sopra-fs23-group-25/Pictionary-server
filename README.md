@@ -18,8 +18,11 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 <img src="https://user-images.githubusercontent.com/91155454/170842503-3a531289-1afc-4b9c-87c1-cc120d9229ce.svg" style='visibility:hidden;' width="16" height="16" /> [**REST**](https://en.wikipedia.org/wiki/Representational_state_transfer) : communication between server and client.	
 
 <img src="https://user-images.githubusercontent.com/91155454/170843632-39007803-3026-4e48-bb78-93836a3ea771.png" style='visibility:hidden;' width="16" height="16" /> [**WebSocket**](https://en.wikipedia.org/wiki/WebSocket) : communication between server and client as well as client to client communication.	
+
+<img src="![GCP-Cloud-Translate-API-10-14-20](https://github.com/sopra-fs23-group-25/Pictionary-server/assets/87647723/6274daf7-a73d-4473-baac-659aa6015ee4)" width="16" height="16" /> [**Google Cloud Translate API**](https://cloud.google.com/translate/docs/reference/rest/) : Translation of guesses and prompts.
 		
 <img src="https://github.com/get-icon/geticon/blob/master/icons/github-icon.svg" width="16" height="16" /> [**GitHub**](https://github.com/) : version control, tracability and planning.
+
 
 ## Roadmap
 Possible Feature Ideas to add in the Future.
