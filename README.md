@@ -21,6 +21,14 @@ We created a web-based version of Pictionary, a fun draw and guess game, where u
 		
 <img src="https://github.com/get-icon/geticon/blob/master/icons/github-icon.svg" width="16" height="16" /> [**GitHub**](https://github.com/) : version control, tracability and planning.
 
+## Roadmap
+Possible Feature Ideas to add in the Future.
+- Image recognition that allows a user to play against a CPU.
+- Saving and sharing of images painted during a turn.
+- Add more languages to choose from.
+- Add synonym-recognition to Translator to increase consistency of Translations.
+
+
 ## High Level Components
 The [`Controllers`](https://github.com/sopra-fs23-group-25/Pictionary-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) handle and process the REST calls from the client and pass them onto the [`Services`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service.java). A major part of the application is handled by the [`GameService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/GameService.java) and [`TurnService`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service/TurnService.java). The GameService keeps track of all players and their overall ranking. It also handles the role rotation making sure each player is assigned the role of painter exactly once per round. Finally, it also controls the number of turns and rounds. The TurnService generates the word that is painted and handles the translation and evaluation of each guess.
 
@@ -29,11 +37,6 @@ Most of these Endpoints are simply a way to relay messages from the dedicated Ho
 
 To Translate a Users guess we created a [`Translator`](https://github.com/sopra-fs23-group-25/Pictionary-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/translator) class which uses the GoogleTranslate API to translate individual Strings. The Translator Class encapsulates this API and provides Helper-methods to simplify the Translation Workflow.
 All [`Guesses`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/entity/Guess.java) that get submitted are translated to English before they are stored in the [`Game Entity`](https://github.com/sopra-fs23-group-25/Pictionary-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/entity/Game.java).
-## Roadmap
-- Image recognition that allows a user to play against a CPU.
-- Saving and sharing of images painted during a turn.
-- Add more languages to choose from.
-- Add synonym-recognition to Translator to increase consistency of Translations.
 
 ## Launch and Deployment
 Download your IDE of choice (e.g., [IntelliJ](https://www.jetbrains.com/idea/download/), [Visual Studio Code](https://code.visualstudio.com/), or [Eclipse](http://www.eclipse.org/downloads/)). Make sure Java 17 is installed on your system (for Windows, please make sure your `JAVA_HOME` environment variable is set to the correct version of Java).
