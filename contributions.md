@@ -138,6 +138,13 @@
 ||#217|write 3 integration tests|
 ||#241 #242|recieving and storing of drawings in game|
 ||#246 #242|check and add new words to play|
-|Nico|#|description|
-||#|description|
+|Nico|#92|implement functionality and button to clear whole canvas|
+||#91, #90|implement eraser&functionality in toolbar and eraser-cursor when eraser active|
+||#94|implement customized popup error messages|
+||#97|implemented eventlistener, that warns user when want to leave gamepage|
+||#98|intermediate screen and logic, when player reconnects when game already started|
+||#100, #101, #102, #103|implemented game-rules page and translation|
+|||animations all over the UI and raining confetti animation in endGame page|
+|||handling errors during game|
+||#80|optimized and refactored UI (lobbyoverview, endTurn, endGame)|
 |Pablo|#|Joker Contributions|
